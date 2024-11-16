@@ -1,10 +1,75 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
+
+  const navigate = useNavigate();
+
+  const [values, setValues] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmpassword: ""
+  });
+
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8000,
+    pauseOnHover: true,
+    theme: "dark"
+  };
+
+  // useEffect(() => {
+  //   if (localStorage.getItem('chat-app-user')) {
+  //     navigate('/');
+  //   }
+  // }, []);
+
+
+
+
+
+
+
+  const handleValidation = () => {
+
+    const { password, confirmpassword, username, email } = values;
+
+    if (password !== confirmpassword) {
+      toast.error(
+        "Password and Confirm password should be same", toastOptions
+      );
+      return false;
+    }
+
+    if (username.length < 3) {
+      toast.error(
+        "Username should be grater than 3 chracters", toastOptions
+      );
+      return false;
+    }
+
+    if (password.length < 8) {
+      toast.error(
+        "password should be equal or grater than 8 chracters", toastOptions
+      );
+      return false;
+    }
+
+    if (email === "") {
+      toast.error(
+        "Email is required", toastOptions
+      )
+      return false;
+    }
+    return false;
+
+  }
+
+
   return (
     <>
       <Container>
@@ -44,6 +109,7 @@ const Register = () => {
 
         </form>
       </Container>
+      <ToastContainer/>
     </>
   )
 }
