@@ -1,14 +1,83 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from 'react';
+import axios from 'axios';
+import { loginRoute } from '../utils/APIRoutes';
 
 const Login = () => {
+
+  const navigate = useNavigate();
+
+  const [values, setValues] = useState({
+    username: "",
+    password: ""
+  });
+
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8000,
+    pauseOnHover: true,
+    theme: "dark"
+  }
+
+  useEffect(() => {
+    if(localStorage.getItem('app-user')){
+      navigate('/')
+    }
+  },[]);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if(handleValidation()){
+      const {password, username} = values;
+
+      try{
+        const {data} = await axios.post(loginRoute, {
+          username,
+          password
+        });
+
+        if(data.status === false){
+          toast.error(data.msg, toastOptions);
+        }
+
+        if(data.status === false){
+          localStorage.setItem('app-user', JSON.stringify(data.user));
+          navigate('/');
+        }
+
+      }catch(ex){
+        console.error("Error during lohin:",ex)
+        toast.error("somthing went wrong please try again",toastOptions)
+      }
+    }
+
+  }
+
+  const handleValidation = () => {
+    const{password,username} = values;
+
+    if(username.trim() === "" || password.trim() === ""){
+      toast.error(
+        "Username and password are required", toastOptions
+      );
+      return false
+    }
+    return false;
+  }
+
+  const handleChange = (event) => {
+    setValues({...values, [event.target.name]: event.target.value});
+  }
+
   return (
     <>
       <Container>
-        <form>
+        <form onSubmit={(event) => handleSubmit(event)}>
           <div className="brand">
             <h1>Learning</h1>
           </div>
@@ -17,6 +86,7 @@ const Login = () => {
             type="text"
             placeholder='username'
             name='username'
+            onChange={(e) => }
           />
 
           <input

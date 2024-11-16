@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import { signupRoute } from '../utils/APIRoutes';
+import axios from 'axios'
 
 const Register = () => {
 
@@ -22,16 +24,38 @@ const Register = () => {
     theme: "dark"
   };
 
-  // useEffect(() => {
-  //   if (localStorage.getItem('chat-app-user')) {
-  //     navigate('/');
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (localStorage.getItem('app-user')) {
+      navigate('/');
+    }
+  }, []);
 
 
 
+const handleSubmit = async (event) => {
+  event.preventDefault();
 
+  if(handleValidation()){
+    const {password, username, email} = values;
 
+    const {data} = await axios.post(signupRoute, {
+      username,
+      email,
+      password
+    });
+
+    if(data.status === false){
+      toast.error(data.msg, toastOptions);
+    }
+
+    if(data.status === true){
+      localStorage.setItem('app-user',JSON.stringify(data.newUser))
+    }
+
+    navigate('/')
+
+  }
+}
 
 
   const handleValidation = () => {
@@ -70,10 +94,15 @@ const Register = () => {
   }
 
 
+  const handleChange = (event) => {
+    setValues({...values, [event.target.name]: event.target.value})
+  }
+
+
   return (
     <>
       <Container>
-        <form>
+        <form onSubmit={(event) => handleSubmit(event)}>
           <div className="brand">
             <h1>Learning</h1>
           </div>
@@ -82,24 +111,28 @@ const Register = () => {
             type="text"
             placeholder='username'
             name='username'
+            onChange={(e) => handleChange(e)}
           />
 
           <input
             type="email"
             placeholder='email'
             name='email'
+            onChange={(e) => handleChange(e)}
           />
 
           <input
             type="password"
             placeholder='password'
             name='password'
+            onChange={(e) => handleChange(e)}
           />
 
           <input
             type="password"
             placeholder='ConfirmPassword'
             name='confirmpassword'
+            onChange={(e) => handleChange(e)}
           />
 
           <button type='submit'>Create User Account</button>
