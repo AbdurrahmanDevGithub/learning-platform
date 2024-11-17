@@ -36,7 +36,7 @@ const handleSubmit = async (event) => {
   event.preventDefault();
 
   if(handleValidation()){
-    const {password, username, email} = values;
+    const { username, email, password } = values;
 
     const {data} = await axios.post(signupRoute, {
       username,
@@ -53,6 +53,7 @@ const handleSubmit = async (event) => {
     }
 
     navigate('/')
+    
 
   }
 }
@@ -89,7 +90,8 @@ const handleSubmit = async (event) => {
       )
       return false;
     }
-    return false;
+
+    return true;
 
   }
 

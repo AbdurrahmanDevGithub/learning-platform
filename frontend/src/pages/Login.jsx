@@ -31,32 +31,31 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    if(handleValidation()){
-      const {password, email} = values;
-
-      try{
-        const {data} = await axios.post(loginRoute, {
+  
+    if (handleValidation()) {
+      const {  email, password } = values;
+  
+      try {
+        const { data } = await axios.post(loginRoute, {
           email,
-          password
+          password,
         });
-
-        if(data.status === false){
+  
+        if (data.status === false) {
           toast.error(data.msg, toastOptions);
         }
-
-        if(data.status === false){
-          localStorage.setItem('app-user', JSON.stringify(data.user));
-          navigate('/');
+  
+        if (data.status === true) {
+          localStorage.setItem("app-user", JSON.stringify(data.user));
+          navigate("/");
         }
-
-      }catch(ex){
-        console.error("Error during lohin:",ex)
-        toast.error("somthing went wrong please try again",toastOptions)
+      } catch (ex) {
+        console.error("Error during login:", ex);
+        toast.error("Something went wrong. Please try again.", toastOptions);
       }
     }
-
-  }
+  };
+  
 
   const handleValidation = () => {
     const{password,email} = values;
@@ -67,7 +66,7 @@ const Login = () => {
       );
       return false
     }
-    return false;
+    return true;
   }
 
   const handleChange = (event) => {
