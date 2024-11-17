@@ -15,6 +15,7 @@ const Register = () => {
     email: "",
     password: "",
     confirmpassword: ""
+    // roles: [],
   });
 
   const toastOptions = {
@@ -36,12 +37,13 @@ const handleSubmit = async (event) => {
   event.preventDefault();
 
   if(handleValidation()){
-    const { username, email, password } = values;
+    const { username, email, password } = values;      //{ username, email, password, roles }
 
     const {data} = await axios.post(signupRoute, {
       username,
       email,
-      password
+      password,
+      // roles
     });
 
     if(data.status === false){
@@ -50,6 +52,7 @@ const handleSubmit = async (event) => {
 
     if(data.status === true){
       localStorage.setItem('app-user',JSON.stringify(data.newUser))
+      
     }
 
     navigate('/')
@@ -100,6 +103,22 @@ const handleSubmit = async (event) => {
     setValues({...values, [event.target.name]: event.target.value})
   }
 
+  // const handleCheckBoxChange = (event) => {
+  //   const {value, checked} = event.target;
+
+  //   setValues((prevValues) => {
+  //     if(checked){
+  //       return {...prevValues, roles: [...prevValues.roles, value]};
+  //     }
+  //     else{
+  //       return{
+  //         ...prevValues,
+  //         roles: prevValues.roles.filter((role) => role !== value),
+  //       };
+  //     }
+  //   })
+  // }
+
 
   return (
     <>
@@ -136,6 +155,30 @@ const handleSubmit = async (event) => {
             name='confirmpassword'
             onChange={(e) => handleChange(e)}
           />
+
+          <div className="roles">
+            <label>
+              <input 
+              type="checkbox"
+              name='role'
+              value='Admin'
+              // onChange={handleCheckBoxChange} 
+              />
+              <span>Admin</span>
+            </label>
+
+            <label>
+              <input 
+              type="checkbox"
+              name='role'
+              value='User' 
+              // onChange={handleCheckBoxChange}
+              />
+             <span>User</span>
+            </label>
+          </div>
+
+          
 
           <button type='submit'>Create User Account</button>
           <span>
@@ -196,6 +239,45 @@ const Container = styled.div`
         outline: none;
       }
       
+    }
+
+    .roles {
+      display: flex;
+      justify-content: space-between;;
+
+      label {
+        color: white;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+
+        input {
+          accent-color: #997af0;
+          margin-right: 0.5rem;
+          appearance: none;
+          width: 20px;
+          height: 20px;
+          border: 2px solid #997af0;
+          border-radius: 50%;
+          cursor: pointer;
+          transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        input:checked {
+          background-color: #997af0;
+          border-color: #3005a4; 
+        }
+
+        input:checked + span {
+          color: #997af0; 
+        }
+
+        span {
+        margin-left: 0.5rem;
+        color: #3005a4;
+        font-weight: bold;
+      }
+      }
     }
 
     button {

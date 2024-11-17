@@ -47,8 +47,11 @@ const Login = () => {
   
         if (data.status === true) {
           localStorage.setItem("app-user", JSON.stringify(data.user));
-          navigate("/");
+
+        
         }
+        
+        navigate("/");
       } catch (ex) {
         console.error("Error during login:", ex);
         toast.error("Something went wrong. Please try again.", toastOptions);
