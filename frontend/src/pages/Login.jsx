@@ -12,7 +12,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [values, setValues] = useState({
-    username: "",
+    email: "",
     password: ""
   });
 
@@ -33,11 +33,11 @@ const Login = () => {
     event.preventDefault();
 
     if(handleValidation()){
-      const {password, username} = values;
+      const {password, email} = values;
 
       try{
         const {data} = await axios.post(loginRoute, {
-          username,
+          email,
           password
         });
 
@@ -59,11 +59,11 @@ const Login = () => {
   }
 
   const handleValidation = () => {
-    const{password,username} = values;
+    const{password,email} = values;
 
-    if(username.trim() === "" || password.trim() === ""){
+    if(email.trim() === "" || password.trim() === ""){
       toast.error(
-        "Username and password are required", toastOptions
+        "email and password are required", toastOptions
       );
       return false
     }
@@ -83,16 +83,17 @@ const Login = () => {
           </div>
 
           <input
-            type="text"
-            placeholder='username'
-            name='username'
-            onChange={(e) => }
+            type="email"
+            placeholder='email'
+            name='email'
+            onChange={(e) => handleChange(e)}
           />
 
           <input
             type="password"
             placeholder='password'
             name='password'
+            onChange={(e) => handleChange(e)}
           />
 
           <button type='submit'>Login</button>
@@ -102,6 +103,7 @@ const Login = () => {
 
         </form>
       </Container>
+      <ToastContainer/>
     </>
   )
 }
