@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
@@ -24,43 +25,46 @@ const Login = () => {
   }
 
   useEffect(() => {
-    if(localStorage.getItem('app-user')){
+    if (localStorage.getItem('app-user')) {
       navigate('/')
     }
-  },[]);
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+
     if (handleValidation()) {
-      const {  email, password } = values;
-  
+      const { email, password } = values;
+
       try {
         const { data } = await axios.post(loginRoute, {
           email,
           password,
         });
-  
+
         if (data.status === false) {
           toast.error(data.msg, toastOptions);
         }
-  
+
         if (data.status === true) {
           localStorage.setItem("app-user", JSON.stringify(data.user));
-          navigate("/");
+
+
         }
+
+        navigate("/");
       } catch (ex) {
         console.error("Error during login:", ex);
         toast.error("Something went wrong. Please try again.", toastOptions);
       }
     }
   };
-  
+
 
   const handleValidation = () => {
-    const{password,email} = values;
+    const { password, email } = values;
 
-    if(email.trim() === "" || password.trim() === ""){
+    if (email.trim() === "" || password.trim() === "") {
       toast.error(
         "email and password are required", toastOptions
       );
@@ -70,11 +74,19 @@ const Login = () => {
   }
 
   const handleChange = (event) => {
-    setValues({...values, [event.target.name]: event.target.value});
+    setValues({ ...values, [event.target.name]: event.target.value });
   }
 
   return (
-    <>
+
+
+    <motion.div
+  initial={{ opacity: 0, y: 50 }}
+  animate={{ opacity: 1, y: 0 }}
+  exit={{ opacity: 0, y: -50 }}
+  transition={{ duration: 0.5 }}
+>
+
       <Container>
         <form onSubmit={(event) => handleSubmit(event)}>
           <div className="brand">
@@ -102,8 +114,9 @@ const Login = () => {
 
         </form>
       </Container>
-      <ToastContainer/>
-    </>
+      <ToastContainer />
+    </motion.div>
+
   )
 }
 
@@ -111,37 +124,37 @@ const Login = () => {
 
 const Container = styled.div`
 
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 1rem;
-  align-items: center;
-  background-color: transparent;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+      align-items: center;
+      background-color: transparent;
 
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    justify-content: center;
+      .brand {
+        display: flex;
+      align-items: center;
+      gap: 1rem;
+      justify-content: center;
 
-    h1 {
-    color: white;
-    text-transform: uppercase;
+      h1 {
+        color: white;
+      text-transform: uppercase;
     }
   }
 
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    background-color: #120529;
-    border-radius: 2rem;
-    padding: 4rem 5rem;
+      form {
+        display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      background-color: #120529;
+      border-radius: 2rem;
+      padding: 4rem 5rem;
 
-    input {
-      background-color: transparent;
+      input {
+        background-color: transparent;
       padding: 1rem;
       border: 0.1rem solid #3005a4;
       border-radius: 0.4rem;
@@ -151,13 +164,13 @@ const Container = styled.div`
 
       &:focus {
         border: 0.1rem solid #997af0;
-        outline: none;
+      outline: none;
       }
       
     }
 
-    button {
-      background-color: #997af0;
+      button {
+        background-color: #997af0;
       color: white;
       padding: 1rem 2rem;
       border: none;
@@ -173,21 +186,21 @@ const Container = styled.div`
       }
     }
 
-    span {
-      color: white;
+      span {
+        color: white;
       text-transform: uppercase;
 
       a {
         color: #4206e4;
-        text-decoration: none;
-        font-weight: bold;
+      text-decoration: none;
+      font-weight: bold;
       }
     }
 
   }
 
 
-`;
+      `;
 
 
 

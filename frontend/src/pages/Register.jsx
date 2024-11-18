@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
@@ -15,6 +16,7 @@ const Register = () => {
     email: "",
     password: "",
     confirmpassword: ""
+    // roles: [],
   });
 
   const toastOptions = {
@@ -32,31 +34,33 @@ const Register = () => {
 
 
 
-const handleSubmit = async (event) => {
-  event.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-  if(handleValidation()){
-    const { username, email, password } = values;
+    if (handleValidation()) {
+      const { username, email, password } = values;      //{ username, email, password, roles }
 
-    const {data} = await axios.post(signupRoute, {
-      username,
-      email,
-      password
-    });
+      const { data } = await axios.post(signupRoute, {
+        username,
+        email,
+        password,
+        // roles
+      });
 
-    if(data.status === false){
-      toast.error(data.msg, toastOptions);
+      if (data.status === false) {
+        toast.error(data.msg, toastOptions);
+      }
+
+      if (data.status === true) {
+        localStorage.setItem('app-user', JSON.stringify(data.newUser))
+
+      }
+
+      navigate('/')
+
+
     }
-
-    if(data.status === true){
-      localStorage.setItem('app-user',JSON.stringify(data.newUser))
-    }
-
-    navigate('/')
-    
-
   }
-}
 
 
   const handleValidation = () => {
@@ -97,55 +101,104 @@ const handleSubmit = async (event) => {
 
 
   const handleChange = (event) => {
-    setValues({...values, [event.target.name]: event.target.value})
+    setValues({ ...values, [event.target.name]: event.target.value })
   }
+
+  // const handleCheckBoxChange = (event) => {
+  //   const {value, checked} = event.target;
+
+  //   setValues((prevValues) => {
+  //     if(checked){
+  //       return {...prevValues, roles: [...prevValues.roles, value]};
+  //     }
+  //     else{
+  //       return{
+  //         ...prevValues,
+  //         roles: prevValues.roles.filter((role) => role !== value),
+  //       };
+  //     }
+  //   })
+  // }
 
 
   return (
-    <>
-      <Container>
-        <form onSubmit={(event) => handleSubmit(event)}>
-          <div className="brand">
-            <h1>Learning</h1>
-          </div>
+    
 
-          <input
-            type="text"
-            placeholder='username'
-            name='username'
-            onChange={(e) => handleChange(e)}
-          />
+    <motion.div
+    initial={{ opacity: 0, y: 50 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -50 }}
+    transition={{ duration: 0.5 }}
+  >
 
-          <input
-            type="email"
-            placeholder='email'
-            name='email'
-            onChange={(e) => handleChange(e)}
-          />
+        <Container>
+          <form onSubmit={(event) => handleSubmit(event)}>
+            <div className="brand">
+              <h1>Learning</h1>
+            </div>
 
-          <input
-            type="password"
-            placeholder='password'
-            name='password'
-            onChange={(e) => handleChange(e)}
-          />
+            <input
+              type="text"
+              placeholder='username'
+              name='username'
+              onChange={(e) => handleChange(e)}
+            />
 
-          <input
-            type="password"
-            placeholder='ConfirmPassword'
-            name='confirmpassword'
-            onChange={(e) => handleChange(e)}
-          />
+            <input
+              type="email"
+              placeholder='email'
+              name='email'
+              onChange={(e) => handleChange(e)}
+            />
 
-          <button type='submit'>Create User Account</button>
-          <span>
-            Already have an account ? <Link to="/login">Login</Link>
-          </span>
+            <input
+              type="password"
+              placeholder='password'
+              name='password'
+              onChange={(e) => handleChange(e)}
+            />
 
-        </form>
-      </Container>
-      <ToastContainer/>
-    </>
+            <input
+              type="password"
+              placeholder='ConfirmPassword'
+              name='confirmpassword'
+              onChange={(e) => handleChange(e)}
+            />
+
+            <div className="roles">
+              <label>
+                <input
+                  type="radio"
+                  name='role'
+                  value='Admin'
+                // onChange={handleCheckBoxChange} 
+                />
+                <span>Admin</span>
+              </label>
+
+              <label>
+                <input
+                  type="radio"
+                  name='role'
+                  value='User'
+                // onChange={handleCheckBoxChange}
+                />
+                <span>User</span>
+              </label>
+            </div>
+
+
+
+            <button type='submit'>Create User Account</button>
+            <span>
+              Already have an account ? <Link to="/login">Login</Link>
+            </span>
+
+          </form>
+        </Container>
+        <ToastContainer />
+      </motion.div>
+    
   )
 }
 
@@ -196,6 +249,45 @@ const Container = styled.div`
         outline: none;
       }
       
+    }
+
+    .roles {
+      display: flex;
+      justify-content: space-between;;
+
+      label {
+        color: white;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+
+        input {
+          accent-color: #997af0;
+          margin-right: 0.5rem;
+          appearance: none;
+          width: 20px;
+          height: 20px;
+          border: 0.2rem solid #3005a4;
+          border-radius: 50%;
+          cursor: pointer;
+          transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        input:checked {
+          background-color: #997af0;
+          border-color: #3005a4; 
+        }
+
+        input:checked + span {
+          color: #997af0; 
+        }
+
+        span {
+        margin-left: 0.5rem;
+        color: #3005a4;
+        font-weight: bold;
+      }
+      }
     }
 
     button {
