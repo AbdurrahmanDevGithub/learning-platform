@@ -1,15 +1,15 @@
 const User = require('../models/User.model')
-const authMiddleware = require('../middleware/Authorization')
 
 
-const signup = async(username,email,password)=>{
+
+const signup = async(username,email,password,role)=>{
   try{
     const emailIsTaken = await User.emailIsTaken(email)
     if(emailIsTaken){
       return {error:"Email is already taken'"}
     }
 
-    const newUser = new User({username,email,password})
+    const newUser = new User({username,email,password,role})
     const user= await newUser.save()
     return user
 
@@ -30,10 +30,11 @@ const signin = async(email,password)=>{
       return {error:"invalid password"}
     }
 
-    // const token = await authMiddleware.generateToken
-    console.log('logged success');
-    
-    return {"msg":"Successfully logged in"}
+    const username = user.username
+
+    console.log(username, 'logged success');
+    return user;
+    // return {username,"msg":"Successfully logged in"}
     
   }catch(error){
     
