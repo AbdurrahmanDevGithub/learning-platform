@@ -1,6 +1,5 @@
 const userServices = require('../services/User.services')
 const User = require('../models/User.model')
-const authMiddleware = require('../middleware/Authorization')
 
 
 
@@ -20,8 +19,8 @@ const Controller = {
     try{
       const {email,password} = req.body
       const user = await userServices.signin(email,password)
-      const token = await authMiddleware.generateToken(user)
-      res.json({user,token})
+      // const token = await authMiddleware.generateToken(user)
+      res.json(user)
       
     }catch(err){
       res.json({"error":"error in signin controller"})
