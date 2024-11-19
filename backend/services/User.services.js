@@ -1,4 +1,5 @@
 const User = require('../models/User.model')
+const authMiddleware = require('../middleware/Authorization')
 
 
 
@@ -30,14 +31,17 @@ const signin = async(email,password)=>{
       return {error:"invalid password"}
     }
 
+    const token = await authMiddleware.generateToken(user)
+
     const username = user.username
 
     console.log(username, 'logged success');
-    return user;
+    return ({user,token});
     // return {username,"msg":"Successfully logged in"}
     
   }catch(error){
-    
+    console.log(error);
+    throw error
   }
 }
 
