@@ -79,6 +79,11 @@ const courseSchema = mongoose.Schema({
       required: true,
     },
   },
+
+  tutorId:{
+    type: mongoose.Schema.Types.ObjectId,
+    required:true
+  }
 });
 
 const Course = mongoose.model("courses", courseSchema);
