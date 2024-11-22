@@ -30,6 +30,7 @@ const Login = () => {
     }
   }, []);
 
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -37,28 +38,23 @@ const Login = () => {
       const { email, password } = values;
 
       try {
-        const { data } = await axios.post(loginRoute, {
-          email,
-          password,
-        });
+        const { data } = await axios.post(loginRoute, { email, password });
 
         if (data.status === false) {
           toast.error(data.msg, toastOptions);
-        }
-
-        if (data.status === true) {
+        } else if (data.status === true) {
           localStorage.setItem("app-user", JSON.stringify(data.user));
+          localStorage.setItem("auth-token", data.token); // Store token for later use
 
-
+          navigate("/");
         }
-
-        navigate("/");
       } catch (ex) {
         console.error("Error during login:", ex);
         toast.error("Something went wrong. Please try again.", toastOptions);
       }
     }
   };
+
 
 
   const handleValidation = () => {
@@ -81,11 +77,11 @@ const Login = () => {
 
 
     <motion.div
-  initial={{ opacity: 0, y: 50 }}
-  animate={{ opacity: 1, y: 0 }}
-  exit={{ opacity: 0, y: -50 }}
-  transition={{ duration: 0.5 }}
->
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -50 }}
+      transition={{ duration: 0.5 }}
+    >
 
       <Container>
         <form onSubmit={(event) => handleSubmit(event)}>
