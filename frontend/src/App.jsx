@@ -4,6 +4,7 @@ import { AnimatePresence } from "framer-motion";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import CourseUplodePage from "./pages/CourseUplodePage";
 
 const App = () => {
   const location = useLocation(); 
@@ -14,6 +15,7 @@ const App = () => {
         <Route path="/" element={<Dashboard />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="uplodecourse" element={<CourseUplodePage/>}/>
       </Routes>
     </AnimatePresence>
   );

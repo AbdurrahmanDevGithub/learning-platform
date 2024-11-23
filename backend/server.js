@@ -2,8 +2,8 @@ const express = require("express")
 const app = express()
 const cors = require('cors');
 require('dotenv').config()
-const dbconnect = require('./configs/DBConnection.js')
-const routes = require('./routes/index.routes')
+const dbconnect = require('./configs/DBConnection')
+const routes = require('./routes/User.routes')
 
 
 app.use(cors({
@@ -17,7 +17,7 @@ app.use(express.json())
 //Database connection
 dbconnect()
 
-app.use("/api",routes)
+app.use("/api", routes);
 
 
 app.listen(process.env.PORT,()=>{

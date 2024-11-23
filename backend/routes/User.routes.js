@@ -9,7 +9,8 @@ const authMiddleware = require('../middleware/Authorization')
 
 //Account creation
 router.post("/signup",userController.signup)
-router.post("/signin",userController.signin)
+router.post("/signin", userController.signin);
+
 
 
 
