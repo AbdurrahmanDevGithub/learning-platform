@@ -16,6 +16,7 @@ router.post("/uploadcourse",authMiddleware.verifyToken,roleMiddleware.authorizeR
   { name: 'video', maxCount: 1 },
 ]),tutorController.uploadCourse)
 
+
 //update course
 router.put('/updatecourse/:id',authMiddleware.verifyToken,roleMiddleware.authorizeRoles("tutor"),multer.fields([
   { name: 'image', maxCount: 1 },
@@ -27,5 +28,7 @@ router.delete('/deletecourse/:id',authMiddleware.verifyToken,roleMiddleware.auth
 
 //fetch all uploaded courses
 router.get('/fetchcourses',authMiddleware.verifyToken,roleMiddleware.authorizeRoles("tutor"),tutorController.fetchCourses)
+
+
 
 module.exports = router

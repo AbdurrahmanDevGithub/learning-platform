@@ -20,30 +20,27 @@ const signup = async(username,email,password,role)=>{
   }
 }
 
-const signin = async(email,password)=>{
-  try{
-    const user = await User.findOne({email})
-    if(!user){
-      return {error:"invalid Email"}
+
+const signin = async(email, password) => {
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return { status: false, msg: "Invalid email" }; 
     }
 
-    if(!await user.comparePassword(password)){
-      return {error:"invalid password"}
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) {
+      return { status: false, msg: "Invalid password" }; 
     }
 
-    const token = await authMiddleware.generateToken(user)
-
-    const username = user.username
-
-    console.log(username, 'logged success');
-    return ({user,token});
-    // return {username,"msg":"Successfully logged in"}
-    
-  }catch(error){
-    console.log(error);
-    throw error
+    const token = await authMiddleware.generateToken(user);
+    return { status: true, user, token }; 
+  } catch (error) {
+    console.error(error);
+    return { status: false, msg: "Something went wrong" }; 
   }
-}
+};
+
 
 module.exports = {
   signup,
