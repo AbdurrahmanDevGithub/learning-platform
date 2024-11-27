@@ -54,6 +54,31 @@ const Login = () => {
       }
     }
   };
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+
+  //   if (handleValidation()) {
+  //     const { email, password } = values;
+
+  //     try {
+  //       const { data } = await axios.post(loginRoute, { email, password });
+
+  //       if (data.status === false) {
+  //         toast.error(data.msg, toastOptions);
+  //       } else if (data.status === true) {
+  //         // Store user and token securely
+  //         localStorage.setItem("app-user", JSON.stringify(data.user));
+  //         localStorage.setItem("auth-token", data.token); // UPDATED: Save token
+
+  //         navigate("/");
+  //       }
+  //     } catch (ex) {
+  //       console.error("Error during login:", ex);
+  //       toast.error("Something went wrong. Please try again.", toastOptions);
+  //     }
+  //   }
+  // };
+
 
 
 
@@ -130,7 +155,7 @@ const Container = styled.div`
       background-color: transparent;
 
       .brand {
-        display: flex;
+      display: flex;
       align-items: center;
       gap: 1rem;
       justify-content: center;
@@ -142,7 +167,7 @@ const Container = styled.div`
   }
 
       form {
-        display: flex;
+      display: flex;
       flex-direction: column;
       gap: 2rem;
       background-color: #120529;

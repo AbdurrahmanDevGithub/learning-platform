@@ -19,6 +19,7 @@ const CourseUploadForm = ({ onSubmit }) => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -32,26 +33,27 @@ const CourseUploadForm = ({ onSubmit }) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     const data = new FormData();
-
     Object.keys(formData).forEach((key) => data.append(key, formData[key]));
+    if (image) data.append('image', image);
+    if (video) data.append('video', video);
 
-    if (image) {
-      data.append('image', image);
+    // Debug: Log FormData content
+    for (let pair of data.entries()) {
+      console.log(`${pair[0]}:`, pair[1]);
     }
 
-    if (video) {
-      data.append('video', video);
+    try {
+      await onSubmit(data); // Call the onSubmit prop
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    } finally {
+      setLoading(false);
     }
-
-    onSubmit(data);
-
-    // Simulate form submission
-    setTimeout(() => setLoading(false), 2000);
   };
 
   return (
