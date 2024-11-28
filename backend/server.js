@@ -3,8 +3,8 @@ const app = express()
 const cors = require('cors');
 require('dotenv').config()
 const dbconnect = require('./configs/DBConnection')
-const routes = require('./routes/User.routes')
-
+// const routes = require('./routes/User.routes')
+const routes = require('./routes/index.routes')
 
 app.use(cors({
   origin: 'http://localhost:5173',
