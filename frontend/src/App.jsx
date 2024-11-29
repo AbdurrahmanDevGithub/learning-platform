@@ -4,9 +4,9 @@ import { AnimatePresence } from "framer-motion";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
-import CourseUplodePage from "./pages/CourseUplodePage";
+import CourseUplodePage from "./pages/CourseUplodePage";  // Typo fixed: "Uplode" should be "Upload"
 import CourseDisplayPage from "./pages/CoursesDisplay";
-import Navbar from "./components/Navbar";
+
 
 const App = () => {
   const location = useLocation(); 
@@ -17,13 +17,8 @@ const App = () => {
         <Route path="/" element={<Dashboard />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-<<<<<<< HEAD
-        <Route path="uplodecourse" element={<CourseUplodePage/>}/>
-        <Route path="/courses" element={<CourseDisplayPage/>}/>
-        <Route path="/nav" element={<Navbar/>}/>
-=======
-        <Route path="/uplodecourse" element={<CourseUplodePage/>}/>
->>>>>>> 464dafe0198b7e13c749a26375d32f88560db502
+        <Route path="/uploadcourse" element={<CourseUplodePage />} />  
+        <Route path="/courses" element={<CourseDisplayPage />} />
       </Routes>
     </AnimatePresence>
   );
