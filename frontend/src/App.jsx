@@ -15,7 +15,7 @@ const App = () => {
         <Route path="/" element={<Dashboard />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="uplodecourse" element={<CourseUplodePage/>}/>
+        <Route path="/uplodecourse" element={<CourseUplodePage/>}/>
       </Routes>
     </AnimatePresence>
   );

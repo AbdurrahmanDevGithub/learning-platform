@@ -6,7 +6,6 @@ const dbconnect = require('./configs/DBConnection')
 
 
 const routes = require('./routes/index.routes')
-
 // const tutorRoutes = require('./routes/Tutor.routes');
 
 app.use(cors({

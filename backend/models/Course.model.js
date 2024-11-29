@@ -83,8 +83,9 @@ const courseSchema = mongoose.Schema({
   tutorId:{
     type: mongoose.Schema.Types.ObjectId,
     required:true
-  }
-});
+  },
+  
+},{ timestamps: true });
 
 const Course = mongoose.model("courses", courseSchema);
 
