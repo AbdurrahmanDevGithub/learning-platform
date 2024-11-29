@@ -6,7 +6,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import CourseUplodePage from "./pages/CourseUplodePage";  // Typo fixed: "Uplode" should be "Upload"
 import CourseDisplayPage from "./pages/CoursesDisplay";
-
+import Navbar from "./components/Navbar";
 
 const App = () => {
   const location = useLocation(); 
@@ -17,8 +17,9 @@ const App = () => {
         <Route path="/" element={<Dashboard />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/uploadcourse" element={<CourseUplodePage />} />  
-        <Route path="/courses" element={<CourseDisplayPage />} />
+        <Route path="uplodecourse" element={<CourseUplodePage/>}/>
+        <Route path="/courses" element={<CourseDisplayPage/>}/>
+        <Route path="/nav" element={<Navbar/>}/>
       </Routes>
     </AnimatePresence>
   );
