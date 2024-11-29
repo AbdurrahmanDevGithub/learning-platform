@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
@@ -30,7 +30,7 @@ const Register = () => {
     if (localStorage.getItem('app-user')) {
       navigate('/');
     }
-  }, []);
+  }, [navigate]);
 
 
 
@@ -40,24 +40,29 @@ const Register = () => {
     if (handleValidation()) {
       const { username, email, password, role } = values;
 
-      const { data } = await axios.post(signupRoute, {
-        username,
-        email,
-        password,
-        role
-      });
-
-      if (data.status === false) {
-        toast.error(data.msg, toastOptions);
+      try{
+        const { data } = await axios.post(signupRoute, {
+          username,
+          email,
+          password,
+          role
+        });
+  
+        if (data.status === false) {
+          toast.error(data.msg, toastOptions);
+        }
+  
+        if (data.status === true) {
+          localStorage.setItem('app-user', JSON.stringify(data.newUser))
+          localStorage.setItem("auth-token", data.token);
+          
+        }
+        navigate('/')
       }
-
-      if (data.status === true) {
-        localStorage.setItem('app-user', JSON.stringify(data.newUser))
-
+      catch(error){
+        console.log("Error during registration: ",error);
+        toast.error("somthing went wrong. Please try again",toastOptions)
       }
-
-      navigate('/')
-
 
     }
   }

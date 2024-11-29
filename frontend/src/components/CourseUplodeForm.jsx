@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import bgImage from '../assets/courseBG.png';
+import bgImage from '../assets/newBG.jpg';
+import Navbar from './Navbar';
 
 const CourseUploadForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
@@ -19,7 +20,7 @@ const CourseUploadForm = ({ onSubmit }) => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  
+
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -42,11 +43,6 @@ const CourseUploadForm = ({ onSubmit }) => {
     if (image) data.append('image', image);
     if (video) data.append('video', video);
 
-    // Debug: Log FormData content
-    for (let pair of data.entries()) {
-      console.log(`${pair[0]}:`, pair[1]);
-    }
-
     try {
       await onSubmit(data); // Call the onSubmit prop
     } catch (error) {
@@ -57,8 +53,12 @@ const CourseUploadForm = ({ onSubmit }) => {
   };
 
   return (
+    <>
+    <Navbar/>
     <Container>
+    
       <div className="form-container">
+        
         <form className="upload-form" onSubmit={handleSubmit}>
           <label className="form-label">
             Category:
@@ -68,11 +68,11 @@ const CourseUploadForm = ({ onSubmit }) => {
               value={formData.category}
               onChange={handleChange}
             >
-              <option value="">Select Category</option>
-              <option value="Engineering">Engineering</option>
-              <option value="Technology">Technology</option>
-              <option value="Business">Business</option>
-              <option value="Art and Design">Art and Design</option>
+              <option className='options' value="">Select Category</option>
+              <option className='options' value="Engineering">Engineering</option>
+              <option className='options' value="Technology">Technology</option>
+              <option className='options' value="Business">Business</option>
+              <option className='options' value="Art and Design">Art and Design</option>
             </select>
           </label>
 
@@ -168,6 +168,7 @@ const CourseUploadForm = ({ onSubmit }) => {
         </form>
       </div>
     </Container>
+    </>
   );
 };
 
@@ -183,6 +184,7 @@ const Container = styled.div`
   align-items: center;
   position: relative;
   overflow: hidden;
+  flex-direction: column;
 
   &::before {
     content: '';
@@ -195,7 +197,7 @@ const Container = styled.div`
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    filter: blur(8px);
+    filter: blur(5px); /* Blur effect */
     z-index: -1;
   }
 
@@ -203,17 +205,63 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
     border-radius: 1rem;
-    padding: 2rem;
-    max-height: 80%;
+    padding: 2rem 2rem;
+    max-width: 900px;
+    width: 100%;
     overflow-y: auto;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+
+    /* Remove shadow by ensuring no box-shadow applied */
+    box-shadow: none;
 
     .upload-form {
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1rem;
+
+      .form-label {
+        display: flex;
+        flex-direction: column;
+        font-size: 20px;
+        font-weight: bold;
+      }
+
+      .form-select,
+      .form-input,
+      .form-file {
+        width: auto;
+        padding: 1px;
+        margin-top: 0.1rem;
+        border-radius: 0.3rem;
+        border: 1px solid #444;
+        font-size: 18px;
+      }
+
+      .form-select {
+        background-color: #666;
+        color: #ffffff;
+      }
+
+      .options {
+        background-color: #666;
+        color: #ffffff;
+      }
+
+      input {
+        background-color: #666;
+        padding: 1rem;
+        border: 0.1rem solid #3005a4;
+        border-radius: 0.4rem;
+        color: white;
+        width: 100%;
+        font-size: 1rem;
+
+        &:focus {
+          border: 0.1rem solid #997af0;
+          outline: none;
+        }
+      }
 
       .button {
         background: linear-gradient(135deg, #3005a4, #997af0);
@@ -271,5 +319,6 @@ const Container = styled.div`
     }
   }
 `;
+
 
 export default CourseUploadForm;

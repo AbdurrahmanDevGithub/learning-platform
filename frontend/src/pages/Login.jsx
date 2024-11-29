@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
@@ -25,10 +25,11 @@ const Login = () => {
   }
 
   useEffect(() => {
-    if (localStorage.getItem('app-user')) {
-      navigate('/')
+    const token = localStorage.getItem('auth-token');
+    if (token) {
+      navigate('/');
     }
-  }, []);
+  }, [navigate]);
 
 
   const handleSubmit = async (event) => {
