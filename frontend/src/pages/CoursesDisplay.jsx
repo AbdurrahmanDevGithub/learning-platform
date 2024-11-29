@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getCourses } from '../utils/tutor';
+import Navbar from '../components/Navbar';
 
 const CourseDisplayPage = () => {
   const [courses, setCourses] = useState([]);
@@ -42,6 +43,7 @@ const CourseDisplayPage = () => {
 
   return (
     <div>
+      <Navbar/>
       <h1>All Courses</h1>
       {message && (
         <p style={{ color: isError ? "red" : "green" }}>{message}</p>

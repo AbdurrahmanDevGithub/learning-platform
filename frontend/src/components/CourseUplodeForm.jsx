@@ -1,16 +1,16 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import bgImage from '../assets/newBG.jpg';
-import Navbar from './Navbar';
+import { useState } from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
+import bgImage from "../assets/newBG.jpg";
+import Navbar from "./Navbar";
 
 const CourseUploadForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
-    category: '',
-    title: '',
-    tutor: '',
-    duration: '',
-    description: ''
+    category: "",
+    title: "",
+    tutor: "",
+    duration: "",
+    description: "",
   });
 
   const [image, setImage] = useState(null);
@@ -21,17 +21,10 @@ const CourseUploadForm = ({ onSubmit }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-
-    if (e.target.name === 'image') {
-      setImage(file);
-    }
-
-    if (e.target.name === 'video') {
-      setVideo(file);
-    }
+    if (e.target.name === "image") setImage(file);
+    if (e.target.name === "video") setVideo(file);
   };
 
   const handleSubmit = async (e) => {
@@ -40,13 +33,13 @@ const CourseUploadForm = ({ onSubmit }) => {
 
     const data = new FormData();
     Object.keys(formData).forEach((key) => data.append(key, formData[key]));
-    if (image) data.append('image', image);
-    if (video) data.append('video', video);
+    if (image) data.append("image", image);
+    if (video) data.append("video", video);
 
     try {
       await onSubmit(data); // Call the onSubmit prop
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error("Error submitting form:", error);
     } finally {
       setLoading(false);
     }
@@ -54,124 +47,132 @@ const CourseUploadForm = ({ onSubmit }) => {
 
   return (
     <>
-    <Navbar/>
-    <Container>
-    
-      <div className="form-container">
-        
-        <form className="upload-form" onSubmit={handleSubmit}>
-          <label className="form-label">
-            Category:
-            <select
-              className="form-select"
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-            >
-              <option className='options' value="">Select Category</option>
-              <option className='options' value="Engineering">Engineering</option>
-              <option className='options' value="Technology">Technology</option>
-              <option className='options' value="Business">Business</option>
-              <option className='options' value="Art and Design">Art and Design</option>
-            </select>
-          </label>
-
-          <label className="form-label">
-            Title:
-            <input
-              className="form-input"
-              type="text"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-            />
-          </label>
-
-          <label className="form-label">
-            Tutor:
-            <input
-              className="form-input"
-              type="text"
-              name="tutor"
-              value={formData.tutor}
-              onChange={handleChange}
-            />
-          </label>
-
-          <label className="form-label">
-            Duration:
-            <input
-              className="form-input"
-              type="number"
-              name="duration"
-              value={formData.duration}
-              onChange={handleChange}
-            />
-          </label>
-
-          <label className="form-label">
-            Description:
-            <input
-              className="form-input"
-              type="text"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-            />
-          </label>
-
-          <label className="form-label">
-            Select Image:
-            <input
-              className="form-file"
-              type="file"
-              name="image"
-              accept="image/*"
-              onChange={handleFileChange}
-            />
-          </label>
-
-          <label className="form-label">
-            Select Video:
-            <input
-              className="form-file"
-              type="file"
-              name="video"
-              accept="video/*"
-              onChange={handleFileChange}
-            />
-          </label>
-
-          <button className={`button ${loading ? 'loading' : ''}`} type="submit">
-            {loading ? (
-              <svg
-                className="spinner"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 100 100"
-                fill="none"
+      <Navbar />
+      <Container>
+        <div className="form-container">
+          <form className="upload-form" onSubmit={handleSubmit}>
+            {/* Input fields */}
+            <label className="form-label">
+              Category:
+              <select
+                className="form-select"
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
               >
-                <circle
-                  className="path"
-                  cx="50"
-                  cy="50"
-                  r="45"
-                  strokeWidth="10"
-                  stroke="#fff"
-                  strokeDasharray="283"
-                  strokeDashoffset="75"
-                ></circle>
-              </svg>
-            ) : (
-              <span className="submitMessage">Upload File</span>
-            )}
-          </button>
-        </form>
-      </div>
-    </Container>
+                <option className="options" value="">
+                  Select Category
+                </option>
+                <option className="options" value="Engineering">
+                  Engineering
+                </option>
+                <option className="options" value="Technology">
+                  Technology
+                </option>
+                <option className="options" value="Business">
+                  Business
+                </option>
+                <option className="options" value="Art and Design">
+                  Art and Design
+                </option>
+              </select>
+            </label>
+
+            <label className="form-label">
+              Title:
+              <input
+                className="form-input"
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+              />
+            </label>
+
+            <label className="form-label">
+              Tutor:
+              <input
+                className="form-input"
+                type="text"
+                name="tutor"
+                value={formData.tutor}
+                onChange={handleChange}
+              />
+            </label>
+
+            <label className="form-label">
+              Duration:
+              <input
+                className="form-input"
+                type="number"
+                name="duration"
+                value={formData.duration}
+                onChange={handleChange}
+              />
+            </label>
+
+            <label className="form-label">
+              Description:
+              <input
+                className="form-input"
+                type="text"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+              />
+            </label>
+
+            <label className="form-label">
+              Select Image:
+              <input
+                className="form-file"
+                type="file"
+                name="image"
+                accept="image/*"
+                onChange={handleFileChange}
+              />
+            </label>
+
+            <label className="form-label">
+              Select Video:
+              <input
+                className="form-file"
+                type="file"
+                name="video"
+                accept="video/*"
+                onChange={handleFileChange}
+              />
+            </label>
+
+            <button className={`button ${loading ? "loading" : ""}`} type="submit">
+              {loading ? (
+                <svg
+                  className="spinner"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 100 100"
+                  fill="none"
+                >
+                  <circle
+                    className="path"
+                    cx="50"
+                    cy="50"
+                    r="45"
+                    strokeWidth="10"
+                    stroke="#fff"
+                    strokeDasharray="283"
+                    strokeDashoffset="75"
+                  ></circle>
+                </svg>
+              ) : (
+                <span className="submitMessage">Upload File</span>
+              )}
+            </button>
+          </form>
+        </div>
+      </Container>
     </>
   );
 };
-
 CourseUploadForm.propTypes = {
   onSubmit: PropTypes.func.isRequired
 };
