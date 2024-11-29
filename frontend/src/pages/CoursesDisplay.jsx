@@ -14,6 +14,7 @@ const CourseDisplayPage = () => {
         setIsError(true);
         return;
       }
+      // bhbxqbkqb
   
       const response = await getCourses(token);
       console.log('Fetched courses:', response);  
