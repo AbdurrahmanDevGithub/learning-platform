@@ -3,13 +3,17 @@ const app = express()
 const cors = require('cors');
 require('dotenv').config()
 const dbconnect = require('./configs/DBConnection')
-// const routes = require('./routes/User.routes')
+
+
 const routes = require('./routes/index.routes')
 
+// const tutorRoutes = require('./routes/Tutor.routes');
+
 app.use(cors({
-  origin: 'http://localhost:5173',
-  credentials: true,
+  origin: ["http://localhost:5173"],
+  methods: ["GET", "POST"],
 }));
+
 
 
 app.use(express.json())
@@ -17,7 +21,8 @@ app.use(express.json())
 //Database connection
 dbconnect()
 
-app.use("/api", routes);
+ app.use("/api", routes);
+//  app.use("/api/tutor",tutorRoutes);
 
 
 app.listen(process.env.PORT,()=>{

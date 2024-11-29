@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import CourseUplodeForm from '../components/CourseUplodeForm';
-import { uplodeCourse } from '../utils/tutor';
+import { uploadCourse } from '../utils/tutor';
 
 const CourseUplodePage = () => {
     
@@ -9,7 +9,7 @@ const CourseUplodePage = () => {
     const handleCourseUpload = async (data) => {
       try {
         const token = localStorage.getItem("token"); 
-        const response = await uplodeCourse(data, token);
+        const response = await uploadCourse(data, token);
         setMessage(response.msg || "Course uploaded successfully!");
       } catch (error) {
         setMessage(error || "Failed to upload course.");

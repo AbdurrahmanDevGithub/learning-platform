@@ -17,25 +17,32 @@ const generateToken = async(user)=>{
   }
 }
 
-const verifyToken=async(req,res,next)=>{
-  try{
-    const authHeader = req.headers['authorization']
-    const token = authHeader && authHeader.split(' ')[1]
+const verifyToken = async (req, res, next) => {
+  try {
+    const authHeader = req.headers['authorization'];
+    console.log("Authorization Header:", authHeader);
 
-    if(!token) return res.json("anouthorized user");
+    const token = authHeader && authHeader.split(' ')[1];
+    console.log("Token:", token);
 
-    jwt.verify(token,process.env.SECRATE_KEY,(err,user)=>{
-      if(err) return res.json("invalid token");
+    if (!token) return res.status(401).json("Unauthorized user");
+
+    jwt.verify(token, process.env.SECRATE_KEY, (err, user) => {
+      if (err) {
+        console.log("JWT Verification Error:", err);
+        return res.status(403).json("Invalid token");
+      }
 
       req.user = user;
-      next()
-    })
-
-  }catch(error){
-    console.log("error in token verifyToken");
-    return {error:"error in token verification",error}
+      console.log("Decoded user:", req.user); // Log the decoded user to ensure it's correct
+      next();
+    });
+  } catch (error) {
+    console.log("Error in verifyToken:", error);
+    res.status(500).json("Server error");
   }
-}
+};
+
 
 module.exports ={
   generateToken,

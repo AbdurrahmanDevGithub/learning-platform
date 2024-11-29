@@ -15,8 +15,8 @@ const Register = () => {
     username: "",
     email: "",
     password: "",
-    confirmpassword: ""
-    // roles: [],
+    confirmpassword: "",
+    role: "user"
   });
 
   const toastOptions = {
@@ -38,13 +38,13 @@ const Register = () => {
     event.preventDefault();
 
     if (handleValidation()) {
-      const { username, email, password } = values;      //{ username, email, password, roles }
+      const { username, email, password, role } = values;
 
       const { data } = await axios.post(signupRoute, {
         username,
         email,
         password,
-        // roles
+        role
       });
 
       if (data.status === false) {
@@ -104,101 +104,90 @@ const Register = () => {
     setValues({ ...values, [event.target.name]: event.target.value })
   }
 
-  // const handleCheckBoxChange = (event) => {
-  //   const {value, checked} = event.target;
 
-  //   setValues((prevValues) => {
-  //     if(checked){
-  //       return {...prevValues, roles: [...prevValues.roles, value]};
-  //     }
-  //     else{
-  //       return{
-  //         ...prevValues,
-  //         roles: prevValues.roles.filter((role) => role !== value),
-  //       };
-  //     }
-  //   })
-  // }
 
 
   return (
-    
+
 
     <motion.div
-    initial={{ opacity: 0, y: 50 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: -50 }}
-    transition={{ duration: 0.5 }}
-  >
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -50 }}
+      transition={{ duration: 0.5 }}
+    >
 
-        <Container>
-          <form onSubmit={(event) => handleSubmit(event)}>
-            <div className="brand">
-              <h1>Learning</h1>
-            </div>
+      <Container>
+        <form onSubmit={(event) => handleSubmit(event)}>
+          <div className="brand">
+            <h1>Learning</h1>
+          </div>
 
-            <input
-              type="text"
-              placeholder='username'
-              name='username'
-              onChange={(e) => handleChange(e)}
-            />
+          <input
+            type="text"
+            placeholder='username'
+            name='username'
+            onChange={(e) => handleChange(e)}
+          />
 
-            <input
-              type="email"
-              placeholder='email'
-              name='email'
-              onChange={(e) => handleChange(e)}
-            />
+          <input
+            type="email"
+            placeholder='email'
+            name='email'
+            onChange={(e) => handleChange(e)}
+          />
 
-            <input
-              type="password"
-              placeholder='password'
-              name='password'
-              onChange={(e) => handleChange(e)}
-            />
+          <input
+            type="password"
+            placeholder='password'
+            name='password'
+            onChange={(e) => handleChange(e)}
+          />
 
-            <input
-              type="password"
-              placeholder='ConfirmPassword'
-              name='confirmpassword'
-              onChange={(e) => handleChange(e)}
-            />
+          <input
+            type="password"
+            placeholder='ConfirmPassword'
+            name='confirmpassword'
+            onChange={(e) => handleChange(e)}
+          />
 
-            <div className="roles">
-              <label>
-                <input
-                  type="radio"
-                  name='role'
-                  value='Admin'
-                // onChange={handleCheckBoxChange} 
-                />
-                <span>Admin</span>
-              </label>
+          <div className="roles">
+            <label>
+              <input
+                type="radio"
+                name="role"
+                value="tutor"
+                onChange={(e) => handleChange(e)}
+                checked={values.role === "tutor"}
+              />
+              <span>Admin</span>
+            </label>
 
-              <label>
-                <input
-                  type="radio"
-                  name='role'
-                  value='User'
-                // onChange={handleCheckBoxChange}
-                />
-                <span>User</span>
-              </label>
-            </div>
+            <label>
+              <input
+                type="radio"
+                name="role"
+                value="user"
+                onChange={(e) => handleChange(e)}
+                checked={values.role === "user"}
+              />
+              <span>User</span>
+            </label>
+          </div>
 
 
 
-            <button type='submit'>Create User Account</button>
-            <span>
-              Already have an account ? <Link to="/login">Login</Link>
-            </span>
 
-          </form>
-        </Container>
-        <ToastContainer />
-      </motion.div>
-    
+          <button type='submit'>Create User Account</button>
+          <span>
+            Already have an account ? <Link to="/login">Login</Link>
+          </span>
+
+        </form>
+      </Container>
+      <ToastContainer />
+    </motion.div>
+
   )
 }
 
