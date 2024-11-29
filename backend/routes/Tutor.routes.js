@@ -27,7 +27,7 @@ router.put('/updatecourse/:id',authMiddleware.verifyToken,roleMiddleware.authori
 router.delete('/deletecourse/:id',authMiddleware.verifyToken,roleMiddleware.authorizeRoles("tutor"),tutorController.deleteCourse)
 
 //fetch all uploaded courses
-router.get('/fetchcourses',authMiddleware.verifyToken,roleMiddleware.authorizeRoles("tutor"),tutorController.fetchCourses)
+router.get('/fetchallcourses',authMiddleware.verifyToken,roleMiddleware.authorizeRoles("tutor"),tutorController.fetchCourses)
 
 
 
