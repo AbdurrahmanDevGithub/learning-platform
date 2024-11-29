@@ -50,7 +50,7 @@ const fetchCourses =  async(tutorId)=>{
     }
 
     
-    const data = await Course.find({tutorId:tutorId})
+    const data = await Course.find({tutorId:tutorId}).sort({ createdAt: -1 });
 
 
     if(!data){

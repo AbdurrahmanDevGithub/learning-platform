@@ -17,9 +17,13 @@ const App = () => {
         <Route path="/" element={<Dashboard />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+<<<<<<< HEAD
         <Route path="uplodecourse" element={<CourseUplodePage/>}/>
         <Route path="/courses" element={<CourseDisplayPage/>}/>
         <Route path="/nav" element={<Navbar/>}/>
+=======
+        <Route path="/uplodecourse" element={<CourseUplodePage/>}/>
+>>>>>>> 464dafe0198b7e13c749a26375d32f88560db502
       </Routes>
     </AnimatePresence>
   );

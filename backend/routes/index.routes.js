@@ -3,8 +3,8 @@ const router = express.Router();
 
 //Routes
 const userRoutes = require('./User.routes')
-
 const tutorRoutes = require('./Tutor.routes')
+const corseRoutes = require('./Course.routes')
 
 const routes = [
   {
@@ -14,6 +14,10 @@ const routes = [
   {
     path:'/tutor',
     route:tutorRoutes
+  },
+  {
+    path:'/course',
+    route:corseRoutes
   }
 ]
 
