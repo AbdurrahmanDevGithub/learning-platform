@@ -26,6 +26,7 @@ export const uploadCourse = async (formData, token) => {
     }
 };
 
+
 export const getCourses = async (token) => {
     try {
         const config = {

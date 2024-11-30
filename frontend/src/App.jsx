@@ -5,9 +5,10 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import CourseUplodePage from "./pages/CourseUplodePage";
-import CourseDisplayPage from "./pages/CoursesDisplay";
+// import CourseDisplayPage from "./pages/CoursesDisplay";
 import Navbar from "./components/Navbar";
 import ManageCourses from "./pages/ManageCourses";
+import FetcheCourses from "./pages/CoursesDisplay";
 
 const App = () => {
   const location = useLocation(); 
@@ -19,7 +20,7 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="uplodecourse" element={<CourseUplodePage/>}/>
-        <Route path="/courses" element={<CourseDisplayPage/>}/>
+        <Route path="/courses" element={<FetcheCourses/>}/>
         <Route path="/nav" element={<Navbar/>}/>
         <Route path="manage" element={<ManageCourses/>}/>
       </Routes>

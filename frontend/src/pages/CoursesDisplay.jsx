@@ -1,67 +1,92 @@
-import { useEffect, useState } from 'react';
-import { getCourses } from '../utils/tutor';
-import Navbar from '../components/Navbar';
+import { useEffect, useState } from "react";
+import { getCourses } from "../utils/tutor";
 
-const CourseDisplayPage = () => {
+const FetcheCourses = () => {
+
   const [courses, setCourses] = useState([]);
-  const [message, setMessage] = useState("");
-  const [isError, setIsError] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const fetchCourses = async () => {
-    try {
-      const token = localStorage.getItem('auth-token');
-      if (!token) {
-        setMessage("You need to log in to view courses");
-        setIsError(true);
-        return;
-      }
-      // bhbxqbkqb
-  
-      const response = await getCourses(token);
-      console.log('Fetched courses:', response);  
-  
-      // Example: If the response is nested under a "data" field
-      if (response && response.data && response.data.courses) {
-        setCourses(response.data.courses);
-        setIsError(false);
-      } else {
-        setMessage("No courses found");
-        setIsError(true);
-      }
-    } catch (error) {
-      console.log(error);
-      setMessage("Failed to fetch courses");
-      setIsError(true);
-    }
-  };
-  
-  
-  
+  const token = localStorage.getItem("auth-token");
+
   useEffect(() => {
-    fetchCourses();
-  }, []);
+    const fetchCourse = async () => {
+      try{
+        const data = await getCourses(token);
+        console.log("Fetch Courses: ",data);
+        setCourses(data);
+      }
+      catch(error){
+        setError("Filed to upload course, plz try again");
+      }
+      finally{
+        setLoading(false);
+      }
+    };
+
+    fetchCourse();
+
+  },[token])
+
+  if(loading){
+    return <p>Loading Courses.......</p>
+  }
+
+  if(error){
+    return <p>Error: {error}</p>
+  }
 
   return (
     <div>
-      <Navbar/>
-      <h1>All Courses</h1>
-      {message && (
-        <p style={{ color: isError ? "red" : "green" }}>{message}</p>
-      )}
-       
-  <ul>
-    {courses.map((course) => (
-      <li key={course._id}>
-        <h3>{course.title}</h3>
-        <p>{course.description}</p>
-        {course.image && <img src={course.image} alt="course" />}
-        {course.video && <video src={course.video} controls />}
-      </li>
-    ))}
-  </ul>
-
+        <h2>Available Courses</h2>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
+            {Array.isArray(courses.data) && courses.data.length > 0 ? (
+                courses.data.map((course, index) => (
+                    <div
+                        key={index}
+                        style={{
+                            border: "1px solid #ccc",
+                            padding: "20px",
+                            borderRadius: "8px",
+                            width: "300px",
+                            textAlign: "center",
+                        }}
+                    >
+                        <img
+                            src={course.image.path} // Adjust path based on your image URL
+                            alt={course.title}
+                            style={{
+                                width: "100%",
+                                height: "auto",
+                                borderRadius: "8px",
+                            }}
+                        />
+                        <h3>{course.title}</h3>
+                        <p><strong>Category:</strong> {course.category}</p>
+                        <p><strong>Tutor:</strong> {course.tutor}</p>
+                        <p><strong>Duration:</strong> {course.duration} hours</p>
+                        <p><strong>Description:</strong> {course.description}</p>
+                        <video
+                            controls
+                            style={{
+                                width: "100%",
+                                height: "auto",
+                                marginTop: "10px",
+                            }}
+                        >
+                            <source src={course.video.path} type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                ))
+            ) : (
+                <p>No courses available or loading...</p>
+            )}
+        </div>
     </div>
-  );
-};
+);
 
-export default CourseDisplayPage;
+
+}
+
+export default FetcheCourses;
