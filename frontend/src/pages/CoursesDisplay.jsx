@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { getCourses } from "../utils/tutor";
+import Navbar from "../components/Navbar";
+import styled from "styled-components";
+import bgImage from "../assets/newBG.jpg";
 
 const FetcheCourses = () => {
-
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -11,82 +13,156 @@ const FetcheCourses = () => {
 
   useEffect(() => {
     const fetchCourse = async () => {
-      try{
+      try {
         const data = await getCourses(token);
-        console.log("Fetch Courses: ",data);
+        console.log("Fetch Courses: ", data);
         setCourses(data);
-      }
-      catch(error){
-        setError("Filed to upload course, plz try again");
-      }
-      finally{
+      } catch (error) {
+        setError("Failed to load courses, please try again.");
+      } finally {
         setLoading(false);
       }
     };
 
     fetchCourse();
+  }, [token]);
 
-  },[token])
-
-  if(loading){
-    return <p>Loading Courses.......</p>
+  if (loading) {
+    return <Container><p>Loading Courses...</p></Container>;
   }
 
-  if(error){
-    return <p>Error: {error}</p>
+  if (error) {
+    return <Container><p>Error: {error}</p></Container>;
   }
 
   return (
-    <div>
-        <h2>Available Courses</h2>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
-            {Array.isArray(courses.data) && courses.data.length > 0 ? (
-                courses.data.map((course, index) => (
-                    <div
-                        key={index}
-                        style={{
-                            border: "1px solid #ccc",
-                            padding: "20px",
-                            borderRadius: "8px",
-                            width: "300px",
-                            textAlign: "center",
-                        }}
-                    >
-                        <img
-                            src={course.image.path} // Adjust path based on your image URL
-                            alt={course.title}
-                            style={{
-                                width: "100%",
-                                height: "auto",
-                                borderRadius: "8px",
-                            }}
-                        />
-                        <h3>{course.title}</h3>
-                        <p><strong>Category:</strong> {course.category}</p>
-                        <p><strong>Tutor:</strong> {course.tutor}</p>
-                        <p><strong>Duration:</strong> {course.duration} hours</p>
-                        <p><strong>Description:</strong> {course.description}</p>
-                        <video
-                            controls
-                            style={{
-                                width: "100%",
-                                height: "auto",
-                                marginTop: "10px",
-                            }}
-                        >
-                            <source src={course.video.path} type="video/mp4" />
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
-                ))
-            ) : (
-                <p>No courses available or loading...</p>
-            )}
-        </div>
-    </div>
-);
+    <>
+    <Navbar />
+    <Container>
+      <h2>Available Courses</h2>
+      <div className="courses-wrapper">
+        {Array.isArray(courses.data) && courses.data.length > 0 ? (
+          courses.data.map((course, index) => (
+            <div key={index} className="course-card">
+              <img src={course.image.path} alt={course.title} className="course-image" />
+              <h3 className="course-title">{course.title}</h3>
+              <p className="course-title"><strong>Category:</strong> {course.category}</p>
+              <p className="course-title"><strong>Tutor:</strong> {course.tutor}</p>
+              <p className="course-title"><strong>Duration:</strong> {course.duration} hours</p>
+              <p className="course-title"><strong>Description:</strong> {course.description}</p>
+              <video controls className="course-video">
+                <source src={course.video.path} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          ))
+        ) : (
+          <p>No courses available or loading...</p>
+        )}
+      </div>
+    </Container>
+    </>
+  );
+};
 
+const Container = styled.div`
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url(${bgImage});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh; 
+  margin: 0; 
 
-}
+  h2 {
+    color: #ccc;
+    margin-bottom: 20px;
+  }
+
+  .courses-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
+    overflow-y: auto;
+    max-height: calc(100vh - 160px); 
+    scrollbar-width: thin;
+    scrollbar-color: #01011b #222;
+
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #01011b;
+      border-radius: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #01011b;
+    }
+  }
+
+  .course-card {
+    position: relative;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    color: #ccc;
+    padding: 30px;
+    width: 250px;
+    text-align: center;
+    background-color: transparent; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    backdrop-filter: blur(40px); 
+    z-index: 1;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: inherit;
+      filter: blur(50px);
+      z-index: -1;
+    }
+
+    .course-image {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .course-title {
+      color: #ccc;
+      margin: 10px 0;
+    }
+
+    p {
+      color: #555;
+      margin: 5px 0;
+    }
+
+    .course-video {
+      width: 100%;
+      height: auto;
+      margin-top: 10px;
+      border-radius: 8px;
+    }
+  }
+`;
 
 export default FetcheCourses;

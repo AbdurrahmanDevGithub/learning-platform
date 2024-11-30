@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import bgImage from "../assets/newBG.jpg";
 import Navbar from "./Navbar";
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const CourseUploadForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
@@ -13,9 +15,19 @@ const CourseUploadForm = ({ onSubmit }) => {
     description: "",
   });
 
+  const toastOptions = {
+    position: "top-right",
+    autoClose: 8000,
+    pauseOnHover: true,
+    theme: "dark"
+  }
+
   const [image, setImage] = useState(null);
   const [video, setVideo] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const imageInputRef = useRef(null);
+  const videoInputRef = useRef(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -38,8 +50,27 @@ const CourseUploadForm = ({ onSubmit }) => {
 
     try {
       await onSubmit(data); // Call the onSubmit prop
+      toast.success("Course uploaded Successfully!",toastOptions);
+
+      setFormData({
+        category: "",
+        title: "",
+        tutor: "",
+        duration: "",
+        description: ""
+      })
+
+      // Reset image and video
+      setImage(null);
+      setVideo(null);
+
+      // Clear file inputs
+      if (imageInputRef.current) imageInputRef.current.value = "";
+      if (videoInputRef.current) videoInputRef.current.value = "";
+
     } catch (error) {
       console.error("Error submitting form:", error);
+      toast.error("Failed to upload the course. Please try again.",toastOptions);
     } finally {
       setLoading(false);
     }
@@ -170,6 +201,7 @@ const CourseUploadForm = ({ onSubmit }) => {
           </form>
         </div>
       </Container>
+      <ToastContainer/>
     </>
   );
 };
