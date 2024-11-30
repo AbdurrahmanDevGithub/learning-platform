@@ -2,7 +2,6 @@ import axios from 'axios';
 
 const API_URL = "http://localhost:3001/api/tutor";
 
-
 export const uploadCourse = async (formData, token) => {
     try {
         const config = {
@@ -35,7 +34,7 @@ export const getCourses = async (token) => {
             },
         };
 
-        const response = await axios.get(`${API_URL}/fetchcourses`, config);
+        const response = await axios.get(`${API_URL}/fetchallcourses`, config);
         return response.data;
 
     }
