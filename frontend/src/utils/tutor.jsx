@@ -2,13 +2,9 @@ import axios from 'axios';
 
 const API_URL = "http://localhost:3001/api/tutor";
 
-
 export const uploadCourse = async (formData, token) => {
     try {
-        const token = localStorage.getItem("auth-token"); // Get token from localStorage
-
         const config = {
-
             headers: {
                 "Content-Type": "multipart/form-data",
                 Authorization: `Bearer ${token}`, // Ensure token is passed correctly
@@ -17,8 +13,6 @@ export const uploadCourse = async (formData, token) => {
 
         const response = await axios.post(`${API_URL}/uploadcourse`, formData, config);
         console.log("Course uploaded successfully:", response.data);
-
-
 
         return response.data;
 
@@ -33,12 +27,6 @@ export const uploadCourse = async (formData, token) => {
     }
 };
 
-/**
- * Get the list of courses
- * @param {string} token - JWT token for authentication
- * @returns {Object} Response data from the server containing courses
- * @throws Will throw an error if fetching fails
- */
 
 export const getCourses = async (token) => {
     try {
@@ -57,8 +45,6 @@ export const getCourses = async (token) => {
         throw new Error("Error fetching courses");
     }
 }
-
-
 
 export const updateCourse = async (id, formData, token) =>{
     try {
