@@ -69,6 +69,7 @@ const FetcheCourses = () => {
 
   return (
     <>
+<<<<<<< HEAD
       <Navbar />
       <Container>
 
@@ -92,6 +93,31 @@ const FetcheCourses = () => {
 
                 <div className="course-actions">
                   <button className="update-button"><Link to="/updatecourse">Update</Link></button>
+=======
+    <Navbar />
+    <Container>
+      
+      <h2>Well Come, {username} </h2>
+      
+      <div className="courses-wrapper">
+        {Array.isArray(courses.data) && courses.data.length > 0 ? (
+          courses.data.map((course, index) => (
+            <div key={index} className="course-card">
+              <img src={course.image.path} alt={course.title} className="course-image" />
+              <h3 className="course-title">{course.title}</h3>
+              <p className="course-id"><strong>Id:</strong> {course._id}</p>
+              <p className="course-title"><strong>Category:</strong> {course.category}</p>
+              <p className="course-title"><strong>Tutor:</strong> {course.tutor}</p>
+              <p className="course-title"><strong>Duration:</strong> {course.duration} hours</p>
+              <p className="course-title"><strong>Description:</strong> {course.description}</p>
+              <video controls className="course-video">
+                <source src={course.video.path} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+
+              <div className="course-actions">
+                  <button className="update-button">Update</button>  
+>>>>>>> 6cdab3c9d6622846213f6e51a9e11ac1279caae6
                   <button className="delete-button" onClick={() => handleDelete(course._id)}>Delete</button>
 
                   {/* onClick={() => handleUpdate(course.id)} */}
