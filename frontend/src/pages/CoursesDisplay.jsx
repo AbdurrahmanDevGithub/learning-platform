@@ -56,9 +56,6 @@ const FetcheCourses = () => {
   } 
 
 
-  
-  
-
   if (loading) {
     return <Container><p>Loading Courses...</p></Container>;
   }

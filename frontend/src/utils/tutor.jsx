@@ -65,25 +65,26 @@ export const updateCourse = async (id, formData, token) =>{
 }
 
 
-export const deleteCourse = async (id, token)=>{
+export const deleteCourse = async (id, token) => {
     try {
-        const config = {
-            headers: {
-                Authorization: `Bearer ${token}`
-            },
-        };
-
-        const response = await axios.delete(`${API_URL}/deletecourse/${id}`, config);
-        console.log("COurse deleted successfully", response.data)
-        return response.data;
+      console.log("Deleting course with ID:", id); // Debugging output
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+  
+      const response = await axios.delete(`${API_URL}/deletecourse/${id}`, config);
+      console.log("Course deleted successfully", response.data);
+      return response.data;
+    } catch (error) {
+      console.error(
+        "Course deletion error:",
+        error.response?.data || error.message
+      );
+      throw new Error(
+        error.response?.data?.message || "Error deleting course"
+      );
     }
-    catch (error) {
-        console.error(
-            "Course deletion error:",
-            error.response?.data || error.message
-        );
-        throw new Error(
-            error.response?.data?.message || "Error deleting course"
-        );
-    }
-}
+  };
+  
