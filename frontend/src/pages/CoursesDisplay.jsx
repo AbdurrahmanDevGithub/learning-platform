@@ -11,6 +11,9 @@ const FetcheCourses = () => {
 
   const token = localStorage.getItem("auth-token");
 
+  const username = JSON.parse(localStorage.getItem('app-user'))?.username || "Guest";
+
+
   useEffect(() => {
     const fetchCourse = async () => {
       try {
@@ -39,7 +42,9 @@ const FetcheCourses = () => {
     <>
     <Navbar />
     <Container>
-      <h2>Available Courses</h2>
+      
+      <h2>Well Come, {username} </h2>
+      
       <div className="courses-wrapper">
         {Array.isArray(courses.data) && courses.data.length > 0 ? (
           courses.data.map((course, index) => (
@@ -66,7 +71,7 @@ const FetcheCourses = () => {
 };
 
 const Container = styled.div`
-  padding: 20px;
+  padding: 35px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -79,7 +84,7 @@ const Container = styled.div`
 
   h2 {
     color: #ccc;
-    margin-bottom: 20px;
+    margin-left: -1200px;
   }
 
   .courses-wrapper {
