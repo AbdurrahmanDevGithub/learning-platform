@@ -8,7 +8,7 @@ export const uploadCourse = async (formData, token) => {
         const token = localStorage.getItem("auth-token"); // Get token from localStorage
 
         const config = {
-<<<<<<< HEAD
+
             headers: {
                 "Content-Type": "multipart/form-data",
                 Authorization: `Bearer ${token}`, // Ensure token is passed correctly
@@ -17,17 +17,11 @@ export const uploadCourse = async (formData, token) => {
 
         const response = await axios.post(`${API_URL}/uploadcourse`, formData, config);
         console.log("Course uploaded successfully:", response.data);
-=======
-        headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`, // Send token as 'Bearer <token>'
-        },
-        };
 
-        const response = await axios.post(`${API_URL}/uploadcourse`, config, formData );
-        console.log(response.data);
->>>>>>> 464dafe0198b7e13c749a26375d32f88560db502
+
+
         return response.data;
+
     } catch (error) {
         console.error(
             "Course uploading error:",
@@ -54,7 +48,7 @@ export const getCourses = async (token) => {
             },
         };
 
-        const response = await axios.get(`${API_URL}/fetchcourses`, config);
+        const response = await axios.get(`${API_URL}/fetchallcourses`, config);
         return response.data;
 
     }
@@ -63,10 +57,7 @@ export const getCourses = async (token) => {
         throw new Error("Error fetching courses");
     }
 }
-=======
 
-
->>>>>>> 464dafe0198b7e13c749a26375d32f88560db502
 
 
 export const updateCourse = async (id, formData, token) =>{
