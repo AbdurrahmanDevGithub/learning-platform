@@ -80,6 +80,7 @@ const FetcheCourses = () => {
             <div key={index} className="course-card">
               <img src={course.image.path} alt={course.title} className="course-image" />
               <h3 className="course-title">{course.title}</h3>
+              <p className="course-id"><strong>Id:</strong> {course._id}</p>
               <p className="course-title"><strong>Category:</strong> {course.category}</p>
               <p className="course-title"><strong>Tutor:</strong> {course.tutor}</p>
               <p className="course-title"><strong>Duration:</strong> {course.duration} hours</p>
@@ -91,7 +92,7 @@ const FetcheCourses = () => {
 
               <div className="course-actions">
                   <button className="update-button">Update</button>  
-                  <button className="delete-button" onClick={() => handleDelete(course.id)}>Delete</button>
+                  <button className="delete-button" onClick={() => handleDelete(course._id)}>Delete</button>
 
                   {/* onClick={() => handleUpdate(course.id)} */}
                 </div>

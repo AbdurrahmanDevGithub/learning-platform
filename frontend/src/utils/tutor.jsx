@@ -13,7 +13,9 @@ export const uploadCourse = async (formData, token) => {
 
         const response = await axios.post(`${API_URL}/uploadcourse`, formData, config);
         console.log("Course uploaded successfully:", response.data);
+
         return response.data;
+
     } catch (error) {
         console.error(
             "Course uploading error:",
@@ -43,7 +45,6 @@ export const getCourses = async (token) => {
         throw new Error("Error fetching courses");
     }
 }
-
 
 export const updateCourse = async (id, formData, token) =>{
     try {
