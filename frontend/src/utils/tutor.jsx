@@ -13,7 +13,9 @@ export const uploadCourse = async (formData, token) => {
 
         const response = await axios.post(`${API_URL}/uploadcourse`, formData, config);
         console.log("Course uploaded successfully:", response.data);
+
         return response.data;
+
     } catch (error) {
         console.error(
             "Course uploading error:",
@@ -44,8 +46,7 @@ export const getCourses = async (token) => {
     }
 }
 
-
-export const updateCourse = async (id, formData, token) =>{
+export const updateCourse = async (id, formData, token) => {
     try {
         const config = {
             headers: {
@@ -55,19 +56,30 @@ export const updateCourse = async (id, formData, token) =>{
         };
 
         const response = await axios.put(`${API_URL}/updatecourse/${id}`, formData, config);
-        console.log("COurse Uploade successfully: ", response.data);
+        console.log("Course uploaded successfully: ", response.data);
         return response.data;
+    } catch (error) {
+        if (error.response) {
+            // API returned an error response
+            console.error("Course update error:", error.response.data);
+            throw new Error(error.response.data.message || "Error updating course");
+        } else if (error.request) {
+            // No response was received from the server
+            console.error("No response received:", error.request);
+            throw new Error("No response from the server");
+        } else {
+            // Something went wrong in setting up the request
+            console.error("Error setting up the request:", error.message);
+            throw new Error("Error in request setup");
+        }
     }
-    catch (error) {
-        console.error("Course update error", error.response?.data || error.message);
-        throw new Error(error.response?.data?.message || "Erroe updating course")
-    }
-}
+};
+
 
 
 export const deleteCourse = async (id, token) => {
     try {
-      console.log("Deleting course with ID:", id); // Debugging output
+      console.log("Deleting course with ID:", id); 
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,

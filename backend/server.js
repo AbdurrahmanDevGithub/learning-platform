@@ -9,10 +9,10 @@ const routes = require('./routes/index.routes')
 // const tutorRoutes = require('./routes/Tutor.routes');
 
 app.use(cors({
-  origin: ["http://localhost:5173"],
-  methods: ["GET", "POST"],
+  origin: 'http://localhost:5173', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
+  allowedHeaders: ['Content-Type', 'Authorization'], 
 }));
-
 
 
 app.use(express.json())

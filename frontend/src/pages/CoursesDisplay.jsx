@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { getCourses, deleteCourse } from "../utils/tutor";
 import Navbar from "../components/Navbar";
 import styled from "styled-components";
@@ -41,19 +42,21 @@ const FetcheCourses = () => {
 
   const handleDelete = async (id) => {
     if (!id) {
-        console.error("Course ID is undefined!");
-        return;
+      console.error("Course ID is undefined!");
+      return;
     }
- 
+
     try {
-        const token = localStorage.getItem("auth-token");
-        await deleteCourse(id, token);  // Make sure ID is passed properly here
-        setCourses(courses.filter(course => course.id !== id)); // Optimistic deletion
-        toast.success("Course deleted successfully!");
+      const token = localStorage.getItem("auth-token");
+      await deleteCourse(id, token);
+      setCourses(courses.filter(course => course.id !== id));
+
+      toast.success("Course deleted successfully!", toastOptions);
     } catch (error) {
-        toast.error("Failed to delete course. Please try again.");
+      toast.error("Failed to delete course. Please try again.", toastOptions);
     }
-  } 
+  };
+
 
 
   if (loading) {
@@ -66,41 +69,42 @@ const FetcheCourses = () => {
 
   return (
     <>
-    <Navbar />
-    <Container>
-      
-      <h2>Well Come, {username} </h2>
-      
-      <div className="courses-wrapper">
-        {Array.isArray(courses.data) && courses.data.length > 0 ? (
-          courses.data.map((course, index) => (
-            <div key={index} className="course-card">
-              <img src={course.image.path} alt={course.title} className="course-image" />
-              <h3 className="course-title">{course.title}</h3>
-              <p className="course-title"><strong>Category:</strong> {course.category}</p>
-              <p className="course-title"><strong>Tutor:</strong> {course.tutor}</p>
-              <p className="course-title"><strong>Duration:</strong> {course.duration} hours</p>
-              <p className="course-title"><strong>Description:</strong> {course.description}</p>
-              <video controls className="course-video">
-                <source src={course.video.path} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+      <Navbar />
+      <Container>
 
-              <div className="course-actions">
-                  <button className="update-button">Update</button>  
-                  <button className="delete-button" onClick={() => handleDelete(course.id)}>Delete</button>
+        <h2>Well Come, {username} </h2>
+
+        <div className="courses-wrapper">
+          {Array.isArray(courses.data) && courses.data.length > 0 ? (
+            courses.data.map((course, index) => (
+              <div key={index} className="course-card">
+                <img src={course.image.path} alt={course.title} className="course-image" />
+                <h3 className="course-title">{course.title}</h3>
+                {/* <p className="course-id"><strong>Id:</strong> {course._id}</p> */}
+                <p className="course-title"><strong>Category:</strong> {course.category}</p>
+                <p className="course-title"><strong>Tutor:</strong> {course.tutor}</p>
+                <p className="course-title"><strong>Duration:</strong> {course.duration} hours</p>
+                <p className="course-title"><strong>Description:</strong> {course.description}</p>
+                <video controls className="course-video">
+                  <source src={course.video.path} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+
+                <div className="course-actions">
+                  <button className="update-button"><Link to="/updatecourse">Update</Link></button>
+                  <button className="delete-button" onClick={() => handleDelete(course._id)}>Delete</button>
 
                   {/* onClick={() => handleUpdate(course.id)} */}
                 </div>
 
-            </div>
-          ))
-        ) : (
-          <p>No courses available or loading...</p>
-        )}
-      </div>
-    </Container>
-    <ToastContainer/>
+              </div>
+            ))
+          ) : (
+            <p className="avl-courses">No courses available or loading...</p>
+          )}
+        </div>
+      </Container>
+      <ToastContainer />
     </>
   );
 };
@@ -146,6 +150,43 @@ const Container = styled.div`
     &::-webkit-scrollbar-track {
       background: #01011b;
     }
+
+  }
+
+  .avl-courses {
+  color: #ccc;
+  text-align: center;
+  align-content: center;
+  font-size: 1.8rem; /* Adjust font-size for smaller screens */
+  width: 100%;
+  animation: scaleUp 1.5s infinite; 
+  margin: 0 auto; /* Center align text */
+}
+
+@media (max-width: 768px) { /* Target phones and smaller devices */
+  .avl-courses {
+    font-size: 1.5rem; /* Smaller font for phones */
+  }
+}
+
+@keyframes scaleUp {
+  0%, 100% {
+    transform: scale(1.2); 
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+
+  .no-courses-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 160px); 
+    color: #ccc;
+    font-size: 1.5em;
+    text-align: center;
   }
 
   .course-card {
@@ -189,6 +230,8 @@ const Container = styled.div`
     .course-title {
       color: #ccc;
       margin: 10px 0;
+      text-align: left;
+      width: 100%;
     }
 
     p {
@@ -202,12 +245,14 @@ const Container = styled.div`
       margin-top: 10px;
       border-radius: 8px;
     }
+
     .course-actions {
       display: flex;
       justify-content: space-between;
       margin-top: 15px;
 
-      .update-button, .delete-button {
+      .update-button,
+      .delete-button {
         background-color: #053406;
         color: white;
         border: none;
@@ -227,9 +272,10 @@ const Container = styled.div`
             background-color: #da190b;
           }
         }
-  }
-}
+      }
+    }
   }
 `;
+
 
 export default FetcheCourses;

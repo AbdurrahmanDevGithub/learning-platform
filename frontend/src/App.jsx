@@ -7,7 +7,6 @@ import Dashboard from "./pages/Dashboard";
 import CourseUplodePage from "./pages/CourseUplodePage";
 // import CourseDisplayPage from "./pages/CoursesDisplay";
 import Navbar from "./components/Navbar";
-import ManageCourses from "./pages/ManageCourses";
 import FetcheCourses from "./pages/CoursesDisplay";
 import CourseUpdate from "./pages/CourseUpdatePage";
 
@@ -23,7 +22,6 @@ const App = () => {
         <Route path="uplodecourse" element={<CourseUplodePage/>}/>
         <Route path="/courses" element={<FetcheCourses/>}/>
         <Route path="/nav" element={<Navbar/>}/>
-        <Route path="manage" element={<ManageCourses/>}/>
         <Route path="/updatecourse" element={<CourseUpdate />} />
 
       </Routes>
