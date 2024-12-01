@@ -46,7 +46,11 @@ export const getCourses = async (token) => {
     }
 }
 
+<<<<<<< HEAD
+export const updateCourse = async (id, formData, token) => {
+=======
 export const updateCourse = async (id, formData, token) =>{
+>>>>>>> 6cdab3c9d6622846213f6e51a9e11ac1279caae6
     try {
         const config = {
             headers: {
@@ -56,35 +60,47 @@ export const updateCourse = async (id, formData, token) =>{
         };
 
         const response = await axios.put(`${API_URL}/updatecourse/${id}`, formData, config);
-        console.log("COurse Uploade successfully: ", response.data);
+        console.log("Course uploaded successfully: ", response.data);
         return response.data;
+    } catch (error) {
+        if (error.response) {
+            // API returned an error response
+            console.error("Course update error:", error.response.data);
+            throw new Error(error.response.data.message || "Error updating course");
+        } else if (error.request) {
+            // No response was received from the server
+            console.error("No response received:", error.request);
+            throw new Error("No response from the server");
+        } else {
+            // Something went wrong in setting up the request
+            console.error("Error setting up the request:", error.message);
+            throw new Error("Error in request setup");
+        }
     }
-    catch (error) {
-        console.error("Course update error", error.response?.data || error.message);
-        throw new Error(error.response?.data?.message || "Erroe updating course")
-    }
-}
+};
 
 
-export const deleteCourse = async (id, token)=>{
+
+export const deleteCourse = async (id, token) => {
     try {
-        const config = {
-            headers: {
-                Authorization: `Bearer ${token}`
-            },
-        };
-
-        const response = await axios.delete(`${API_URL}/deletecourse/${id}`, config);
-        console.log("COurse deleted successfully", response.data)
-        return response.data;
+      console.log("Deleting course with ID:", id); 
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+  
+      const response = await axios.delete(`${API_URL}/deletecourse/${id}`, config);
+      console.log("Course deleted successfully", response.data);
+      return response.data;
+    } catch (error) {
+      console.error(
+        "Course deletion error:",
+        error.response?.data || error.message
+      );
+      throw new Error(
+        error.response?.data?.message || "Error deleting course"
+      );
     }
-    catch (error) {
-        console.error(
-            "Course deletion error:",
-            error.response?.data || error.message
-        );
-        throw new Error(
-            error.response?.data?.message || "Error deleting course"
-        );
-    }
-}
+  };
+  

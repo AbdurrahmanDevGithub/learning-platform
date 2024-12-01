@@ -11,9 +11,9 @@ const Navbar = () => {
                     Learning
                 </div>
                 <ul className="navbar-link">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#services">Services</a></li>
+                    <li><Link to="/">Dashboard</Link></li>
+                    <li><Link to="/courses">Manage Courses</Link></li>
+                    <li><Link to="/uplodecourse">Uploade Courses</Link></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
                 <button className="signin-button">
@@ -56,7 +56,7 @@ const Container = styled.div`
     .navbar-link li {
         font-size: 1rem;
         transition: color 0.3s ease;
-    }    
+    }
 
     .navbar-link li a:hover {
         color: #997af0;
@@ -89,6 +89,54 @@ const Container = styled.div`
     .icon {
         font-size: 1.2rem;
     }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+        .navbar {
+            flex-direction: column;
+            padding: 1rem 2rem;
+        }
+
+        .navbar-brand {
+            font-size: 1.2rem; 
+            margin-bottom: 1rem;
+        }
+
+        .navbar-link {
+            flex-direction: column;
+            gap: 1rem;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .navbar-link li {
+            text-align: center; 
+        }
+
+        .signin-button {
+            width: 100%; 
+            justify-content: center; 
+            padding: 0.8rem 0; 
+        }
+    }
+
+    @media (max-width: 480px) {
+        .navbar {
+            padding: 1rem; 
+        }
+
+        .navbar-brand {
+            font-size: 1.1rem;
+        }
+
+        .navbar-link {
+            font-size: 1rem;
+        }
+
+        .signin-button {
+            font-size: 0.9rem; 
+        }
+    }
 `;
 
-export default Navbar
+export default Navbar;
