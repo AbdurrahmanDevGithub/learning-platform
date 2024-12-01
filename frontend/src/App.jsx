@@ -9,6 +9,7 @@ import CourseUplodePage from "./pages/CourseUplodePage";
 import Navbar from "./components/Navbar";
 import ManageCourses from "./pages/ManageCourses";
 import FetcheCourses from "./pages/CoursesDisplay";
+import CourseUpdate from "./pages/CourseUpdatePage";
 
 const App = () => {
   const location = useLocation(); 
@@ -23,6 +24,8 @@ const App = () => {
         <Route path="/courses" element={<FetcheCourses/>}/>
         <Route path="/nav" element={<Navbar/>}/>
         <Route path="manage" element={<ManageCourses/>}/>
+        <Route path="/updatecourse" element={<CourseUpdate />} />
+
       </Routes>
     </AnimatePresence>
   );
