@@ -46,11 +46,8 @@ export const getCourses = async (token) => {
     }
 }
 
-<<<<<<< HEAD
 export const updateCourse = async (id, formData, token) => {
-=======
-export const updateCourse = async (id, formData, token) =>{
->>>>>>> 6cdab3c9d6622846213f6e51a9e11ac1279caae6
+
     try {
         const config = {
             headers: {
