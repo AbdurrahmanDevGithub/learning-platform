@@ -1,4 +1,5 @@
 const Course = require('../models/Course.model')
+const Enrollment = require('../models/EnrolledCorses.model')
 
 const fetchCourseById=async(id)=>{
   try{
@@ -34,7 +35,29 @@ const fetchAllCourses=async(category)=>{
   }
 }
 
+
+const enrollCourse=async(id,email,username,cid,tutorid,course_category)=>{
+  try{
+    const enrollment = new Enrollment ({
+      user_id:id,
+      user_email:email,
+      username,
+      course_id:cid,
+      tutor_id:tutorid,
+      course_category
+    })
+
+    const data = await enrollment.save()
+    return data;
+
+  }catch(error){
+    console.log("error in enrollCourse services",error);
+    return ({"error in enrollCourse services":error})
+  }
+}
+
 module.exports = {
   fetchCourseById,
-  fetchAllCourses
+  fetchAllCourses,
+  enrollCourse
 }
