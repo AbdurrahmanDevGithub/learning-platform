@@ -8,8 +8,6 @@ const tutorController = require('../controllers/Tutor.controller')
 const multer = require('../configs/Multer');
 
 
-
-
 //upload course
 router.post("/uploadcourse",authMiddleware.verifyToken,roleMiddleware.authorizeRoles("tutor"),multer.fields([
   { name: 'image', maxCount: 1 },

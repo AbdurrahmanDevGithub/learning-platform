@@ -20,6 +20,21 @@ const fetchCourseById=async(id)=>{
   }
 }
 
+
+const fetchAllCourses=async(category)=>{
+  try{
+    const data = await Course.find({category})
+    if(!data || data.length === 0){
+      return ({"msg":"No data found"})
+    }
+    return data;
+  }catch(error){
+    console.log(err);
+    res.json({"err in fetchAllCourses services":err})
+  }
+}
+
 module.exports = {
-  fetchCourseById
+  fetchCourseById,
+  fetchAllCourses
 }
