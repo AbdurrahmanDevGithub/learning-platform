@@ -51,48 +51,6 @@ const verifyToken = async (req, res, next) => {
 };
 
 
-// const verifyTokenForEnrolment = async (req, res, next) => {
-//   try {
-//     // Check if the route is /enrollcourse
-//     if (req.originalUrl === '/enrollcourse') {
-//       const authHeader = req.headers['authorization'];
-//       console.log("Authorization Header:", authHeader);
-
-//       // If no authorization header, respond with a specific message for enrolling in a course
-//       if (!authHeader) {
-//         return res.status(401).json({ message: "You need to login first to enroll in a course." });
-//       }
-
-//       const token = authHeader.split(' ')[1];
-//       console.log("Token:", token);
-
-//       if (!token) {
-//         return res.status(401).json({ message: "You need to login first to enroll in a course." });
-//       }
-
-//       // Verify the token
-//       jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
-//         if (err) {
-//           console.log("JWT Verification Error:", err);
-//           return res.status(403).json({ message: "Invalid token. Please login again." });
-//         }
-
-//         req.user = user;
-//         console.log("Decoded user:", req.user); // Log the decoded user to ensure it's correct
-//         next();
-//       });
-//     } else {
-//       // For other routes, skip the check or handle it differently
-//       next();
-//     }
-//   } catch (error) {
-//     console.log("Error in verifyToken:", error);
-//     res.status(500).json({ message: "Server error, please try again later." });
-//   }
-// };
-
-
-
 
 module.exports ={
   generateToken,
