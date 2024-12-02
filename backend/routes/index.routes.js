@@ -4,11 +4,16 @@ const router = express.Router();
 //Routes
 const userRoutes = require('./User.routes')
 const tutorRoutes = require('./Tutor.routes')
-const corseRoutes = require('./Course.routes')
+const courseRoutes = require('./Course.routes')
+const accountRoutes = require('./Account.routes')
 
 const routes = [
   {
     path:'/account',
+    route:accountRoutes
+  },
+  {
+    path:'/user',
     route:userRoutes
   },
   {
@@ -17,7 +22,7 @@ const routes = [
   },
   {
     path:'/course',
-    route:corseRoutes
+    route:courseRoutes
   }
 ]
 
