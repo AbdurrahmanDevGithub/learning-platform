@@ -46,7 +46,6 @@ export const getCourses = async (token) => {
     }
 }
 
-
 export const updateCourse = async (id, formData, token) => {
 
     try {

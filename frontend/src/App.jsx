@@ -11,7 +11,7 @@ import FetcheCourses from "./pages/CoursesDisplay";
 import CourseUpdate from "./pages/CourseUpdatePage";
 
 const App = () => {
-  const location = useLocation(); 
+  const location = useLocation();
 
   return (
     <AnimatePresence mode="wait">
@@ -19,12 +19,12 @@ const App = () => {
         <Route path="/" element={<Dashboard />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="uplodecourse" element={<CourseUplodePage/>}/>
-        <Route path="/courses" element={<FetcheCourses/>}/>
-        <Route path="/nav" element={<Navbar/>}/>
-        <Route path="/updatecourse" element={<CourseUpdate />} />
-
+        <Route path="/uplodecourse" element={<CourseUplodePage />} />
+        <Route path="/courses" element={<FetcheCourses />} />
+        <Route path="/nav" element={<Navbar />} />
+        <Route path="/updatecourse/:id" element={<CourseUpdate />} />
       </Routes>
+
     </AnimatePresence>
   );
 };
