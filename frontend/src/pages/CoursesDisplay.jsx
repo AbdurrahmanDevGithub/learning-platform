@@ -4,7 +4,7 @@ import { getCourses, deleteCourse } from "../utils/tutor";
 import Navbar from "../components/Navbar";
 import styled from "styled-components";
 import bgImage from "../assets/newBG.jpg";
-import { toast, ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const FetcheCourses = () => {
@@ -13,22 +13,31 @@ const FetcheCourses = () => {
   const [error, setError] = useState(null);
 
   const token = localStorage.getItem("auth-token");
-  const username = JSON.parse(localStorage.getItem('app-user'))?.username || "Guest";
+  const username = JSON.parse(localStorage.getItem("app-user"))?.username || "Guest";
 
   const toastOptions = {
     position: "top-right",
     autoClose: 8000,
     pauseOnHover: true,
-    theme: "dark"
-  }
+    theme: "dark",
+  };
 
   useEffect(() => {
     const fetchCourse = async () => {
       try {
         const data = await getCourses(token);
         console.log("Fetch Courses: ", data);
-        setCourses(data);
+
+        // Ensure `data` is an array before updating state
+        if (Array.isArray(data)) {
+          setCourses(data);
+        } else if (data?.data && Array.isArray(data.data)) {
+          setCourses(data.data);
+        } else {
+          throw new Error("Invalid data format received.");
+        }
       } catch (error) {
+        console.error("Error fetching courses:", error);
         setError("Failed to load courses, please try again.");
       } finally {
         setLoading(false);
@@ -39,140 +48,123 @@ const FetcheCourses = () => {
   }, [token]);
 
   const handleDelete = async (id) => {
-    if (!id) {
-      console.error("Course ID is undefined!");
-      return;
-    }
+    if (window.confirm("Are you sure you want to delete this course?")) {
+      try {
+        await deleteCourse(id, token);
+        toast.success("Course deleted successfully!", toastOptions);
 
-    try {
-      const token = localStorage.getItem("auth-token");
-      await deleteCourse(id, token);
-      setCourses(courses.filter(course => course.id !== id));
-      toast.success("Course deleted successfully!", toastOptions);
-    } catch (error) {
-      toast.error("Failed to delete course. Please try again.", toastOptions);
+        // Update the state to remove the deleted course
+        setCourses((prevCourses) => prevCourses.filter((course) => course._id !== id));
+      } catch (error) {
+        console.error("Error deleting course:", error);
+        toast.error("Failed to delete the course. Please try again.", toastOptions);
+      }
     }
   };
 
   if (loading) {
-    return <Container><p>Loading Courses...</p></Container>;
+    return (
+      <Container>
+        <p>Loading Courses...</p>
+      </Container>
+    );
   }
 
   if (error) {
-    return <Container><p>Error: {error}</p></Container>;
+    return (
+      <Container>
+        <p>Error: {error}</p>
+      </Container>
+    );
   }
 
   return (
     <>
       <Navbar />
+      <ToastContainer />
       <Container>
-        <h2>Welcome, {username} </h2>
-
-        <div className="courses-wrapper">
-          {Array.isArray(courses.data) && courses.data.length > 0 ? (
-            courses.data.map((course, index) => (
-              <div key={index} className="course-card">
-                <img src={course.image.path} alt={course.title} className="course-image" />
-                <h3 className="course-title">{course.title}</h3>
-                <p className="course-title"><strong>Category:</strong> {course.category}</p>
-                <p className="course-title"><strong>Tutor:</strong> {course.tutor}</p>
-                <p className="course-title"><strong>Duration:</strong> {course.duration} hours</p>
-                <p className="course-title"><strong>Description:</strong> {course.description}</p>
-                <video controls className="course-video">
-                  <source src={course.video.path} type="video/mp4" />
+        <h1>Welcome, {username}!</h1>
+        <div className="courses-container">
+          {Array.isArray(courses) && courses.length > 0 ? (
+            courses.map((course) => (
+              <div className="course-card" key={course._id}>
+                <h2>{course.title}</h2>
+                <p>{course.description}</p>
+                <img
+                  src={course.image}
+                  alt={course.title}
+                  className="course-image"
+                />
+                <video
+                  controls
+                  className="course-video"
+                  src={course.video}
+                >
                   Your browser does not support the video tag.
                 </video>
-
+                <p>
+                  <strong>Category:</strong> {course.category}
+                </p>
+                <p>
+                  <strong>Tutor:</strong> {course.tutor}
+                </p>
+                <p>
+                  <strong>Duration:</strong> {course.duration} hours
+                </p>
                 <div className="course-actions">
-                  <button className="update-button"><Link to="/updatecourse">Update</Link></button>
-                  <button className="delete-button" onClick={() => handleDelete(course._id)}>Delete</button>
+                  <Link to={`/updatecourse/${course._id}`}>
+                    <button className="button">Edit</button>
+                  </Link>
+                  <button
+                    className="button delete-button"
+                    onClick={() => handleDelete(course._id)}
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
             ))
           ) : (
-            <p className="avl-courses">No courses available or loading...</p>
+            <p>No courses available.</p>
           )}
         </div>
       </Container>
-      <ToastContainer />
     </>
   );
 };
 
 const Container = styled.div`
-  padding: 35px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 2rem;
   background-image: url(${bgImage});
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  min-height: 100vh; 
-  margin: 0; 
+  min-height: 100vh;
 
-  h2 {
-    color: #ccc;
-    margin-left: -1200px;
+  h1 {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 2rem;
   }
 
-  .courses-wrapper {
+  .courses-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 40px;
+    gap: 2rem;
     justify-content: center;
-    width: 100%;
-    padding: 20px;
-    overflow-y: auto;
-    max-height: calc(100vh - 160px); 
-    scrollbar-width: thin;
-    scrollbar-color: #01011b #222;
-
-    &::-webkit-scrollbar {
-      width: 10px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: #01011b;
-      border-radius: 5px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: #01011b;
-    }
-  }
-
-  .avl-courses {
-    color: #ccc;
-    text-align: center;
-    font-size: 1.8rem;
-    width: 100%;
-    animation: scaleUp 1.5s infinite; 
-  }
-
-  @keyframes scaleUp {
-    0%, 100% {
-      transform: scale(1.2); 
-    }
-    50% {
-      transform: scale(1.1);
-    }
   }
 
   .course-card {
-    position: relative;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    color: #ccc;
-    padding: 30px;
-    width: 250px;
-    text-align: center;
     background-color: transparent; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    border: 1px solid #ccc;
     transition: transform 0.3s ease;
     backdrop-filter: blur(40px); 
     z-index: 1;
+    border-radius: 10px;
+    padding: 1rem;
+    width: 300px;
+    color: #ddd;
 
     &:hover {
       transform: scale(1.05);
@@ -188,56 +180,51 @@ const Container = styled.div`
       background: inherit;
       filter: blur(50px);
       z-index: -1;
+    }    
+
+    h2 {
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      margin: 0.3rem 0;
     }
 
     .course-image {
       width: 100%;
       height: auto;
-      border-radius: 8px;
-      font-weight: bold;
-    }
-
-    .course-title {
-      color: #ccc;
-      margin: 10px 0;
-    }
-
-    p {
-      color: #555;
-      margin: 5px 0;
+      border-radius: 5px;
+      margin: 0.5rem 0;
     }
 
     .course-video {
       width: 100%;
-      height: auto;
-      margin-top: 10px;
-      border-radius: 8px;
+      margin: 0.5rem 0;
+      border-radius: 5px;
     }
 
     .course-actions {
       display: flex;
       justify-content: space-between;
-      margin-top: 15px;
+      margin-top: 1rem;
 
-      .update-button,
-      .delete-button {
-        background-color: #053406;
-        color: white;
+      .button {
+        padding: 0.5rem 1rem;
         border: none;
-        padding: 8px 12px;
-        border-radius: 4px;
+        border-radius: 5px;
         cursor: pointer;
-        transition: background-color 0.3s;
+        transition: background 0.3s ease;
 
         &:hover {
-          background-color: #45a049;
+          background: #ddd;
         }
 
         &.delete-button {
-          background-color: #3b0703;
+          background: #ff5555;
+          color: #fff;
 
           &:hover {
-            background-color: #da190b;
+            background: #ff0000;
           }
         }
       }
