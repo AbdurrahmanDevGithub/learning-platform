@@ -91,7 +91,7 @@ const FetcheCourses = () => {
                 <h2>{course.title}</h2>
                 <p>{course.description}</p>
                 <img
-                  src={course.image}
+                  src={course.images}
                   alt={course.title}
                   className="course-image"
                 />
@@ -125,7 +125,12 @@ const FetcheCourses = () => {
               </div>
             ))
           ) : (
+            <div className="avl-courses">
             <p>No courses available.</p>
+            <span>
+             <Link to="/uplodecourse">Uplode Course</Link>
+            </span>
+            </div>
           )}
         </div>
       </Container>
@@ -139,11 +144,17 @@ const Container = styled.div`
   background-size: cover;
   background-position: center;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   h1 {
-    color: #fff;
-    text-align: center;
-    margin-bottom: 2rem;
+    position: absolute;
+    top: 6rem;
+    left: 6rem;
+    color: #ddd;
+    margin: 0;
   }
 
   .courses-container {
@@ -151,7 +162,31 @@ const Container = styled.div`
     flex-wrap: wrap;
     gap: 2rem;
     justify-content: center;
+    width: 100%;
   }
+
+  .avl-courses {
+    color: #f67171;
+    text-align: center;
+    font-size: 2.8rem;
+    animation: scaleUp 1.5s infinite; 
+    position: absolute;
+    top: 50%;
+    left: 37%;
+    transform: translate(-30%, -50%);
+    margin: 0; 
+  }
+
+  @keyframes scaleUp {
+    0%, 100% {
+      transform: scale(1.2); 
+    }
+    50% {
+      transform: scale(1.1);
+    }
+  }
+  
+  
 
   .course-card {
     background-color: transparent; 
