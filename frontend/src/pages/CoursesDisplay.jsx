@@ -91,7 +91,7 @@ const FetcheCourses = () => {
                 <h2>{course.title}</h2>
                 <p>{course.description}</p>
                 <img
-                  src={course.images}
+                  src={course.image}
                   alt={course.title}
                   className="course-image"
                 />
@@ -125,12 +125,7 @@ const FetcheCourses = () => {
               </div>
             ))
           ) : (
-            <div className="avl-courses">
             <p>No courses available.</p>
-            <span>
-             <Link to="/uplodecourse">Uplode Course</Link>
-            </span>
-            </div>
           )}
         </div>
       </Container>

@@ -19,6 +19,9 @@ app.use(express.json())
 //Database connection
 dbconnect()
 
+app.use('/uploads', express.static('uploads'));
+
+
  app.use("/api", routes);
 //  app.use("/api/tutor",tutorRoutes);
 
