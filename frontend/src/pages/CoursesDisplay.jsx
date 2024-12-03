@@ -83,52 +83,52 @@ const FetcheCourses = () => {
       <Navbar />
       <ToastContainer />
       <Container>
-  <h1>Welcome, {username}!</h1>
-  <div className="courses-container">
-    {Array.isArray(courses) && courses.length > 0 ? (
-      courses.map((course) => (
-        <div className="course-card" key={course._id}>
-          <h2>{course.title}</h2>
-          <p>{course.description}</p>
-          {/* Updated Image */}
-          <img
-            src={`data:image/jpeg;base64,${course.image?.content}`}
-            alt={course.title}
-            className="course-image"
-          />
-          {/* Updated Video */}
-          <video controls className="course-video" 
-            src={`http://localhost:3001/uploads/videos/${course.video?.filename}`}>
-              Your browser does not support the video tag.
-          </video>
-          <p>
-            <strong>Category:</strong> {course.category}
-          </p>
-          <p>
-            <strong>Tutor:</strong> {course.tutor}
-          </p>
-          <p>
-            <strong>Duration:</strong> {course.duration} hours
-          </p>
-          <div className="course-actions">
-            <Link to={`/updatecourse/${course._id}`}>
-              <button className="button">Edit</button>
-            </Link>
-            <button
-              className="button delete-button"
-              onClick={() => handleDelete(course._id)}
-            >
-              Delete
-            </button>
-          </div>
+        <h1>Welcome, {username}!</h1>
+        <div className="courses-container">
+          {Array.isArray(courses) && courses.length > 0 ? (
+            courses.map((course) => (
+              <div className="course-card" key={course._id}>
+                <h2>{course.title}</h2>
+                <p>{course.description}</p>
+                <img
+                  src={course.image}
+                  alt={course.title}
+                  className="course-image"
+                />
+                <video
+                  controls
+                  className="course-video"
+                  src={course.video}
+                >
+                  Your browser does not support the video tag.
+                </video>
+                <p>
+                  <strong>Category:</strong> {course.category}
+                </p>
+                <p>
+                  <strong>Tutor:</strong> {course.tutor}
+                </p>
+                <p>
+                  <strong>Duration:</strong> {course.duration} hours
+                </p>
+                <div className="course-actions">
+                  <Link to={`/updatecourse/${course._id}`}>
+                    <button className="button">Edit</button>
+                  </Link>
+                  <button
+                    className="button delete-button"
+                    onClick={() => handleDelete(course._id)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p>No courses available.</p>
+          )}
         </div>
-      ))
-    ) : (
-      <p>No courses available.</p>
-    )}
-  </div>
-</Container>
-
+      </Container>
     </>
   );
 };
@@ -139,11 +139,17 @@ const Container = styled.div`
   background-size: cover;
   background-position: center;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   h1 {
-    color: #fff;
-    text-align: center;
-    margin-bottom: 2rem;
+    position: absolute;
+    top: 6rem;
+    left: 6rem;
+    color: #ddd;
+    margin: 0;
   }
 
   .courses-container {
@@ -151,7 +157,31 @@ const Container = styled.div`
     flex-wrap: wrap;
     gap: 2rem;
     justify-content: center;
+    width: 100%;
   }
+
+  .avl-courses {
+    color: #f67171;
+    text-align: center;
+    font-size: 2.8rem;
+    animation: scaleUp 1.5s infinite; 
+    position: absolute;
+    top: 50%;
+    left: 37%;
+    transform: translate(-30%, -50%);
+    margin: 0; 
+  }
+
+  @keyframes scaleUp {
+    0%, 100% {
+      transform: scale(1.2); 
+    }
+    50% {
+      transform: scale(1.1);
+    }
+  }
+  
+  
 
   .course-card {
     background-color: transparent; 
