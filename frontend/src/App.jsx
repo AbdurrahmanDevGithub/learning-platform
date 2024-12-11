@@ -9,7 +9,6 @@ import FetcheCourses from "./pages/CoursesDisplay";
 import CourseUpdate from "./pages/CourseUpdatePage";
 import ProtectedRoute from "./components/ProtextedRoute";
 import PublicRoute from "./components/PublicRoute";
-import Navbar from "./components/Navbar";
 
 
 const App = () => {

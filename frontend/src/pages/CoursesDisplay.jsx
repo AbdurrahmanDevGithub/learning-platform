@@ -150,6 +150,7 @@ const Container = styled.div`
     left: 6rem;
     color: #ddd;
     margin: 0;
+    color: black;
   }
 
   .courses-container {
@@ -161,7 +162,7 @@ const Container = styled.div`
   }
 
   .avl-courses {
-    color: #f67171;
+    color: black;
     text-align: center;
     font-size: 2.8rem;
     animation: scaleUp 1.5s infinite; 
@@ -187,7 +188,7 @@ const Container = styled.div`
     background-color: transparent; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    border: 1px solid #ccc;
+    border: 1px solid black;
     transition: transform 0.3s ease;
     backdrop-filter: blur(40px); 
     z-index: 1;
@@ -214,10 +215,12 @@ const Container = styled.div`
 
     h2 {
       margin-bottom: 0.5rem;
+      color: black;
     }
 
     p {
       margin: 0.3rem 0;
+      color: black;
     }
 
     .course-image {
@@ -225,6 +228,7 @@ const Container = styled.div`
       height: auto;
       border-radius: 5px;
       margin: 0.5rem 0;
+      color: black;
     }
 
     .course-video {
