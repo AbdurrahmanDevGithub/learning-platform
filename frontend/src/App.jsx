@@ -5,10 +5,11 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import CourseUplodePage from "./pages/CourseUplodePage";
-// import CourseDisplayPage from "./pages/CoursesDisplay";
-import Navbar from "./components/Navbar";
 import FetcheCourses from "./pages/CoursesDisplay";
 import CourseUpdate from "./pages/CourseUpdatePage";
+import ProtectedRoute from "./components/ProtextedRoute";
+import PublicRoute from "./components/PublicRoute";
+
 
 const App = () => {
   const location = useLocation();
@@ -16,13 +17,16 @@ const App = () => {
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/uplodecourse" element={<CourseUplodePage />} />
-        <Route path="/courses" element={<FetcheCourses />} />
-        <Route path="/nav" element={<Navbar />} />
-        <Route path="/updatecourse/:id" element={<CourseUpdate />} />
+        {/* Public Routes */}
+        <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+        <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+
+        {/* Protected Routes */}
+        <Route path="/" element=
+        {<ProtectedRoute> <Dashboard /> </ProtectedRoute>} />
+        <Route path="/uplodecourse" element={<ProtectedRoute> <CourseUplodePage /> </ProtectedRoute>} />
+        <Route path="/courses" element={<ProtectedRoute> <FetcheCourses /> </ProtectedRoute>} />
+        <Route path="/updatecourse/:id" element={<ProtectedRoute> <CourseUpdate /> </ProtectedRoute>} />
       </Routes>
 
     </AnimatePresence>

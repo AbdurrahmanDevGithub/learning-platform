@@ -8,7 +8,7 @@ const CourseUplodePage = () => {
 
   const handleCourseUpload = async (data) => {
     try {
-      const token = localStorage.getItem("auth-token"); // Ensure token key matches localStorage
+      const token = localStorage.getItem("token"); // Ensure token key matches localStorage
       if (!token) {
         setMessage("You need to log in to upload a course.");
         setIsError(true);
