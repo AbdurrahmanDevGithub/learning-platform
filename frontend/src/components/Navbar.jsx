@@ -1,30 +1,43 @@
-import styled from "styled-components"
+import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { logout } from "../redux/features/AuthSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 const Navbar = () => {
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+    const dispatch = useDispatch();
+
+    const handleLogout = () => {
+        dispatch(logout());
+    };
+
     return (
         <Container>
             <nav className="navbar">
-                <div className="navbar-brand">
-                    Learning
-                </div>
+                <div className="navbar-brand">Learning</div>
                 <ul className="navbar-link">
                     <li><Link to="/">Dashboard</Link></li>
                     <li><Link to="/courses">Manage Courses</Link></li>
-                    <li><Link to="/uplodecourse">Uploade Courses</Link></li>
+                    <li><Link to="/uplodecourse">Upload Courses</Link></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
-                <button className="signin-button">
-                    <FontAwesomeIcon icon={faSignInAlt} className="icon" />
-                     <Link to="/login">Sign In</Link>
-                </button>
+
+                {isAuthenticated ? (
+                    <button onClick={handleLogout} className="signin-button">
+                        Logout
+                    </button>
+                ) : (
+                    <Link to="/login" className="signin-button">
+                        <FontAwesomeIcon icon={faSignInAlt} className="icon" />
+                        Sign In
+                    </Link>
+                )}
             </nav>
         </Container>
-
-    )
-}
+    );
+};
 
 const Container = styled.div`
     .navbar {
@@ -75,6 +88,7 @@ const Container = styled.div`
         cursor: pointer;
         transition: background 0.3s ease, transform 0.2s ease;
         font-size: 1rem;
+        text-decoration: none;  /* Ensure the Link is styled as a button */
     }
 
     .signin-button:hover {

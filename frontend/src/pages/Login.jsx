@@ -18,7 +18,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setError('');
 
     try {
       const response = await axios.post("http://localhost:3001/api/account/signin", {
@@ -34,18 +34,18 @@ const Login = () => {
           })
         );
         toast.success("Login successful!", { position: "top-right" });
-        navigate("/");
-      }
-      else {
-        setError("User name or Password incorect, Please try again");
+        navigate("/"); 
+      } else {
+        setError("Invalid credentials, please try again");
       }
 
+    } catch (error) {
+      const errorMessage = error.response?.data?.error || "An error occurred. Please try again.";
+      setError(errorMessage);
+      toast.error(errorMessage, { position: "top-right" });
     }
-    catch (error) {
-      setError("An error occurred please try again later");
-      console.log(error);
-    }
-  }
+  };
+
 
   return (
 
