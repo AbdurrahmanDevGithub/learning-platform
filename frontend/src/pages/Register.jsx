@@ -54,7 +54,7 @@ const Register = () => {
   
         if (data.status === true) {
           localStorage.setItem('app-user', JSON.stringify(data.newUser))
-          localStorage.setItem("auth-token", data.token);
+          localStorage.setItem("token", data.token);
           
         }
         navigate('/')

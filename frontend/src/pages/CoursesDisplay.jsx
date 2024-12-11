@@ -12,7 +12,7 @@ const FetcheCourses = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const token = localStorage.getItem("auth-token");
+  const token = localStorage.getItem("token");
   const username = JSON.parse(localStorage.getItem("app-user"))?.username || "Guest";
 
   const toastOptions = {

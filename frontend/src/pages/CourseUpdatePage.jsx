@@ -48,7 +48,7 @@ const CourseUpdate = () => {
     data.append("description", formData.description);
 
     try {
-      const token = localStorage.getItem("auth-token");
+      const token = localStorage.getItem("token");
 
       if (!token) {
         toast.error("You must be logged in to update a course!", toastOptions);

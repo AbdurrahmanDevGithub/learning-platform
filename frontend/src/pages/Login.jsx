@@ -4,99 +4,47 @@ import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-import { useEffect } from 'react';
 import axios from 'axios';
-import { loginRoute } from '../utils/APIRoutes';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../redux/features/AuthSlice';
 
 const Login = () => {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const [values, setValues] = useState({
-    email: "",
-    password: ""
-  });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
 
-  const toastOptions = {
-    position: "bottom-right",
-    autoClose: 8000,
-    pauseOnHover: true,
-    theme: "dark"
-  }
+    try {
+      const response = await axios.post("http://localhost:3001/api/account/signin", {
+        email,
+        password,
+      });
 
-  useEffect(() => {
-    const token = localStorage.getItem('auth-token');
-    if (token) {
-      navigate('/');
-    }
-  }, [navigate]);
-
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    if (handleValidation()) {
-      const { email, password } = values;
-
-      try {
-        const { data } = await axios.post(loginRoute, { email, password });
-
-        if (data.status === false) {
-          toast.error(data.msg, toastOptions);
-        } else if (data.status === true) {
-          localStorage.setItem("app-user", JSON.stringify(data.user));
-          localStorage.setItem("auth-token", data.token); // Store token for later use
-
-          navigate("/");
-        }
-      } catch (ex) {
-        console.error("Error during login:", ex);
-        toast.error("Something went wrong. Please try again.", toastOptions);
+      if (response.status === 200) {
+        dispatch(
+          loginSuccess({
+            token: response.data.token,
+            username: response.data.username,
+          })
+        );
+        toast.success("Login successful!", { position: "top-right" });
+        navigate("/");
       }
+      else {
+        setError("User name or Password incorect, Please try again");
+      }
+
     }
-  };
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-
-  //   if (handleValidation()) {
-  //     const { email, password } = values;
-
-  //     try {
-  //       const { data } = await axios.post(loginRoute, { email, password });
-
-  //       if (data.status === false) {
-  //         toast.error(data.msg, toastOptions);
-  //       } else if (data.status === true) {
-  //         // Store user and token securely
-  //         localStorage.setItem("app-user", JSON.stringify(data.user));
-  //         localStorage.setItem("auth-token", data.token); // UPDATED: Save token
-
-  //         navigate("/");
-  //       }
-  //     } catch (ex) {
-  //       console.error("Error during login:", ex);
-  //       toast.error("Something went wrong. Please try again.", toastOptions);
-  //     }
-  //   }
-  // };
-
-
-
-
-  const handleValidation = () => {
-    const { password, email } = values;
-
-    if (email.trim() === "" || password.trim() === "") {
-      toast.error(
-        "email and password are required", toastOptions
-      );
-      return false
+    catch (error) {
+      setError("An error occurred please try again later");
+      console.log(error);
     }
-    return true;
-  }
-
-  const handleChange = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.value });
   }
 
   return (
@@ -117,16 +65,18 @@ const Login = () => {
 
           <input
             type="email"
-            placeholder='email'
+            placeholder='sample@gmail.com'
             name='email'
-            onChange={(e) => handleChange(e)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
 
           <input
             type="password"
-            placeholder='password'
+            placeholder='Enter your password'
             name='password'
-            onChange={(e) => handleChange(e)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
 
           <button type='submit'>Login</button>
