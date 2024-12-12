@@ -46,6 +46,10 @@ const Controller = {
       };
 
       const data = await tutorServices.uploadCourse(details);
+      if(data.error){
+        return res.status(data.statuscode).json({error:data.error});
+      }
+
       return res.status(201).json({ msg: 'Course uploaded successfully', data });
     } catch (err) {
       console.error(err);
@@ -97,10 +101,14 @@ const Controller = {
       }
 
       const data = await tutorServices.updateCourse(id,details)
+      if(data.error){
+        return res.status(data.statuscode).json({error:data.error});
+      }
       return res.json({data})
 
     }catch(error){
       console.log(err);
+      res.status(500).json({ error: 'Error in update controller' });
     }
   },
 
@@ -108,9 +116,13 @@ const Controller = {
     try{
       const {id} = req.params;
       const deletedId = await tutorServices.deleteCourse(id)
+      if(deletedId.error){
+        return res.status(deletedId.statuscode).json({error:deletedId.error});
+      }
       res.json({deletedId})
     }catch(error){
       console.log(error,"Error in deleteCourse controller");
+      res.status(500).json({ error: 'Error in deleteCourse controller' });
     }
   },
 
@@ -118,9 +130,13 @@ const Controller = {
     try{
       const tutorId = req.user.id;
       const data = await tutorServices.fetchCourses(tutorId)
+      if(data.error){
+        return res.status(data.statuscode).json({error:data.error});
+      }
       res.json({data})
     }catch(error){
       console.log(error,"Error in deleteCourse controller");
+      res.status(500).json({ error: 'Error in fetchcourse controller' });
     }
   }  
 
