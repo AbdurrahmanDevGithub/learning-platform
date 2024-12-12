@@ -21,25 +21,45 @@ const signup = async(username,email,password,role)=>{
 }
 
 
+// const signin = async(email, password) => {
+//   try {
+//     const user = await User.findOne({ email });
+//     if (!user) {
+//       return { status: false, msg: "Invalid email" }; 
+//     }
+
+//     const isMatch = await user.comparePassword(password);
+//     if (!isMatch) {
+//       return { status: false, msg: "Invalid password" }; 
+//     }
+
+//     const token = await authMiddleware.generateToken(user);
+//     return { status: true, user, token }; 
+//   } catch (error) {
+//     console.error(error);
+//     return { status: false, msg: "Something went wrong" }; 
+//   }
+// };
 const signin = async(email, password) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      return { status: false, msg: "Invalid email" }; 
+      return { success: false, msg: "Invalid email", statuscode: 409 }; 
     }
 
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-      return { status: false, msg: "Invalid password" }; 
+      return { success: false, msg: "Invalid password", statuscode: 409 }; 
     }
 
     const token = await authMiddleware.generateToken(user);
-    return { status: true, user, token }; 
+    return { success: true, user, token }; 
   } catch (error) {
     console.error(error);
-    return { status: false, msg: "Something went wrong" }; 
+    return { success: false, msg: "Something went wrong", statuscode: 500 }; 
   }
 };
+
 
 
 
