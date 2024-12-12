@@ -21,7 +21,6 @@ dbconnect()
 
 app.use('/uploads', express.static('uploads'));
 
-
  app.use("/api", routes);
 //  app.use("/api/tutor",tutorRoutes);
 
