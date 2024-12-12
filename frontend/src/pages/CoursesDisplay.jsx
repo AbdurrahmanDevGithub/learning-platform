@@ -27,7 +27,6 @@ const FetcheCourses = () => {
       try {
         const data = await getCourses(token);
         console.log("Fetch Courses: ", data);
-
         // Ensure `data` is an array before updating state
         if (Array.isArray(data)) {
           setCourses(data);
