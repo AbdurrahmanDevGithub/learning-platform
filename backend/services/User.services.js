@@ -7,7 +7,7 @@ const signup = async(username,email,password,role)=>{
   try{
     const emailIsTaken = await User.emailIsTaken(email)
     if(emailIsTaken){
-      return {error:"Email is already taken'"}
+      return {error:"Email is already taken",statuscode:409}
     }
 
     const newUser = new User({username,email,password,role})
@@ -16,7 +16,7 @@ const signup = async(username,email,password,role)=>{
 
   }catch(error){
     console.log("error in signup services",error);
-    throw error
+    return {error:"error in signup services",statuscode:500} 
   }
 }
 
@@ -25,19 +25,19 @@ const signin = async(email, password) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      return { status: false, msg: "Invalid email" }; 
+      return { status: false, msg: "Invalid email",statuscode:409 }; 
     }
 
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-      return { status: false, msg: "Invalid password" }; 
+      return { status: false, msg: "Invalid password",statuscode:409 }; 
     }
 
     const token = await authMiddleware.generateToken(user);
     return { status: true, user, token }; 
   } catch (error) {
     console.error(error);
-    return { status: false, msg: "Something went wrong" }; 
+    return { status: false, msg: "Something went wrong",statuscode:500 }; 
   }
 };
 

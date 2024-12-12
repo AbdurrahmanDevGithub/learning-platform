@@ -8,7 +8,7 @@ const uploadCourse = async(details)=>{
     return course
   }catch(err){
     console.log(err);
-    return {error:"error in uploadCourse services"}
+    return {error:"error in uploadCourse services",statuscode:500}
   }
 }
 
@@ -24,7 +24,7 @@ const  updateCourse = async(id,details)=>{
 
   }catch(err){
     console.log(err);
-    return {error:"error in updateCourse services"}
+    return {error:"error in updateCourse services",statuscode:500}
   }
 }
 
@@ -37,7 +37,7 @@ const deleteCourse = async(id)=>{
 
   }catch(err){
     console.log(err);
-    return {error:"error in deleteCourse services"}
+    return {error:"error in deleteCourse services",statuscode:500}
   } 
 }
 
@@ -46,7 +46,7 @@ const fetchCourses =  async(tutorId)=>{
   try{
 
     if (!mongoose.Types.ObjectId.isValid(tutorId)) {
-      return { error: "Invalid ID format" };
+      return { error: "Invalid ID format",statuscode:409 };
     }
 
     
@@ -54,14 +54,14 @@ const fetchCourses =  async(tutorId)=>{
 
 
     if(!data){
-      return {error:"no data found in this id"}
+      return {error:"no data found in this id",statuscode:404}
     }
 
     return data
 
   }catch(err){
     console.log(err);
-    return {error:"error in fetchCourses services"}
+    return {error:"error in fetchCourses services",statuscode:500}
   } 
 }
 

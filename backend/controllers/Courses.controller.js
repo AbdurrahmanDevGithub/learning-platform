@@ -21,11 +21,14 @@ const controller = {
       const {cid,tutorid,category} = req.params;
 
       const user = await courseServices.enrollCourse(id,email,username,cid,tutorid,category)
-      return res.json(user);  
+      if(user.error){
+        return res.status(user.statuscode || 500) .json({error:user.error})
+      }
+      return res.status(201).json(user);  
       
     }catch(error){
       console.log(error);
-      res.json({"err":error})
+      return res.status(500).json({"err":error})
     }
   },
 
@@ -33,10 +36,13 @@ const controller = {
     try{
       const {category}= req.params;
       const data = await courseServices.fetchAllCourses(category);
-      return res.json(data);
+      if(data.error){
+        return res.status(data.statuscode || 500) .json({error:data.error})
+      }
+      return res.status(201).json(data);
     }catch(error){
       console.log(error);
-      res.json({"err":error})
+      return res.status(500).json({"err":error})
     }
   }
 }

@@ -7,11 +7,14 @@ const Controller = {
   signup: async(req,res)=>{
     try{
       const {username,email,password,role} = req.body;
-      const newUser = await userServices.signup(username,email,password,role) 
-      res.json({newUser})
+      const newUser = await userServices.signup(username,email,password,role)
+      if(newUser.error){
+        return res.status(newUser.statuscode || 500) .json({error:newUser.error})
+      }
+      res.status(201).json({newUser})
     }catch(err){
-      res.json({"error":"error in signup controller"})
       console.log(err);
+      return res.status(500).json({"error":"error in signup controller"})
     }
   },
 
@@ -20,11 +23,14 @@ const Controller = {
       const {email,password} = req.body
       const user = await userServices.signin(email,password)
       // const token = await authMiddleware.generateToken(user)
-      res.json(user)
+      if(user.error){
+        return res.status(user.statuscode || 500).json({error:user.error})
+      }
+      res.status(201).json(user)
       
     }catch(err){
-      res.json({"error":"error in signin controller"})
       console.log(err);
+      return res.status(500) .json({"error":"error in signin controller"})
     }
   },
 
