@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import bgImage from "../assets/newBG.jpg";
 import Navbar from "./Navbar";
-import { toast, ToastContainer } from 'react-toastify';
-import "react-toastify/dist/ReactToastify.css";
+import Alert from '@mui/material/Alert';
+import Collapse from '@mui/material/Collapse';
 
 const CourseUploadForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
@@ -15,16 +15,10 @@ const CourseUploadForm = ({ onSubmit }) => {
     description: "",
   });
 
-  const toastOptions = {
-    position: "top-right",
-    autoClose: 8000,
-    pauseOnHover: true,
-    theme: "dark"
-  }
-
   const [image, setImage] = useState(null);
   const [video, setVideo] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState({ type: "", message: "", visible: false });
 
   const imageInputRef = useRef(null);
   const videoInputRef = useRef(null);
@@ -49,30 +43,26 @@ const CourseUploadForm = ({ onSubmit }) => {
     if (video) data.append("video", video);
 
     try {
-      await onSubmit(data); // Call the onSubmit prop
-      toast.success("Course uploaded Successfully!",toastOptions);
+      await onSubmit(data);
+      setAlert({ type: "success", message: "Course uploaded successfully!", visible: true });
 
       setFormData({
         category: "",
         title: "",
         tutor: "",
         duration: "",
-        description: ""
-      })
-
-      // Reset image and video
+        description: "",
+      });
       setImage(null);
       setVideo(null);
-
-      // Clear file inputs
       if (imageInputRef.current) imageInputRef.current.value = "";
       if (videoInputRef.current) videoInputRef.current.value = "";
-
     } catch (error) {
       console.error("Error submitting form:", error);
-      toast.error("Failed to upload the course. Please try again.",toastOptions);
+      setAlert({ type: "error", message: "Failed to upload the course. Please try again.", visible: true });
     } finally {
       setLoading(false);
+      setTimeout(() => setAlert({ ...alert, visible: false }), 4000); // Hide alert after 4 seconds
     }
   };
 
@@ -80,6 +70,12 @@ const CourseUploadForm = ({ onSubmit }) => {
     <>
       <Navbar />
       <Container>
+        <Collapse in={alert.visible}>
+          <Alert severity={alert.type} onClose={() => setAlert({ ...alert, visible: false })}>
+            {alert.message}
+          </Alert>
+        </Collapse>
+
         <div className="form-container">
           <form className="upload-form" onSubmit={handleSubmit}>
             {/* Input fields */}
@@ -201,10 +197,10 @@ const CourseUploadForm = ({ onSubmit }) => {
           </form>
         </div>
       </Container>
-      <ToastContainer/>
     </>
   );
 };
+
 CourseUploadForm.propTypes = {
   onSubmit: PropTypes.func.isRequired
 };
