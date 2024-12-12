@@ -19,32 +19,35 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-
+    
     try {
       const response = await axios.post("http://localhost:3001/api/account/signin", {
         email,
         password,
       });
-
-      if (response.status === 200) {
+  
+      if (response.data.success) {
         dispatch(
           loginSuccess({
             token: response.data.token,
-            username: response.data.username,
+            username: response.data.user.username,
           })
         );
         toast.success("Login successful!", { position: "top-right" });
-        navigate("/"); 
+        navigate("/");
       } else {
-        setError("Invalid credentials, please try again");
+        setError(response.data.msg || "Invalid credentials, please try again");
+        toast.error(response.data.msg || "Invalid credentials, please try again", {
+          position: "top-right",
+        });
       }
-
     } catch (error) {
-      const errorMessage = error.response?.data?.error || "An error occurred. Please try again.";
+      const errorMessage = error.response?.data?.msg || "An error occurred. Please try again.";
       setError(errorMessage);
       toast.error(errorMessage, { position: "top-right" });
     }
   };
+  
 
 
   return (

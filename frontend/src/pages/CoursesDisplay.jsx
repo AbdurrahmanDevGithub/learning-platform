@@ -13,7 +13,7 @@ const FetcheCourses = () => {
   const [error, setError] = useState(null);
 
   const token = localStorage.getItem("token");
-  const username = JSON.parse(localStorage.getItem("app-user"))?.username || "Guest";
+  const username = localStorage.getItem("username") || "Guest";
 
   const toastOptions = {
     position: "top-right",
@@ -27,8 +27,6 @@ const FetcheCourses = () => {
       try {
         const data = await getCourses(token);
         console.log("Fetch Courses: ", data);
-
-        // Ensure `data` is an array before updating state
         if (Array.isArray(data)) {
           setCourses(data);
         } else if (data?.data && Array.isArray(data.data)) {
@@ -52,9 +50,9 @@ const FetcheCourses = () => {
       try {
         await deleteCourse(id, token);
         toast.success("Course deleted successfully!", toastOptions);
-
-        // Update the state to remove the deleted course
-        setCourses((prevCourses) => prevCourses.filter((course) => course._id !== id));
+        setCourses((prevCourses) =>
+          prevCourses.filter((course) => course._id !== id)
+        );
       } catch (error) {
         console.error("Error deleting course:", error);
         toast.error("Failed to delete the course. Please try again.", toastOptions);
@@ -134,7 +132,7 @@ const FetcheCourses = () => {
 };
 
 const Container = styled.div`
-  padding: 2rem;
+  padding: 5rem;
   background-image: url(${bgImage});
   background-size: cover;
   background-position: center;
@@ -159,59 +157,40 @@ const Container = styled.div`
     gap: 2rem;
     justify-content: center;
     width: 100%;
+    max-height: 70vh; /* Enable vertical scrolling */
+    overflow-y: auto; /* Enable scrolling */
+    padding: 1rem;
   }
 
-  .avl-courses {
-    color: black;
-    text-align: center;
-    font-size: 2.8rem;
-    animation: scaleUp 1.5s infinite; 
-    position: absolute;
-    top: 50%;
-    left: 37%;
-    transform: translate(-30%, -50%);
-    margin: 0; 
+  .courses-container::-webkit-scrollbar {
+    width: 8px;
   }
 
-  @keyframes scaleUp {
-    0%, 100% {
-      transform: scale(1.2); 
-    }
-    50% {
-      transform: scale(1.1);
-    }
+  .courses-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
   }
-  
-  
+
+  .courses-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 
   .course-card {
-    background-color: transparent; 
+    background-color: transparent;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     border: 1px solid black;
     transition: transform 0.3s ease;
-    backdrop-filter: blur(40px); 
+    backdrop-filter: blur(40px);
     z-index: 1;
     border-radius: 10px;
-    padding: 1rem;
+    padding: 2rem;
     width: 300px;
     color: #ddd;
 
     &:hover {
       transform: scale(1.05);
     }
-
-    &::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: inherit;
-      filter: blur(50px);
-      z-index: -1;
-    }    
 
     h2 {
       margin-bottom: 0.5rem;
@@ -228,7 +207,6 @@ const Container = styled.div`
       height: auto;
       border-radius: 5px;
       margin: 0.5rem 0;
-      color: black;
     }
 
     .course-video {
