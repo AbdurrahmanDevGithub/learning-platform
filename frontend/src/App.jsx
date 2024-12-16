@@ -30,8 +30,8 @@ const App = () => {
         <Route path="/uplodecourse" element={<ProtectedRoute> <CourseUplodePage /> </ProtectedRoute>} />
         <Route path="/courses" element={<ProtectedRoute> <FetcheCourses /> </ProtectedRoute>} />
         <Route path="/updatecourse/:id" element={<ProtectedRoute> <CourseUpdate /> </ProtectedRoute>} />
-        <Route path="/allcourses" element={<Courses />} />
-        <Route path="/mycourses" element={<MyCourses />} />
+        <Route path="/allcourses" element={<ProtectedRoute> <Courses /> </ProtectedRoute> } />
+        <Route path="/mycourses" element={<ProtectedRoute> <MyCourses /> </ProtectedRoute>} />
       </Routes>
 
     </AnimatePresence>
