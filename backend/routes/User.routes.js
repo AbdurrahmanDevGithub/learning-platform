@@ -14,6 +14,6 @@ const courseController = require('../controllers/Courses.controller')
 
 
 router.post('/enrollcourse/:cid/:tutorid/:category',authMiddleware.verifyToken,roleMiddleware.authorizeRoles("tutor","user"),courseController.enrollCourse);
-
+router.get('/mycourses',authMiddleware.verifyToken,roleMiddleware.authorizeRoles("tutor","user"),courseController.fetchMyCourses)
 
 module.exports = router
