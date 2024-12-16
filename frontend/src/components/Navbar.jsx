@@ -13,6 +13,8 @@ const Navbar = () => {
         dispatch(logout());
     };
 
+    const category = "Engineering";
+
     return (
         <Container>
             <nav className="navbar">
@@ -22,6 +24,8 @@ const Navbar = () => {
                     <li><Link to="/courses">Manage Courses</Link></li>
                     <li><Link to="/uplodecourse">Upload Courses</Link></li>
                     <li><a href="#contact">Contact</a></li>
+                     <li><Link to="/allcourses">View Courses</Link></li>
+                     <li><Link to="/mycourses">My Courses</Link></li>
                 </ul>
 
                 {isAuthenticated ? (

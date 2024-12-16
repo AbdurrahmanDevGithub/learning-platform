@@ -36,7 +36,6 @@ const enrollmentSchema = mongoose.Schema({
   },
   // course_name:{
   //   type:String,
-  //   required:true
   // },
   // enrolled_date:{
   //   type:Date,
