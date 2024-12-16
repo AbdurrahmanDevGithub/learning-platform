@@ -44,7 +44,7 @@ const enrollCourse=async(id,email,username,cid,tutorid,course_category)=>{
       username,
       course_id:cid,
       tutor_id:tutorid,
-      course_category
+      course_category,
     })
 
     const data = await enrollment.save()
@@ -56,8 +56,24 @@ const enrollCourse=async(id,email,username,cid,tutorid,course_category)=>{
   }
 }
 
+const fetchMyCourses = async(id)=>{
+  try{
+    const data = await Enrollment.find({user_id:id})
+    if(!data){
+      return ({"msg":"there is no Enrolment courses stored in this id",statuscode:404})
+    }
+    return data;
+
+  }catch(error){
+    console.log("error in fetchMyCourses services",error);
+    return {"error in fetchMyCourses services":error,statuscode:500}
+  }
+}
+
+
 module.exports = {
   fetchCourseById,
   fetchAllCourses,
-  enrollCourse
+  enrollCourse,
+  fetchMyCourses
 }
