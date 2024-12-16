@@ -6,6 +6,7 @@ import Navbar from "./Navbar";
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
 
+//wsbhqbsw swbshwqjbs swb2hsbkq
 const CourseUploadForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
     category: "",

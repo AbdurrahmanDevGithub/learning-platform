@@ -21,28 +21,76 @@ const signup = async(username,email,password,role)=>{
 }
 
 
+// const signin = async(email, password) => {
+//   try {
+//     const user = await User.findOne({ email });
+//     if (!user) {
+//       return { status: false, msg: "Invalid email" }; 
+//     }
+
+//     const isMatch = await user.comparePassword(password);
+//     if (!isMatch) {
+//       return { status: false, msg: "Invalid password" }; 
+//     }
+
+//     const token = await authMiddleware.generateToken(user);
+//     return { status: true, user, token }; 
+//   } catch (error) {
+//     console.error(error);
+//     return { status: false, msg: "Something went wrong" }; 
+//   }
+// };
 const signin = async(email, password) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
+<<<<<<< HEAD
+<<<<<<< HEAD
       return { success: false, msg: "Invalid email", statuscode: 409 }; 
+=======
+      return { status: false, msg: "Invalid email",statuscode:409 }; 
+>>>>>>> main
+=======
+      return { success: false, msg: "Invalid email", statuscode: 409 }; 
+>>>>>>> main
     }
 
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
+<<<<<<< HEAD
+<<<<<<< HEAD
       return { success: false, msg: "Invalid password", statuscode: 409 }; 
+=======
+      return { status: false, msg: "Invalid password",statuscode:409 }; 
+>>>>>>> main
+=======
+      return { success: false, msg: "Invalid password", statuscode: 409 }; 
+>>>>>>> main
     }
 
     const token = await authMiddleware.generateToken(user);
     return { success: true, user, token }; 
   } catch (error) {
     console.error(error);
+<<<<<<< HEAD
+<<<<<<< HEAD
+    return { success: false, msg: "Something went wrong", statuscode: 500 }; 
+=======
+    return { status: false, msg: "Something went wrong",statuscode:500 }; 
+>>>>>>> main
+  }
+=======
     return { success: false, msg: "Something went wrong", statuscode: 500 }; 
   }
+>>>>>>> main
 };
 
 
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> main
 module.exports = {
   signup,
   signin
