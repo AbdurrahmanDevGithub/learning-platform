@@ -13,8 +13,6 @@ const Navbar = () => {
         dispatch(logout());
     };
 
-    const category = "Engineering";
-
     return (
         <Container>
             <nav className="navbar">
@@ -24,8 +22,8 @@ const Navbar = () => {
                     <li><Link to="/courses">Manage Courses</Link></li>
                     <li><Link to="/uplodecourse">Upload Courses</Link></li>
                     <li><a href="#contact">Contact</a></li>
-                     <li><Link to="/allcourses">View Courses</Link></li>
-                     <li><Link to="/mycourses">My Courses</Link></li>
+                    <li><Link to="/allcourses">View Courses</Link></li>
+                    <li><Link to="/mycourses">My Courses</Link></li>
                 </ul>
 
                 {isAuthenticated ? (
@@ -48,7 +46,7 @@ const Container = styled.div`
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background-color: #01011b;
+        background-color: rgba(1, 1, 27, 0.9); 
         padding: 1rem 6rem;
     }
 
@@ -92,7 +90,7 @@ const Container = styled.div`
         cursor: pointer;
         transition: background 0.3s ease, transform 0.2s ease;
         font-size: 1rem;
-        text-decoration: none;  /* Ensure the Link is styled as a button */
+        text-decoration: none;  
     }
 
     .signin-button:hover {
@@ -156,5 +154,6 @@ const Container = styled.div`
         }
     }
 `;
+
 
 export default Navbar;
