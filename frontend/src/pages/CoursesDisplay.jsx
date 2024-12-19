@@ -133,9 +133,10 @@ const FetcheCourses = () => {
 
 const Container = styled.div`
   padding: 5rem;
-  background-image: url(${bgImage});
+  background: linear-gradient( #87CEFA, #B0C4DE);
+  z-index: -1;
   background-size: cover;
-  background-position: center;
+  background-attachment: fixed;  
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -157,8 +158,8 @@ const Container = styled.div`
     gap: 2rem;
     justify-content: center;
     width: 100%;
-    max-height: 70vh; /* Enable vertical scrolling */
-    overflow-y: auto; /* Enable scrolling */
+    max-height: 70vh; 
+    overflow-y: auto; 
     padding: 1rem;
   }
 

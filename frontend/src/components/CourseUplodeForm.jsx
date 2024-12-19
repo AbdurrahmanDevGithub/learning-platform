@@ -5,6 +5,7 @@ import bgImage from "../assets/newBG.jpg";
 import Navbar from "./Navbar";
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
+import courseBG from '../assets/vecteezy_digital-marketing-3d-icon-illustration-for-your-website_11997005.png';
 
 //wsbhqbsw swbshwqjbs swb2hsbkq
 const CourseUploadForm = ({ onSubmit }) => {
@@ -76,126 +77,132 @@ const CourseUploadForm = ({ onSubmit }) => {
             {alert.message}
           </Alert>
         </Collapse>
-
-        <div className="form-container">
-          <form className="upload-form" onSubmit={handleSubmit}>
-            {/* Input fields */}
-            <label className="form-label">
-              Category:
-              <select
-                className="form-select"
-                name="category"
-                value={formData.category}
-                onChange={handleChange}
-              >
-                <option className="options" value="">
-                  Select Category
-                </option>
-                <option className="options" value="Engineering">
-                  Engineering
-                </option>
-                <option className="options" value="Technology">
-                  Technology
-                </option>
-                <option className="options" value="Business">
-                  Business
-                </option>
-                <option className="options" value="Art and Design">
-                  Art and Design
-                </option>
-              </select>
-            </label>
-
-            <label className="form-label">
-              Title:
-              <input
-                className="form-input"
-                type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-              />
-            </label>
-
-            <label className="form-label">
-              Tutor:
-              <input
-                className="form-input"
-                type="text"
-                name="tutor"
-                value={formData.tutor}
-                onChange={handleChange}
-              />
-            </label>
-
-            <label className="form-label">
-              Duration:
-              <input
-                className="form-input"
-                type="number"
-                name="duration"
-                value={formData.duration}
-                onChange={handleChange}
-              />
-            </label>
-
-            <label className="form-label">
-              Description:
-              <input
-                className="form-input"
-                type="text"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-              />
-            </label>
-
-            <label className="form-label">
-              Select Image:
-              <input
-                className="form-file"
-                type="file"
-                name="image"
-                accept="image/*"
-                onChange={handleFileChange}
-              />
-            </label>
-
-            <label className="form-label">
-              Select Video:
-              <input
-                className="form-file"
-                type="file"
-                name="video"
-                accept="video/*"
-                onChange={handleFileChange}
-              />
-            </label>
-
-            <button className={`button ${loading ? "loading" : ""}`} type="submit">
-              {loading ? (
-                <svg
-                  className="spinner"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 100 100"
-                  fill="none"
+        <div className="flex-direction">
+          <div className="form-container">
+            <form className="upload-form" onSubmit={handleSubmit}>
+              {/* Input fields */}
+              <label className="form-label">
+                Category:
+                <select
+                  className="form-select"
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange}
                 >
-                  <circle
-                    className="path"
-                    cx="50"
-                    cy="50"
-                    r="45"
-                    strokeWidth="10"
-                    stroke="#fff"
-                    strokeDasharray="283"
-                    strokeDashoffset="75"
-                  ></circle>
-                </svg>
-              ) : (
-                <span className="submitMessage">Upload File</span>
-              )}
-            </button>
-          </form>
+                  <option className="options" value="">
+                    Select Category
+                  </option>
+                  <option className="options" value="Engineering">
+                    Engineering
+                  </option>
+                  <option className="options" value="Technology">
+                    Technology
+                  </option>
+                  <option className="options" value="Business">
+                    Business
+                  </option>
+                  <option className="options" value="Art and Design">
+                    Art and Design
+                  </option>
+                </select>
+              </label>
+
+              <label className="form-label">
+                Title:
+                <input
+                  className="form-input"
+                  type="text"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleChange}
+                />
+              </label>
+
+              <label className="form-label">
+                Tutor:
+                <input
+                  className="form-input"
+                  type="text"
+                  name="tutor"
+                  value={formData.tutor}
+                  onChange={handleChange}
+                />
+              </label>
+
+              <label className="form-label">
+                Duration:
+                <input
+                  className="form-input"
+                  type="number"
+                  name="duration"
+                  value={formData.duration}
+                  onChange={handleChange}
+                />
+              </label>
+
+              <label className="form-label">
+                Description:
+                <input
+                  className="form-input"
+                  type="text"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                />
+              </label>
+
+              <label className="form-label">
+                Select Image:
+                <input
+                  className="form-file"
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                />
+              </label>
+
+              <label className="form-label">
+                Select Video:
+                <input
+                  className="form-file"
+                  type="file"
+                  name="video"
+                  accept="video/*"
+                  onChange={handleFileChange}
+                />
+              </label>
+
+              <button className={`button ${loading ? "loading" : ""}`} type="submit">
+                {loading ? (
+                  <svg
+                    className="spinner"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 100 100"
+                    fill="none"
+                  >
+                    <circle
+                      className="path"
+                      cx="50"
+                      cy="50"
+                      r="45"
+                      strokeWidth="10"
+                      stroke="#fff"
+                      strokeDasharray="283"
+                      strokeDashoffset="75"
+                    ></circle>
+                  </svg>
+                ) : (
+                  <span className="submitMessage">Upload File</span>
+                )}
+              </button>
+            </form>
+          </div>
+
+
+          <div>
+            <img src={courseBG} alt="Image" />
+          </div>
         </div>
       </Container>
     </>
@@ -215,6 +222,8 @@ const Container = styled.div`
   position: relative;
   overflow: hidden;
   flex-direction: column;
+  top: 4rem;
+  position: absolute;
 
   &::before {
     content: '';
@@ -223,12 +232,11 @@ const Container = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url(${bgImage});
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    filter: blur(5px); /* Blur effect */
+    background: linear-gradient( #87CEFA, #B0C4DE);
+    filter: blur(5px); 
     z-index: -1;
+    background-size: cover;
+    background-attachment: fixed;  
   }
 
   .form-container {
@@ -237,10 +245,15 @@ const Container = styled.div`
     gap: 2rem;
     background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
     border-radius: 1rem;
-    padding: 2rem 2rem;
-    max-width: 900px;
-    width: 100%;
+    padding: 2rem 6rem;
+    max-width: 1200px;
+    width: 900px;
     overflow-y: auto;
+    top: 4rem;
+    padding-top: -3rem; /* Reduce top padding to 1rem */
+    padding-right: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 2rem;
 
     /* Remove shadow by ensuring no box-shadow applied */
     box-shadow: none;
@@ -249,6 +262,7 @@ const Container = styled.div`
       display: flex;
       flex-direction: column;
       gap: 1rem;
+      padding-top: -5rem;
 
       .form-label {
         display: flex;
@@ -340,6 +354,20 @@ const Container = styled.div`
     }
   }
 
+  .flex-direction {
+  display: flex;
+  flex-direction: row; 
+  justify-content: center; 
+  align-items: center; 
+  gap: 4rem;
+  
+  img{
+    width: 500px;
+    height: auto;
+  }
+}
+
+  
   @keyframes spin {
     from {
       transform: rotate(0deg);

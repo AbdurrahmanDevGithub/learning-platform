@@ -3,12 +3,13 @@ import React, { useState } from "react";
 import { host } from "../utils/APIRoutes";
 import { toast, ToastContainer } from "react-toastify";
 import Navbar from "../components/Navbar";
-import bgImage from "../assets/newBG.jpg";
-import { TextField, Box, Typography, Button, List, ListItem, Card, CardContent, CardMedia, Grid, CircularProgress } from "@mui/material";
+import SearchIcon from '@mui/icons-material/Search';
+import { TextField, Box, Typography, Button, List, ListItem, Card, CardContent, CardMedia, Grid, CircularProgress, IconButton } from "@mui/material";
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(false); // Added loading state
+  const [loading, setLoading] = useState(false); 
+  const [searchQuery, setSearchQuery] = useState('');
 
   const categories = [
     "Engineering",
@@ -34,7 +35,7 @@ const Courses = () => {
   ];
 
   const handleClickedCourse = async (category) => {
-    setLoading(true); // Show loading spinner
+    setLoading(true); 
     try {
       const response = await axios.get(`${host}/api/course/fetchallcourses/${category}`);
       if (response.data && response.data.length > 0) {
@@ -51,7 +52,7 @@ const Courses = () => {
         toast.error("An unexpected error occurred.");
       }
     }
-    setLoading(false); // Hide loading spinner
+    setLoading(false); 
   };
 
   const enroleCourse = async (courseId, tutorId, category) => {
@@ -83,18 +84,57 @@ const Courses = () => {
     }
   };
 
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSearchSubmit = () => {
+    if (searchQuery.trim()) {
+      const filteredCourses = courses.filter((course) =>
+        course.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      if (filteredCourses.length) {
+        setCourses(filteredCourses);
+      } else {
+        toast.error(`No courses found matching "${searchQuery}"`);
+      }
+    }
+  };
+
   return (
-    <div style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '100vh' }}>
+    <div style={{ background: 'linear-gradient( #87CEFA, #B0C4DE)', minHeight: '100vh' }}>
       <Navbar />
-      
-      <Box sx={{ display: "flex", justifyContent: "center", marginY: 2 }}>
-        <TextField label="Search" variant="outlined" fullWidth sx={{ maxWidth: "600px" }} />
+
+      {/* Search Bar */}
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px', padding: '20px 20px' }}>
+        <TextField
+          variant="outlined"
+          size="small"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          placeholder="Search courses..."
+          fullWidth
+          sx={{ backgroundColor: 'white', borderRadius: 2 }}
+        />
+        <IconButton onClick={handleSearchSubmit} sx={{ marginLeft: 3 }}>
+          <SearchIcon />
+        </IconButton>
       </Box>
 
-      <Box sx={{ display: "flex" }}>
-        {/* Categories Sidebar */}
-        <Box sx={{ width: "250px", padding: 2, backgroundColor: "rgba(255, 255, 255, 0.6)", backdropFilter: "blur(10px)",  borderRadius: 2 }}>
-          <Typography variant="h6" sx={{ marginBottom: 2 }}>Categories</Typography>
+      {/* Categories Sidebar - Scrollable */}
+      <Box sx={{ display: "flex", marginTop: '10px' }}>
+        <Box
+          sx={{
+            width: "250px",
+            padding: 2,
+            backgroundColor: "rgba(255, 255, 255, 0.6)",
+            backdropFilter: "blur(10px)",
+            borderRadius: 2,
+            maxHeight: 'calc(100vh - 60px)',
+            overflowY: 'auto',
+          }}
+        >
+          <Typography variant="h6" sx={{ marginBottom: 3 }}>Categories</Typography>
           <List>
             {categories.map((category) => (
               <ListItem key={category}>
@@ -115,28 +155,39 @@ const Courses = () => {
           ) : (
             <Grid container spacing={3}>
               {courses.map((course) => (
-                <Grid item xs={12} sm={6} md={4} key={course._id}>
-                  <Card sx={{ transition: "transform 0.3s ease, box-shadow 0.3s ease", '&:hover': { transform: "scale(1.05)", boxShadow: "0 6px 20px rgba(0,0,0,0.2)" }, }}>
+                <Grid item xs={10} sm={6} md={3} key={course._id}>
+                  <Card
+                    sx={{
+                      maxWidth: 300, 
+                      margin: 'auto',
+                      borderRadius: '12px',
+                      transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                      '&:hover': {
+                        transform: "scale(1.05)",
+                        boxShadow: "0 6px 20px rgba(0,0,0,0.2)"
+                      }
+                    }}
+                  >
                     <CardMedia
                       component="img"
                       height="140"
                       image={course.image}
                       alt={course.title}
                     />
-                    <CardContent>
+                    <CardContent sx={{ padding: 1 }}>
                       <Typography gutterBottom variant="h6" component="div">
                         {course.title}
                       </Typography>
-                      <Typography variant="body2" color="text.secondary">
+                      <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.875rem' }}> 
                         {course.description}
                       </Typography>
-                      <Typography variant="body2" sx={{ marginTop: 1 }}>
+                      <Typography variant="body2" sx={{ marginTop: 1, fontSize: '0.875rem' }}>
                         <strong>Category:</strong> {course.category}
                       </Typography>
-                      <Typography variant="body2">
+                      <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>
                         <strong>Tutor:</strong> {course.tutor}
                       </Typography>
-                      <Typography variant="body2">
+                      <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>
                         <strong>Duration:</strong> {course.duration} hours
                       </Typography>
                       {course.video && (
@@ -151,7 +202,7 @@ const Courses = () => {
                         variant="contained"
                         color="primary"
                         fullWidth
-                        sx={{ marginTop: 2 }}
+                        sx={{ marginTop: 2, fontSize: '0.875rem' }} 
                         onClick={() => enroleCourse(course._id, course.tutorId, course.category)}
                       >
                         Add to Favourite

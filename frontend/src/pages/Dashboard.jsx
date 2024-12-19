@@ -1,10 +1,10 @@
 import Navbar from "../components/Navbar";
 import { TextField, Box } from "@mui/material";
-import Typography from "@mui/material/Typography";
+
 
 export default function Dashboard() {
   return (
-    <Typography sx={{backgroundColor:'aliceblue'}}>
+    <div style={{ background: 'linear-gradient(#87CEFA, #B0C4DE)', minHeight: '100vh' }}>
       <Navbar />
       <Box sx={{ padding: "20px", display: "flex", justifyContent: "center" }}>
         <TextField
@@ -14,6 +14,6 @@ export default function Dashboard() {
           sx={{ maxWidth: "600px" }}
         />
       </Box>
-    </Typography>
+    </div>
   );
 }
