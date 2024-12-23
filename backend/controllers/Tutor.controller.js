@@ -7,23 +7,21 @@ const Controller = {
 
       const tutorId = req.user.id
 
-      // Access uploaded files
       const imageFile = req.files?.image ? req.files.image[0] : null;
       const videoFile = req.files?.video ? req.files.video[0] : null;
 
       let image = null;
       let video = null;
 
-      // Process image file
       if (imageFile) {
         const base64Image = imageFile.buffer.toString('base64');
         image = {
           filename: imageFile.originalname,
-          content: base64Image,
+          content: `data:${imageFile.mimetype};base64,${base64Image}`, // Convert to data URL
         };
       }
+      
 
-      // Process video file
       if (videoFile) {
         const base64Video = videoFile.buffer.toString('base64');
         video = {
@@ -33,7 +31,6 @@ const Controller = {
         };
       }
       
-
       const details = {
         category,
         title,
