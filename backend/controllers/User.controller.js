@@ -40,7 +40,7 @@ const Controller = {
       return res.json({"msg":role})
     }catch(err){
       res.json({"error":"error in roleTest controller"})
-      console.log(err);
+      console.log(err)
     }
   }
 }

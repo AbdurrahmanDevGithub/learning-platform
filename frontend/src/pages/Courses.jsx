@@ -40,6 +40,8 @@ const Courses = () => {
       const response = await axios.get(`${host}/api/course/fetchallcourses/${category}`);
       if (response.data && response.data.length > 0) {
         setCourses(response.data);
+        console.log(response.data);
+        
       } else {
         toast.error(`Sorry! currently no courses available in ${category} category.`);
       }
@@ -171,7 +173,7 @@ const Courses = () => {
                     <CardMedia
                       component="img"
                       height="140"
-                      image={course.image}
+                      image={course.image?.content || "defaultImagePath" }
                       alt={course.title}
                     />
                     <CardContent sx={{ padding: 1 }}>
@@ -190,14 +192,14 @@ const Courses = () => {
                       <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>
                         <strong>Duration:</strong> {course.duration} hours
                       </Typography>
-                      {course.video && (
+                      {/* {course.video && (
                         <Box sx={{ marginTop: 2 }}>
                           <video controls width="100%">
                             <source src={course.video} type="video/mp4" />
                             Your browser does not support the video tag.
                           </video>
                         </Box>
-                      )}
+                      )} */}
                       <Button
                         variant="contained"
                         color="primary"
