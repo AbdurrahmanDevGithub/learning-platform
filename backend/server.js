@@ -5,6 +5,7 @@ require('dotenv').config()
 const dbconnect = require('./configs/DBConnection')
 const bodyParser = require('body-parser')
 const routes = require('./routes/index.routes')
+const path = require('path')
 // const tutorRoutes = require('./routes/Tutor.routes');
 
 app.use(cors({
@@ -16,6 +17,10 @@ app.use(cors({
 
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
+
+app.use('/image',express.static(path.join(__dirname,'/Public/Uploads/Images')))
+app.use('/video',express.static(path.join(__dirname,'/Public/Uploads/Videos')))
+
 
 app.use(express.json()); 
 

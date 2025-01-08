@@ -88,11 +88,13 @@ const FetcheCourses = () => {
               <div className="course-card" key={course._id}>
                 <h2>{course.title}</h2>
                 <p>{course.description}</p>
+                sdsd
                 <img
-                  src={course.image?.content || "defaultImagePath" }
+                  src={course.image}
                   alt={course.title}
                   className="course-image"
                 />
+
                 <video
                   controls
                   className="course-video"

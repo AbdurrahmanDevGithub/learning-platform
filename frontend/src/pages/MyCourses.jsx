@@ -32,6 +32,9 @@ const MyCourses = () => {
     fetchMyCourses();
   }, []);
 
+  console.log(courses);
+  
+
   return (
     <div style={{ background: 'linear-gradient(#87CEFA, #B0C4DE)', minHeight: '100vh' }}>
       <Navbar />
@@ -49,11 +52,12 @@ const MyCourses = () => {
               </TableRow>
             </TableHead>
             <TableBody>
+              
               {courses.map((course) => (
                 <TableRow key={course._id}>
                   <TableCell>
                     <img
-                      src={course.image || "/default-course-image.jpg"}
+                      src={`http://localhost:3001/image/${course.image}`}
                       alt={course.title}
                       style={{ width: "50px", height: "50px" }}
                     />

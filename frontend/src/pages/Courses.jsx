@@ -199,7 +199,8 @@ const Courses = () => {
                   >
                     <CardMedia
                       component="img"
-                      image={course.image?.content || "defaultImagePath"}
+                      height="140"
+                      image={course.image?.content || "defaultImagePath" }
                       alt={course.title}
                       sx={{
                         width: "50px",             // Set the width
@@ -210,7 +211,7 @@ const Courses = () => {
                         borderRadius: "50%"       // This will make the image round
                       }}
                     />
-                    <CardContent sx={{ padding: 2 }}>
+                    <CardContent sx={{ padding: 1 }}>
                       <Typography gutterBottom variant="h6" component="div">
                         {course.title}
                       </Typography>

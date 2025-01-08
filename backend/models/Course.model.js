@@ -52,32 +52,13 @@ const courseSchema = mongoose.Schema({
   },
 
   image: {
-    filename: {
-      type: String,
-      required: true,
-      trim: true,
-      validate: {
-        validator: function (value) {
-          return /\.(jpeg|jpg|png|gif)$/i.test(value);
-        },
-        message: "Invalid image format. Use jpeg, jpg, png, or gif.",
-      },
-    },
-    content: {
-      type: String,
-      required: true,
-    },
+    type:String,
+    required:true  
   },
 
   video: {
-    filename: {
-      type: String,
-      required: true,
-    },
-    path: {
-      type: String,
-      required: true,
-    },
+    type:String,
+    required:true
   },
 
   tutorId:{
