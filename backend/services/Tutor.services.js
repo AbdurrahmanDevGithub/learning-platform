@@ -1,16 +1,37 @@
 const Course = require('../models/Course.model')
 const mongoose = require('mongoose')
 
+// const uploadCourse = async(details)=>{
+//   try{
+//     const course = new Course(details)
+//     await course.save()
+//     return course
+//   }catch(err){
+//     console.log(err);
+//     return {error:"error in uploadCourse services",statuscode:500}
+//   }
+// }
+
+
 const uploadCourse = async(details)=>{
   try{
     const course = new Course(details)
-    await course.save()
-    return course
+    console.log("comes");
+    
+    const data = await course.save()
+    if(!data){
+      console.log("NOT STORED");
+      
+      return {statuscode:409,error:"course not stored"}
+    }
+    console.log("comes2");
+    return {statuscode:201,course}
   }catch(err){
     console.log(err);
     return {error:"error in uploadCourse services",statuscode:500}
   }
 }
+
 
 const  updateCourse = async(id,details)=>{
   try{
@@ -20,7 +41,11 @@ const  updateCourse = async(id,details)=>{
       { new: true }
     )
 
-    return update
+    if(!update){
+      return {statuscode:403,error:"Course Not updated"}
+    }
+
+    return {statuscode:200,update}
 
   }catch(err){
     console.log(err);

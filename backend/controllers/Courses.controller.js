@@ -49,16 +49,16 @@ const controller = {
 
   fetchMyCourses:async(req,res)=>{
     try{
-      const id = req.user.id;
-      if(!id){
+      const user_id = req.user.id;
+      if(!user_id){
         return res.status(404).json({error:"id not found"})
       }
-      const data = await courseServices.fetchMyCourses(id)
+      const data = await courseServices.fetchMyCourses(user_id)
       if(data.error){
         return res.status(data.statuscode || 500) .json({error:data.error})
       }
-      console.log(data);
-      return res.status(201).json(data)
+      // console.log(data);
+      return res.status(201).json(data.courses)
     }catch(error){
       console.log(error);
       return res.status(500).json({"err":error})

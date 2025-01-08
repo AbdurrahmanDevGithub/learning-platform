@@ -88,11 +88,14 @@ const FetcheCourses = () => {
               <div className="course-card" key={course._id}>
                 <h2>{course.title}</h2>
                 <p>{course.description}</p>
+                sdsd
                 <img
-                  src={course.image}
+                
+                  src={`http://localhost:3001/image/${course.image}`}
                   alt={course.title}
                   className="course-image"
                 />
+
                 <video
                   controls
                   className="course-video"
