@@ -8,7 +8,7 @@ import { TextField, Box, Typography, Button, List, ListItem, Card, CardContent, 
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
   const categories = [
@@ -35,13 +35,13 @@ const Courses = () => {
   ];
 
   const handleClickedCourse = async (category) => {
-    setLoading(true); 
+    setLoading(true);
     try {
       const response = await axios.get(`${host}/api/course/fetchallcourses/${category}`);
       if (response.data && response.data.length > 0) {
         setCourses(response.data);
         console.log(response.data);
-        
+
       } else {
         toast.error(`Sorry! currently no courses available in ${category} category.`);
       }
@@ -54,7 +54,7 @@ const Courses = () => {
         toast.error("An unexpected error occurred.");
       }
     }
-    setLoading(false); 
+    setLoading(false);
   };
 
   const enroleCourse = async (courseId, tutorId, category) => {
@@ -104,11 +104,11 @@ const Courses = () => {
   };
 
   return (
-    <div style={{ background: 'linear-gradient( #87CEFA, #B0C4DE)', minHeight: '100vh' }}>
+    <div style={{ background: "linear-gradient(#87CEFA, #B0C4DE)", minHeight: "100vh" }}>
       <Navbar />
 
       {/* Search Bar */}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px', padding: '20px 20px' }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: "10px", padding: "20px 20px" }}>
         <TextField
           variant="outlined"
           size="small"
@@ -116,31 +116,58 @@ const Courses = () => {
           onChange={handleSearchChange}
           placeholder="Search courses..."
           fullWidth
-          sx={{ backgroundColor: 'white', borderRadius: 2 }}
+          sx={{ backgroundColor: "white", borderRadius: 2 }}
         />
         <IconButton onClick={handleSearchSubmit} sx={{ marginLeft: 3 }}>
           <SearchIcon />
         </IconButton>
       </Box>
 
-      {/* Categories Sidebar - Scrollable */}
-      <Box sx={{ display: "flex", marginTop: '10px' }}>
+      {/* Main Content Wrapper */}
+      <Box sx={{ display: "flex" }}>
+        {/* Categories Sidebar - Scrollable */}
         <Box
+          className="scrollbar-custom"
           sx={{
             width: "250px",
-            padding: 2,
-            backgroundColor: "rgba(255, 255, 255, 0.6)",
+            padding: 1,
+            backgroundColor: "rgba(1, 1, 27, 0.9)",
             backdropFilter: "blur(10px)",
-            borderRadius: 2,
-            maxHeight: 'calc(100vh - 60px)',
-            overflowY: 'auto',
+            maxHeight: "calc(100vh - 60px)",
+            overflowY: "auto",
+            "&::-webkit-scrollbar": {
+              width: "5px", // Scrollbar width
+            },
+            "&::-webkit-scrollbar-thumb": {
+              background: "rgba(1, 1, 27, 0.9)", // Scrollbar color
+              borderRadius: "20px", // Rounded scrollbar edges
+            },
+            "&::-webkit-scrollbar-thumb:hover": {
+              background: "rgba(3, 3, 63, 0.9)", // Scrollbar color on hover
+            },
+            "&::-webkit-scrollbar-track": {
+              background: "rgba(1, 1, 27, 0.9)", // Scrollbar track color
+            },
+            scrollbarWidth: "thin", // For Firefox
+            scrollbarColor: "rgba(3, 3, 63, 0.9) rgba(51, 51, 82, 0.9)", // For Firefox
           }}
+
         >
-          <Typography variant="h6" sx={{ marginBottom: 3 }}>Categories</Typography>
           <List>
             {categories.map((category) => (
               <ListItem key={category}>
-                <Button variant="contained" fullWidth onClick={() => handleClickedCourse(category)}>
+                <Button
+                  sx={{
+                    background: "linear-gradient(135deg, #3005a4, #997af0)",
+                    "&:hover": {
+                      background: "linear-gradient(135deg, #997af0, #3005a4)",
+                      transform: "scale(1.06)",
+                    },
+                  }}
+                  variant="contained"
+                  fullWidth
+                  onClick={() => handleClickedCourse(category)}
+                >
                   {category}
                 </Button>
               </ListItem>
@@ -160,51 +187,56 @@ const Courses = () => {
                 <Grid item xs={10} sm={6} md={3} key={course._id}>
                   <Card
                     sx={{
-                      maxWidth: 300, 
-                      margin: 'auto',
-                      borderRadius: '12px',
+                      maxWidth: 300,
+                      margin: "auto",
+                      borderRadius: "12px",
                       transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                      '&:hover': {
+                      "&:hover": {
                         transform: "scale(1.05)",
-                        boxShadow: "0 6px 20px rgba(0,0,0,0.2)"
-                      }
+                        boxShadow: "0 6px 20px rgba(0,0,0,0.2)",
+                      },
                     }}
                   >
                     <CardMedia
                       component="img"
-                      height="140"
-                      image={course.image?.content || "defaultImagePath" }
+                      image={course.image?.content || "defaultImagePath"}
                       alt={course.title}
+                      sx={{
+                        width: "50px",             // Set the width
+                        height: "50px",            // Set the height
+                        objectFit: "cover",        // Ensure the image covers the entire area without distortion
+                        marginLeft: "10px",
+                        marginTop: "10px",
+                        borderRadius: "50%"       // This will make the image round
+                      }}
                     />
-                    <CardContent sx={{ padding: 1 }}>
+                    <CardContent sx={{ padding: 2 }}>
                       <Typography gutterBottom variant="h6" component="div">
                         {course.title}
                       </Typography>
-                      <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.875rem' }}> 
+                      <Typography variant="body2" color="text.secondary" sx={{ fontSize: "0.875rem" }}>
                         {course.description}
                       </Typography>
-                      <Typography variant="body2" sx={{ marginTop: 1, fontSize: '0.875rem' }}>
+                      <Typography variant="body2" sx={{ marginTop: 1, fontSize: "0.875rem" }}>
                         <strong>Category:</strong> {course.category}
                       </Typography>
-                      <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>
+                      <Typography variant="body2" sx={{ fontSize: "0.875rem" }}>
                         <strong>Tutor:</strong> {course.tutor}
                       </Typography>
-                      <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>
+                      <Typography variant="body2" sx={{ fontSize: "0.875rem" }}>
                         <strong>Duration:</strong> {course.duration} hours
                       </Typography>
-                      {/* {course.video && (
-                        <Box sx={{ marginTop: 2 }}>
-                          <video controls width="100%">
-                            <source src={course.video} type="video/mp4" />
-                            Your browser does not support the video tag.
-                          </video>
-                        </Box>
-                      )} */}
                       <Button
                         variant="contained"
-                        color="primary"
                         fullWidth
-                        sx={{ marginTop: 2, fontSize: '0.875rem' }} 
+                        sx={{
+                          marginTop: 2,
+                          fontSize: "0.875rem",
+                          background: "linear-gradient(135deg, #3005a4, #997af0)",
+                          "&:hover": {
+                            background: "linear-gradient(135deg, #997af0, #3005a4)",
+                          },
+                        }}
                         onClick={() => enroleCourse(course._id, course.tutorId, course.category)}
                       >
                         Add to Favourite
@@ -221,6 +253,7 @@ const Courses = () => {
       <ToastContainer />
     </div>
   );
+
 };
 
 export default Courses;

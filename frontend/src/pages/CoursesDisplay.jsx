@@ -89,7 +89,7 @@ const FetcheCourses = () => {
                 <h2>{course.title}</h2>
                 <p>{course.description}</p>
                 <img
-                  src={course.image}
+                  src={course.image?.content || "defaultImagePath" }
                   alt={course.title}
                   className="course-image"
                 />
@@ -177,8 +177,8 @@ const Container = styled.div`
   }
 
   .course-card {
-    background-color: transparent;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: rgba(173, 216, 230, 0.5);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     overflow: hidden;
     border: 1px solid black;
     transition: transform 0.3s ease;
@@ -186,7 +186,7 @@ const Container = styled.div`
     z-index: 1;
     border-radius: 10px;
     padding: 2rem;
-    width: 300px;
+    width: 250px;
     color: #ddd;
 
     &:hover {
@@ -204,9 +204,9 @@ const Container = styled.div`
     }
 
     .course-image {
-      width: 100%;
+      width: 50px;
       height: auto;
-      border-radius: 5px;
+      border-radius: 10px;
       margin: 0.5rem 0;
     }
 

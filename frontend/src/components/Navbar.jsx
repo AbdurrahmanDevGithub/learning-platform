@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
+import { faSignInAlt, faGraduationCap } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { logout } from "../redux/features/AuthSlice";
 import { useSelector, useDispatch } from "react-redux";
@@ -16,7 +16,9 @@ const Navbar = () => {
     return (
         <Container>
             <nav className="navbar">
-                <div className="navbar-brand">Learning</div>
+                <div className="navbar-brand">
+                    <FontAwesomeIcon icon={faGraduationCap} className="brand-icon" />
+                </div>
                 <ul className="navbar-link">
                     <li><Link to="/">Dashboard</Link></li>
                     <li><Link to="/courses">Manage Courses</Link></li>
@@ -56,9 +58,9 @@ const Container = styled.div`
     }
 
     .navbar-brand {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #997af0;
+        font-size: 2.5rem;
+        font-weight: 900;
+        color: #997af0; 
     }
 
     .navbar-link {

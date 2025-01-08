@@ -1,16 +1,13 @@
 import { useState } from "react";
 import { updateCourse } from "../utils/tutor";
 import { useParams } from "react-router-dom";
-import styled from "styled-components";
-import bgImage from "../assets/newBG.jpg";
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "../components/Navbar";
+import styled from "styled-components";
 
 const CourseUpdate = () => {
-
   const [loading, setLoading] = useState(false);
-
   const { id: courseId } = useParams();
 
   const [formData, setFormData] = useState({
@@ -19,6 +16,8 @@ const CourseUpdate = () => {
     tutor: "",
     duration: "",
     description: "",
+    image: null,
+    video: null
   });
 
   const toastOptions = {
@@ -35,6 +34,14 @@ const CourseUpdate = () => {
     });
   }
 
+  const handleFileChange = (e) => {
+    const { name, files } = e.target;
+    setFormData({
+      ...formData,
+      [name]: files[0], // Assuming only one file is selected
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -47,6 +54,14 @@ const CourseUpdate = () => {
     data.append("duration", formData.duration);
     data.append("description", formData.description);
 
+    // Append image and video files if present
+    if (formData.image) {
+      data.append("image", formData.image);
+    }
+    if (formData.video) {
+      data.append("video", formData.video);
+    }
+
     try {
       const token = localStorage.getItem("token");
 
@@ -54,6 +69,7 @@ const CourseUpdate = () => {
         toast.error("You must be logged in to update a course!", toastOptions);
         return;
       }
+      
       const response = await updateCourse(courseId, data, token);
       console.log("Course Updated Successfully!", response);
       toast.success("Course updated successfully!", toastOptions);
@@ -68,276 +84,185 @@ const CourseUpdate = () => {
   return (
     <>
       <Navbar />
-      <Container>
-        <div className="form-container">
-          <form className="upload-form" onSubmit={handleSubmit}>
-            {/* Input fields */}
-            <label className="form-label">
-              Category:
-              <select
-                className="form-select"
-                name="category"
-                value={formData.category}
-                onChange={handleChange}
-              >
-                <option className="options" value="">
-                  Select Category
-                </option>
-                <option className="options" value="Engineering">
-                  Engineering
-                </option>
-                <option className="options" value="Technology">
-                  Technology
-                </option>
-                <option className="options" value="Business">
-                  Business
-                </option>
-                <option className="options" value="Art and Design">
-                  Art and Design
-                </option>
-              </select>
-            </label>
+      <FormContainer>
+        <Form onSubmit={handleSubmit}>
+          <Label>
+            Category:
+            <Select
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+            >
+              <Option value="">Select Category</Option>
+              <Option value="Engineering">Engineering</Option>
+              <Option value="Technology">Technology</Option>
+              <Option value="Business">Business</Option>
+              <Option value="Art and Design">Art and Design</Option>
+            </Select>
+          </Label>
 
-            <label className="form-label">
-              Title:
-              <input
-                className="form-input"
-                type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-              />
-            </label>
+          <Label>
+            Title:
+            <Input
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+            />
+          </Label>
 
-            <label className="form-label">
-              Tutor:
-              <input
-                className="form-input"
-                type="text"
-                name="tutor"
-                value={formData.tutor}
-                onChange={handleChange}
-              />
-            </label>
+          <Label>
+            Tutor:
+            <Input
+              type="text"
+              name="tutor"
+              value={formData.tutor}
+              onChange={handleChange}
+            />
+          </Label>
 
-            <label className="form-label">
-              Duration:
-              <input
-                className="form-input"
-                type="number"
-                name="duration"
-                value={formData.duration}
-                onChange={handleChange}
-              />
-            </label>
+          <Label>
+            Duration:
+            <Input
+              type="number"
+              name="duration"
+              value={formData.duration}
+              onChange={handleChange}
+            />
+          </Label>
 
-            <label className="form-label">
-              Description:
-              <input
-                className="form-input"
-                type="text"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-              />
-            </label>
+          <Label>
+            Description:
+            <Input
+              type="text"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+            />
+          </Label>
 
-            <label className="form-label">
-              Select Image:
-              <input
-                className="form-file"
-                type="file"
-                name="image"
-                accept="image/*"
-                // onChange={handleFileChange}
-              />
-            </label>
+          <Label>
+            Select Image:
+            <FileInput
+              type="file"
+              name="image"
+              accept="image/*"
+              onChange={handleFileChange}
+            />
+          </Label>
 
-            <label className="form-label">
-              Select Video:
-              <input
-                className="form-file"
-                type="file"
-                name="video"
-                accept="video/*"
-                // onChange={handleFileChange}
-              />
-            </label>
+          <Label>
+            Select Video:
+            <FileInput
+              type="file"
+              name="video"
+              accept="video/*"
+              onChange={handleFileChange}
+            />
+          </Label>
 
-            <button className={`button ${loading ? "loading" : ""}`} type="submit">
-              {loading ? (
-                <svg
-                  className="spinner"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 100 100"
-                  fill="none"
-                >
-                  <circle
-                    className="path"
-                    cx="50"
-                    cy="50"
-                    r="45"
-                    strokeWidth="10"
-                    stroke="#fff"
-                    strokeDasharray="283"
-                    strokeDashoffset="75"
-                  ></circle>
-                </svg>
-              ) : (
-                <span className="submitMessage">Upload File</span>
-              )}
-            </button>
-          </form>
-        </div>
-      </Container>
-      <ToastContainer/>
+          <SubmitButton className={loading ? "loading" : ""} type="submit">
+            {loading ? (
+              <Spinner xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+                <Circle cx="50" cy="50" r="45" strokeWidth="10" stroke="#fff" strokeDasharray="283" strokeDashoffset="75" />
+              </Spinner>
+            ) : (
+              <SubmitText>Upload File</SubmitText>
+            )}
+          </SubmitButton>
+        </Form>
+      </FormContainer>
+      <ToastContainer />
     </>
   );
 };
 
-const Container = styled.div`
-  height: 100vh;
-  width: 100vw;
+export default CourseUpdate;
+
+// Styled Components
+const FormContainer = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  flex-direction: column;
+  padding: 20px;
+`;
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url(${bgImage});
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    filter: blur(5px); /* Blur effect */
-    z-index: -1;
+const Form = styled.form`
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+  background: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+`;
+
+const Label = styled.label`
+  display: block;
+  margin-bottom: 15px;
+  font-weight: bold;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+`;
+
+const Select = styled.select`
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+`;
+
+const Option = styled.option`
+  padding: 10px;
+`;
+
+const FileInput = styled.input`
+  margin-top: 5px;
+`;
+
+const SubmitButton = styled.button`
+  width: 100%;
+  padding: 12px;
+  background: #4CAF50;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  &:hover {
+    background: #45a049;
   }
-
-  .form-container {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
-    border-radius: 1rem;
-    padding: 2rem 2rem;
-    max-width: 900px;
-    width: 100%;
-    overflow-y: auto;
-
-    /* Remove shadow by ensuring no box-shadow applied */
-    box-shadow: none;
-
-    .upload-form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-
-      .form-label {
-        display: flex;
-        flex-direction: column;
-        font-size: 20px;
-        font-weight: bold;
-      }
-
-      .form-select,
-      .form-input,
-      .form-file {
-        width: auto;
-        padding: 1px;
-        margin-top: 0.1rem;
-        border-radius: 0.3rem;
-        border: 1px solid #444;
-        font-size: 18px;
-      }
-
-      .form-select {
-        background-color: #666;
-        color: #ffffff;
-      }
-
-      .options {
-        background-color: #666;
-        color: #ffffff;
-      }
-
-      input {
-        background-color: #666;
-        padding: 1rem;
-        border: 0.1rem solid #3005a4;
-        border-radius: 0.4rem;
-        color: white;
-        width: 100%;
-        font-size: 1rem;
-
-        &:focus {
-          border: 0.1rem solid #997af0;
-          outline: none;
-        }
-      }
-
-      .button {
-        background: linear-gradient(135deg, #3005a4, #997af0);
-        border: none;
-        color: #ffffff;
-        cursor: pointer;
-        font-size: 14px;
-        font-weight: bold;
-        height: 40px;
-        padding: 0 10px;
-        border-radius: 0.5rem;
-        outline: none;
-        position: relative;
-        transition: background 0.3s ease, transform 0.2s ease;
-
-        &:hover {
-          background: linear-gradient(135deg, #997af0, #3005a4);
-          transform: scale(1.05);
-        }
-
-        &:active {
-          transform: scale(0.95);
-        }
-
-        &.loading {
-          background: linear-gradient(135deg, #666, #444);
-          pointer-events: none;
-
-          .spinner {
-            animation: spin 1s linear infinite;
-          }
-        }
-
-        .spinner {
-          width: 20px;
-          height: 20px;
-        }
-
-        .submitMessage {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 5px;
-        }
-      }
-    }
+  &.loading {
+    background: #cccccc;
+    cursor: not-allowed;
   }
+`;
 
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
+const Spinner = styled.svg`
+  width: 30px;
+  height: 30px;
+  animation: rotate 2s linear infinite;
+  @keyframes rotate {
+    100% {
       transform: rotate(360deg);
     }
   }
 `;
 
+const Circle = styled.circle`
+  fill: none;
+  stroke: #fff;
+  stroke-width: 10;
+  stroke-dasharray: 283;
+  stroke-dashoffset: 75;
+`;
 
-export default CourseUpdate;
+const SubmitText = styled.span`
+  font-size: 16px;
+  font-weight: bold;
+`;
