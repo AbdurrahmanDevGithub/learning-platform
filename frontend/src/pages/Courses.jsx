@@ -173,9 +173,10 @@ const Courses = () => {
                     <CardMedia
                       component="img"
                       height="140"
-                      image={course.image?.content || "defaultImagePath" }
+                      image={`http://localhost:3001/image/${course.image}`}
                       alt={course.title}
                     />
+
                     <CardContent sx={{ padding: 1 }}>
                       <Typography gutterBottom variant="h6" component="div">
                         {course.title}

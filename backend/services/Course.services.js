@@ -56,13 +56,24 @@ const enrollCourse=async(id,email,username,cid,tutorid,course_category)=>{
   }
 }
 
-const fetchMyCourses = async(id)=>{
+const fetchMyCourses = async(user_id)=>{
   try{
-    const data = await Enrollment.find({user_id:id})
-    if(!data){
+    const data = await Enrollment.find({user_id:user_id})
+    
+    if(data.length===0){
       return ({"msg":"there is no Enrolment courses stored in this id",statuscode:404})
     }
-    return data;
+
+    const courses = []
+
+    for(let enrollment of data){
+      const course = await Course.findById(enrollment.course_id)
+      if(course){
+        courses.push(course)
+      }
+    }
+
+    return {statuscode:200,courses};
 
   }catch(error){
     console.log("error in fetchMyCourses services",error);
