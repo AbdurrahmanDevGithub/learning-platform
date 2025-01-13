@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { getCourses, deleteCourse } from "../utils/tutor";
 import Navbar from "../components/Navbar";
 import styled from "styled-components";
-import bgImage from "../assets/newBG.jpg";
+// import bgImage from "../assets/newBG.jpg";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -88,9 +88,7 @@ const FetcheCourses = () => {
               <div className="course-card" key={course._id}>
                 <h2>{course.title}</h2>
                 <p>{course.description}</p>
-                sdsd
                 <img
-                
                   src={`http://localhost:3001/image/${course.image}`}
                   alt={course.title}
                   className="course-image"
@@ -99,8 +97,7 @@ const FetcheCourses = () => {
                 <video
                   src={`http://localhost:3001/video/${course.video}`}
                   className="course-video"
-                  controls
-                  alt={course.title}
+                  src={course.video}
                 >
                   Your browser does not support the video tag.
                 </video>
@@ -183,8 +180,8 @@ const Container = styled.div`
   }
 
   .course-card {
-    background-color: transparent;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: rgba(173, 216, 230, 0.5);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     overflow: hidden;
     border: 1px solid black;
     transition: transform 0.3s ease;
@@ -210,17 +207,20 @@ const Container = styled.div`
     }
 
     .course-image {
-      width: 100%;
+      width: 50px;
       height: auto;
-      border-radius: 5px;
+      border-radius: 10px;
       margin: 0.5rem 0;
     }
 
     .course-video {
-      width: 100%;
-      margin: 0.5rem 0;
-      border-radius: 5px;
-    }
+    width: 100%; 
+    height: auto; 
+    max-height: 200px; 
+    margin: 0.5rem 0; 
+    border-radius: 10px; 
+    object-position: cover; 
+  }
 
     .course-actions {
       display: flex;

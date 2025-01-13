@@ -4,11 +4,11 @@ import { uploadCourse } from '../utils/tutor';
 
 const CourseUplodePage = () => {
   const [message, setMessage] = useState("");
-  const [isError, setIsError] = useState(false); // To track success or error messages
+  const [isError, setIsError] = useState(false); 
 
   const handleCourseUpload = async (data) => {
     try {
-      const token = localStorage.getItem("token"); // Ensure token key matches localStorage
+      const token = localStorage.getItem("token"); 
       if (!token) {
         setMessage("You need to log in to upload a course.");
         setIsError(true);

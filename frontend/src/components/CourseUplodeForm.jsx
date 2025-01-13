@@ -104,6 +104,54 @@ const CourseUploadForm = ({ onSubmit }) => {
                   <option className="options" value="Art and Design">
                     Art and Design
                   </option>
+                  <option className="options" value="Health and Wellness">
+                    Health and Wellness
+                  </option>
+                  <option className="options" value="Personal Development">
+                    Personal Development
+                  </option>
+                  <option className="options" value="Languages">
+                    Languages
+                  </option>
+                  <option className="options" value="Science and Mathematics">
+                    Science and Mathematics
+                  </option>
+                  <option className="options" value="Humanities">
+                    Humanities
+                  </option>
+                  <option className="options" value="Music">
+                    Music
+                  </option>
+                  <option className="options" value="Programming">
+                    Programming
+                  </option>
+                  <option className="options" value="Marketing">
+                    Marketing
+                  </option>
+                  <option className="options" value="Finance and Accounting">
+                    Finance and Accounting
+                  </option>
+                  <option className="options" value="Photography">
+                    Photography
+                  </option>
+                  <option className="options" value="Cooking">
+                    Cooking
+                  </option>
+                  <option className="options" value="Psychology">
+                    Psychology
+                  </option>
+                  <option className="options" value="History">
+                    History
+                  </option>
+                  <option className="options" value="Sports and Fitness">
+                    Sports and Fitness
+                  </option>
+                  <option className="options" value="Writing and Literature">
+                    Writing and Literature
+                  </option>
+                  <option className="options" value="Science and Mathematics">
+                    Education
+                  </option>
                 </select>
               </label>
 
@@ -243,19 +291,17 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
+    background-color: rgba(255, 255, 255, 0.2); 
     border-radius: 1rem;
     padding: 2rem 6rem;
     max-width: 1200px;
     width: 900px;
     overflow-y: auto;
     top: 4rem;
-    padding-top: -3rem; /* Reduce top padding to 1rem */
+    padding-top: -3rem;
     padding-right: 2rem;
     padding-bottom: 2rem;
     padding-left: 2rem;
-
-    /* Remove shadow by ensuring no box-shadow applied */
     box-shadow: none;
 
     .upload-form {
@@ -361,19 +407,93 @@ const Container = styled.div`
   align-items: center; 
   gap: 4rem;
   
-  img{
-    width: 500px;
-    height: auto;
-  }
+  img {
+  width: 400px;
+  height: auto;
+  border-radius: 1rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.7); /* Soft shadow */
+}
+
 }
 
   
-  @keyframes spin {
+@keyframes spin {
     from {
       transform: rotate(0deg);
     }
     to {
       transform: rotate(360deg);
+    }
+  }
+
+  /* Media Queries */
+  @media (max-width: 1200px) {
+    .form-container {
+      width: 80%;
+      padding: 1.5rem;
+    }
+
+    .flex-direction {
+      flex-direction: column;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    .flex-direction img {
+      width: 80%;
+      max-width: 400px;
+      height: auto;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .form-container {
+      width: 100%;
+      padding: 1rem;
+    }
+
+    .flex-direction {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .flex-direction img {
+      width: 100%;
+      max-width: none;
+      height: auto;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .form-container {
+      padding: 1rem;
+      width: 100%;
+    }
+
+    .upload-form {
+      gap: 0.5rem;
+    }
+
+    .form-label {
+      font-size: 16px;
+    }
+
+    input,
+    select {
+      font-size: 16px;
+      padding: 0.8rem;
+    }
+
+    .button {
+      font-size: 12px;
+      height: 35px;
+      padding: 0 8px;
+    }
+
+    .flex-direction img {
+      width: 100%;
+      max-width: none;
+      height: auto;
     }
   }
 `;
