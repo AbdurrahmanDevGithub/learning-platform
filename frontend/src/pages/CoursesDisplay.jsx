@@ -95,12 +95,14 @@ const FetcheCourses = () => {
                 />
 
                 <video
-                  controls
-                  className="course-video"
                   src={`http://localhost:3001/video/${course.video}`}
+                  className="course-video"
+                  src={course.video}
                 >
                   Your browser does not support the video tag.
                 </video>
+
+
                 <p>
                   <strong>Category:</strong> {course.category}
                 </p>
