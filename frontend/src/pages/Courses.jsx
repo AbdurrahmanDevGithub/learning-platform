@@ -200,7 +200,7 @@ const Courses = () => {
                     <CardMedia
                       component="img"
                       height="140"
-                      image={course.image?.content || "defaultImagePath" }
+                      image={`http://localhost:3001/image/${course.image}`}
                       alt={course.title}
                       sx={{
                         width: "50px",             // Set the width

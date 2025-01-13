@@ -93,11 +93,69 @@ const CourseUpdate = () => {
               value={formData.category}
               onChange={handleChange}
             >
-              <Option value="">Select Category</Option>
-              <Option value="Engineering">Engineering</Option>
-              <Option value="Technology">Technology</Option>
-              <Option value="Business">Business</Option>
-              <Option value="Art and Design">Art and Design</Option>
+              <option className="options" value="">
+                    Select Category
+                  </option>
+                  <option className="options" value="Engineering">
+                    Engineering
+                  </option>
+                  <option className="options" value="Technology">
+                    Technology
+                  </option>
+                  <option className="options" value="Business">
+                    Business
+                  </option>
+                  <option className="options" value="Art and Design">
+                    Art and Design
+                  </option>
+                  <option className="options" value="Health and Wellness">
+                    Health and Wellness
+                  </option>
+                  <option className="options" value="Personal Development">
+                    Personal Development
+                  </option>
+                  <option className="options" value="Languages">
+                    Languages
+                  </option>
+                  <option className="options" value="Science and Mathematics">
+                    Science and Mathematics
+                  </option>
+                  <option className="options" value="Humanities">
+                    Humanities
+                  </option>
+                  <option className="options" value="Music">
+                    Music
+                  </option>
+                  <option className="options" value="Programming">
+                    Programming
+                  </option>
+                  <option className="options" value="Marketing">
+                    Marketing
+                  </option>
+                  <option className="options" value="Finance and Accounting">
+                    Finance and Accounting
+                  </option>
+                  <option className="options" value="Photography">
+                    Photography
+                  </option>
+                  <option className="options" value="Cooking">
+                    Cooking
+                  </option>
+                  <option className="options" value="Psychology">
+                    Psychology
+                  </option>
+                  <option className="options" value="History">
+                    History
+                  </option>
+                  <option className="options" value="Sports and Fitness">
+                    Sports and Fitness
+                  </option>
+                  <option className="options" value="Writing and Literature">
+                    Writing and Literature
+                  </option>
+                  <option className="options" value="Science and Mathematics">
+                    Education
+                  </option>
             </Select>
           </Label>
 
