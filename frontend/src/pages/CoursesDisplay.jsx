@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { getCourses, deleteCourse } from "../utils/tutor";
 import Navbar from "../components/Navbar";
 import styled from "styled-components";
-// import bgImage from "../assets/newBG.jpg";
+import BGImage from "../assets/smoke-376543.jpg";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -77,11 +77,13 @@ const FetcheCourses = () => {
   }
 
   return (
+
     <>
       <Navbar />
       <ToastContainer />
       <Container>
-        <h1>Welcome, {username}!</h1>
+
+        <h1>Welcome, <span>{username}!</span></h1>
         <div className="courses-container">
           {Array.isArray(courses) && courses.length > 0 ? (
             courses.map((course) => (
@@ -93,15 +95,14 @@ const FetcheCourses = () => {
                   alt={course.title}
                   className="course-image"
                 />
-
                 <video
                   src={`http://localhost:3001/video/${course.video}`}
                   className="course-video"
-                  src={course.video}
+                  controls
+                  type="video/mp4" 
                 >
                   Your browser does not support the video tag.
                 </video>
-
 
                 <p>
                   <strong>Category:</strong> {course.category}
@@ -135,11 +136,14 @@ const FetcheCourses = () => {
 };
 
 const Container = styled.div`
-  padding: 5rem;
-  background: linear-gradient( #87CEFA, #B0C4DE);
-  z-index: -1;
+  padding: 8rem 4rem 4rem;
+  margin-top: 0;
+  background-image: url(${BGImage});
   background-size: cover;
-  background-attachment: fixed;  
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;
+  background-attachment: fixed;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -148,21 +152,26 @@ const Container = styled.div`
 
   h1 {
     position: absolute;
-    top: 6rem;
-    left: 6rem;
-    color: #ddd;
+    top: 10rem;
+    left: 12rem;
     margin: 0;
-    color: black;
+    color: white;
+    animation: fadeInUp 0.8s ease-out forwards;
+
+    span{
+      color: #0505bd;
+    }
   }
 
   .courses-container {
+    top: 15rem;
     display: flex;
     flex-wrap: wrap;
     gap: 2rem;
     justify-content: center;
     width: 100%;
-    max-height: 70vh; 
-    overflow-y: auto; 
+    max-height: 70vh;
+    overflow-y: auto;
     padding: 1rem;
   }
 
@@ -191,6 +200,7 @@ const Container = styled.div`
     padding: 2rem;
     width: 300px;
     color: #ddd;
+    
 
     &:hover {
       transform: scale(1.05);
@@ -214,13 +224,13 @@ const Container = styled.div`
     }
 
     .course-video {
-    width: 100%; 
-    height: auto; 
-    max-height: 200px; 
-    margin: 0.5rem 0; 
-    border-radius: 10px; 
-    object-position: cover; 
-  }
+      width: 100%;
+      height: auto;
+      max-height: 200px;
+      margin: 0.5rem 0;
+      border-radius: 10px;
+      object-position: cover;
+    }
 
     .course-actions {
       display: flex;

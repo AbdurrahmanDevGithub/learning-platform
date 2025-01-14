@@ -1,45 +1,91 @@
 import Navbar from "../components/Navbar";
-import { TextField, Box, Button, Typography } from "@mui/material";
+import { TextField, Box, Button } from "@mui/material";
 import { useState } from "react";
-import axios from "axios";
+import { motion } from "framer-motion";
+import BGImage from '../assets/smoke-376543.jpg';
 
 export default function Dashboard() {
   const [search, setSearch] = useState("");
-  const [recommendations, setRecommendations] = useState([]);
-
-  const handleSearch = async () => {
-    try {
-      const response = await axios.get(`http://localhost:5000/recommend?title=${search}`);
-      setRecommendations(response.data);
-    } catch (error) {
-      console.error("Error fetching recommendations:", error);
-    }
-  };
 
   return (
-    <div style={{ background: 'linear-gradient(#87CEFA, #B0C4DE)', minHeight: '100vh' }}>
-      <Navbar />
-      <Box sx={{ padding: "20px", display: "flex", justifyContent: "center" }}>
-        <TextField
-          label="Search"
-          variant="outlined"
-          fullWidth
-          sx={{ maxWidth: "600px" }}
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <Button onClick={handleSearch} variant="contained" sx={{ marginLeft: "10px" }}>
-          Search
-        </Button>
-      </Box>
-      <Box sx={{ padding: "20px" }}>
-        {recommendations.length > 0 && (
-          <Typography variant="h6">Recommendations:</Typography>
-        )}
-        {recommendations.map((rec, index) => (
-          <Typography key={index} variant="body1">{rec}</Typography>
-        ))}
+    <>
+    <Navbar/>
+    <div
+      style={{
+        backgroundImage: `url(${BGImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        minHeight: '100vh',
+        
+      }}
+    >
+      
+      <Box sx={{ padding: "160px", display: "flex", justifyContent: "center" }}>
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          style={{ width: "100%", maxWidth: "600px" }}
+        >
+          <TextField
+            label="Search"
+            variant="outlined"
+            fullWidth
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: "white",
+                  borderWidth: "2px",
+                  fontWeight: "bold"
+                },
+                "&:hover fieldset": {
+                  borderColor: "#0202a1",
+                  fontWeight: "bold"
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "#0202a1",
+                  fontWeight: "bold"
+                },
+              },
+              "& .MuiInputLabel-root": {
+                color: "white",
+                fontWeight: "bold"
+              },
+              "& .MuiInputLabel-root.Mui-focused": {
+                color: "#0202a1",
+                fontWeight: "bold"
+              },
+            }}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+        >
+          <Button
+            // onClick={handleSearch}
+            variant="contained"
+            sx={{
+              marginLeft: "10px",
+              backgroundColor: "white",
+              color: "black",
+              fontWeight: "bold",
+              "&:hover": {
+                backgroundColor: "#0202a1",
+                color: "white",
+                fontWeight: "bold"
+              },
+            }}
+          >
+            Search
+          </Button>
+        </motion.div>
       </Box>
     </div>
+    </>
   );
 }

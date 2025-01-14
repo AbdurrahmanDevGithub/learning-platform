@@ -4,6 +4,8 @@ import { host } from "../utils/APIRoutes";
 import { toast, ToastContainer } from "react-toastify";
 import Navbar from "../components/Navbar";
 import SearchIcon from '@mui/icons-material/Search';
+import BGImage from '../assets/smoke-376543.jpg'
+import { motion } from "framer-motion";
 import { TextField, Box, Typography, Button, List, ListItem, Card, CardContent, CardMedia, Grid, CircularProgress, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -106,165 +108,205 @@ const Courses = () => {
   };
 
 
-  const handleViewCourseDetails = async(course_id)=>{
-    try{
+  const handleViewCourseDetails = async (course_id) => {
+    try {
       navigate(`/viewcoursedetails/${course_id}`)
-    }catch(error){
+    } catch (error) {
       console.log(error);
     }
   }
 
 
   return (
-    <div style={{ background: "linear-gradient(#87CEFA, #B0C4DE)", minHeight: "100vh" }}>
+    <>
       <Navbar />
+      <div
+        style={{
+          backgroundImage: `url(${BGImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          minHeight: '100vh',
+        }}
+      >
 
-      {/* Search Bar */}
-      <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: "10px", padding: "20px 20px" }}>
-        <TextField
-          variant="outlined"
-          size="small"
-          value={searchQuery}
-          onChange={handleSearchChange}
-          placeholder="Search courses..."
-          fullWidth
-          sx={{ backgroundColor: "white", borderRadius: 2 }}
-        />
-        <IconButton onClick={handleSearchSubmit} sx={{ marginLeft: 3 }}>
-          <SearchIcon />
-        </IconButton>
-      </Box>
-
-      {/* Main Content Wrapper */}
-      <Box sx={{ display: "flex" }}>
-        {/* Categories Sidebar - Scrollable */}
-        <Box
-          className="scrollbar-custom"
-          sx={{
-            width: "250px",
-            padding: 1,
-            backgroundColor: "rgba(1, 1, 27, 0.9)",
-            backdropFilter: "blur(10px)",
-            maxHeight: "calc(100vh - 60px)",
-            overflowY: "auto",
-            "&::-webkit-scrollbar": {
-              width: "5px", // Scrollbar width
-            },
-            "&::-webkit-scrollbar-thumb": {
-              background: "rgba(1, 1, 27, 0.9)", // Scrollbar color
-              borderRadius: "20px", // Rounded scrollbar edges
-            },
-            "&::-webkit-scrollbar-thumb:hover": {
-              background: "rgba(3, 3, 63, 0.9)", // Scrollbar color on hover
-            },
-            "&::-webkit-scrollbar-track": {
-              background: "rgba(1, 1, 27, 0.9)", // Scrollbar track color
-            },
-            scrollbarWidth: "thin", // For Firefox
-            scrollbarColor: "rgba(3, 3, 63, 0.9) rgba(51, 51, 82, 0.9)", // For Firefox
-          }}
-
+        {/* Search Bar with animation */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
         >
-          <List>
-            {categories.map((category) => (
-              <ListItem key={category}>
-                <Button
-                  sx={{
-                    background: "linear-gradient(135deg, #3005a4, #997af0)",
-                    "&:hover": {
-                      background: "linear-gradient(135deg, #997af0, #3005a4)",
-                      transform: "scale(1.06)",
-                    },
-                  }}
-                  variant="contained"
-                  fullWidth
-                  onClick={() => handleClickedCourse(category)}
-                >
-                  {category}
-                </Button>
-              </ListItem>
-            ))}
-          </List>
-        </Box>
+          <Box sx={{ paddingTop: "160px", paddingBottom: '20px', paddingX: '180px', display: "flex", justifyContent: "center" }}>
+            <TextField
+              variant="outlined"
+              size="small"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              placeholder="Search courses..."
+              fullWidth
+              sx={{ backgroundColor: "white", borderRadius: 2 }}
+            />
+            <IconButton onClick={handleSearchSubmit} sx={{ marginLeft: 1 }}>
+              <SearchIcon />
+            </IconButton>
+          </Box>
+        </motion.div>
 
-        {/* Courses Grid */}
-        <Box sx={{ flexGrow: 1, padding: 2 }}>
-          {loading ? (
-            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "80vh" }}>
-              <CircularProgress />
-            </Box>
-          ) : (
-            <Grid container spacing={3}>
-              {courses.map((course) => (
-                <Grid item xs={10} sm={6} md={3} key={course._id}>
-                  <Card onClick={()=>handleViewCourseDetails(course._id)} 
-                    sx={{
-                      maxWidth: 300,
-                      margin: "auto",
-                      borderRadius: "12px",
-                      transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                      "&:hover": {
-                        transform: "scale(1.05)",
-                        boxShadow: "0 6px 20px rgba(0,0,0,0.2)",
-                      },
-                    }}
-                  >
-                    <CardMedia
-                      component="img"
-                      height="140"
-                      image={`http://localhost:3001/image/${course.image}`}
-                      alt={course.title}
+        <Box sx={{ display: "flex", marginTop: "16px" }}>
+          {/* Categories Sidebar with animation */}
+          <motion.div
+            initial={{ x: -200 }}
+            animate={{ x: 0 }}
+            transition={{ type: "spring", stiffness: 100, damping: 25 }}
+          >
+            <Box
+              className="scrollbar-custom"
+              sx={{
+                width: "250px",
+                padding: 1,
+                backgroundColor: "rgba(1, 1, 27, 0.9)",
+                backdropFilter: "blur(10px)",
+                maxHeight: "calc(100vh - 60px)",
+                overflowY: "auto",
+                borderColor: '#0202a1',
+                "&::-webkit-scrollbar": {
+                  width: "5px",
+                },
+                "&::-webkit-scrollbar-thumb": {
+                  background: "rgba(1, 1, 27, 0.9)",
+                  borderRadius: "20px",
+                },
+                "&::-webkit-scrollbar-thumb:hover": {
+                  background: "rgba(3, 3, 63, 0.9)",
+                },
+                "&::-webkit-scrollbar-track": {
+                  background: "rgba(1, 1, 27, 0.9)",
+                },
+                scrollbarWidth: "thin",
+                scrollbarColor: "rgba(3, 3, 63, 0.9) rgba(51, 51, 82, 0.9)",
+                marginTop: "16px",
+              }}
+            >
+              <List>
+                {categories.map((category) => (
+                  <ListItem key={category}>
+                    <Button
                       sx={{
-                        width: "50px",             // Set the width
-                        height: "50px",            // Set the height
-                        objectFit: "cover",        // Ensure the image covers the entire area without distortion
-                        marginLeft: "10px",
-                        marginTop: "10px",
-                        borderRadius: "50%"       // This will make the image round
+                        background: "linear-gradient(135deg, #3005a4, #997af0)",
+                        "&:hover": {
+                          background: "linear-gradient(135deg, #997af0, #3005a4)",
+                          transform: "scale(1.06)",
+                        },
                       }}
-                    />
-                    <CardContent sx={{ padding: 1 }}>
-                      <Typography gutterBottom variant="h6" component="div">
-                        {course.title}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary" sx={{ fontSize: "0.875rem" }}>
-                        {course.description}
-                      </Typography>
-                      <Typography variant="body2" sx={{ marginTop: 1, fontSize: "0.875rem" }}>
-                        <strong>Category:</strong> {course.category}
-                      </Typography>
-                      <Typography variant="body2" sx={{ fontSize: "0.875rem" }}>
-                        <strong>Tutor:</strong> {course.tutor}
-                      </Typography>
-                      <Typography variant="body2" sx={{ fontSize: "0.875rem" }}>
-                        <strong>Duration:</strong> {course.duration} hours
-                      </Typography>
-                      <Button
-                        variant="contained"
-                        fullWidth
-                        sx={{
-                          marginTop: 2,
-                          fontSize: "0.875rem",
-                          background: "linear-gradient(135deg, #3005a4, #997af0)",
-                          "&:hover": {
-                            background: "linear-gradient(135deg, #997af0, #3005a4)",
-                          },
-                        }}
-                        onClick={() => enroleCourse(course._id, course.tutorId, course.category)}
-                      >
-                        Enroll to this
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
-          )}
-        </Box>
-      </Box>
+                      variant="contained"
+                      fullWidth
+                      onClick={() => handleClickedCourse(category)}
+                    >
+                      {category}
+                    </Button>
+                  </ListItem>
+                ))}
+              </List>
+            </Box>
+          </motion.div>
 
-      <ToastContainer />
-    </div>
+          {/* Courses Grid */}
+          <Box sx={{ flexGrow: 1, padding: 2 }}>
+            {loading ? (
+              <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "80vh" }}>
+                <CircularProgress />
+              </Box>
+            ) : (
+              <Grid container spacing={3}>
+                {courses.map((course) => (
+                  <Grid item xs={10} sm={6} md={3} key={course._id}>
+                    <Card
+                      sx={{
+                        maxWidth: 300,
+                        margin: "auto",
+                        borderRadius: "12px",
+                        transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                        "&:hover": {
+                          transform: "scale(1.05)",
+                          boxShadow: "0 6px 20px rgba(0,0,0,0.2)",
+                        },
+                      }}
+                    >
+                      <CardMedia
+                        component="img"
+                        height="140"
+                        image={`http://localhost:3001/image/${course.image}`}
+                        alt={course.title}
+                        sx={{
+                          width: "50px",             
+                          height: "50px",            
+                          objectFit: "cover",        
+                          marginLeft: "10px",
+                          marginTop: "10px",
+                          borderRadius: "50%"      
+                        }}
+                      />
+                      <CardContent sx={{ padding: 1 }}>
+                        <Typography gutterBottom variant="h6" component="div">
+                          {course.title}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" sx={{ fontSize: "0.875rem" }}>
+                          {course.description}
+                        </Typography>
+                        <Typography variant="body2" sx={{ marginTop: 1, fontSize: "0.875rem" }}>
+                          <strong>Category:</strong> {course.category}
+                        </Typography>
+                        <Typography variant="body2" sx={{ fontSize: "0.875rem" }}>
+                          <strong>Tutor:</strong> {course.tutor}
+                        </Typography>
+                        <Typography variant="body2" sx={{ fontSize: "0.875rem" }}>
+                          <strong>Duration:</strong> {course.duration} hours
+                        </Typography>
+                        <Button
+                          variant="contained"
+                          fullWidth
+                          sx={{
+                            marginTop: 2,
+                            fontSize: "0.875rem",
+                            background: "linear-gradient(135deg, #3005a4, #997af0)",
+                            "&:hover": {
+                              background: "linear-gradient(135deg, #997af0, #3005a4)",
+                            },
+                          }}
+                          onClick={() => enroleCourse(course._id, course.tutorId, course.category)}
+                        >
+                          Add to Favourite
+                        </Button>
+                        <Button
+                          variant="outlined"
+                          fullWidth
+                          sx={{
+                            marginTop: 1,
+                            fontSize: "0.875rem",
+                            color: "#3005a4",
+                            borderColor: "#997af0",
+                            "&:hover": {
+                              background: "rgba(48, 5, 164, 0.1)",
+                              borderColor: "#3005a4",
+                            },
+                          }}
+                          onClick={() => handleViewCourseDetails(course._id)}
+                        >
+                          View Details
+                        </Button>
+
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                ))}
+              </Grid>
+            )}
+          </Box>
+        </Box>
+
+        <ToastContainer />
+      </div>
+    </>
   );
 
 };
