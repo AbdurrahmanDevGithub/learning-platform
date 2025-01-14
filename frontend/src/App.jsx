@@ -11,6 +11,7 @@ import ProtectedRoute from "./components/ProtextedRoute";
 import PublicRoute from "./components/PublicRoute";
 import Courses from "./pages/Courses";
 import MyCourses from "./pages/MyCourses";
+import ViewCourseDetails from "./pages/ViewCourseDetails";
 
 
 
@@ -32,6 +33,7 @@ const App = () => {
         <Route path="/updatecourse/:id" element={<ProtectedRoute> <CourseUpdate /> </ProtectedRoute>} />
         <Route path="/allcourses" element={<ProtectedRoute> <Courses /> </ProtectedRoute> } />
         <Route path="/mycourses" element={<ProtectedRoute> <MyCourses /> </ProtectedRoute>} />
+        <Route path="/viewcoursedetails/:course_id" element={ <ViewCourseDetails />} />
       </Routes>
 
     </AnimatePresence>

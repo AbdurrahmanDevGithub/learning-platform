@@ -5,11 +5,13 @@ import { toast, ToastContainer } from "react-toastify";
 import Navbar from "../components/Navbar";
 import SearchIcon from '@mui/icons-material/Search';
 import { TextField, Box, Typography, Button, List, ListItem, Card, CardContent, CardMedia, Grid, CircularProgress, IconButton } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate()
 
   const categories = [
     "Engineering",
@@ -103,6 +105,16 @@ const Courses = () => {
     }
   };
 
+
+  const handleViewCourseDetails = async(course_id)=>{
+    try{
+      navigate(`/viewcoursedetails/${course_id}`)
+    }catch(error){
+      console.log(error);
+    }
+  }
+
+
   return (
     <div style={{ background: "linear-gradient(#87CEFA, #B0C4DE)", minHeight: "100vh" }}>
       <Navbar />
@@ -185,7 +197,7 @@ const Courses = () => {
             <Grid container spacing={3}>
               {courses.map((course) => (
                 <Grid item xs={10} sm={6} md={3} key={course._id}>
-                  <Card
+                  <Card onClick={()=>handleViewCourseDetails(course._id)} 
                     sx={{
                       maxWidth: 300,
                       margin: "auto",
@@ -240,7 +252,7 @@ const Courses = () => {
                         }}
                         onClick={() => enroleCourse(course._id, course.tutorId, course.category)}
                       >
-                        Add to Favourite
+                        Enroll to this
                       </Button>
                     </CardContent>
                   </Card>

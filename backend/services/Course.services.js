@@ -81,10 +81,25 @@ const fetchMyCourses = async(user_id)=>{
   }
 }
 
+const viewCourseDetails = async (course_id) => {
+  try {
+    const details = await Course.findById(course_id);
+    if (!details) {
+      return { statuscode: 404, error: "No details found" };
+    }
+    return { statuscode: 200, details };
+  } catch (error) {
+    console.log(error, "Error in viewCourseDetails service");
+    return { statuscode: 500, error: "Internal server error" }; 
+  }
+};
+
+
 
 module.exports = {
   fetchCourseById,
   fetchAllCourses,
   enrollCourse,
-  fetchMyCourses
+  fetchMyCourses,
+  viewCourseDetails
 }
