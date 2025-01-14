@@ -5,6 +5,8 @@ import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "../components/Navbar";
 import styled from "styled-components";
+import courseBG from '../assets/vecteezy_digital-marketing-3d-icon-illustration-for-your-website_11997005.png'
+import BGImage from '../assets/smoke-376543.jpg'
 
 const CourseUpdate = () => {
   const [loading, setLoading] = useState(false);
@@ -38,7 +40,7 @@ const CourseUpdate = () => {
     const { name, files } = e.target;
     setFormData({
       ...formData,
-      [name]: files[0], // Assuming only one file is selected
+      [name]: files[0], 
     });
   };
 
@@ -84,16 +86,20 @@ const CourseUpdate = () => {
   return (
     <>
       <Navbar />
-      <FormContainer>
-        <Form onSubmit={handleSubmit}>
-          <Label>
-            Category:
-            <Select
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-            >
-              <option className="options" value="">
+      <Container>
+        <div className="flex-direction">
+          <div className="form-container">
+            <form className="upload-form" onSubmit={handleSubmit}>
+              {/* Input fields */}
+              <label className="form-label">
+                Category:
+                <select
+                  className="form-select"
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange}
+                >
+                  <option className="options" value="">
                     Select Category
                   </option>
                   <option className="options" value="Engineering">
@@ -156,171 +162,355 @@ const CourseUpdate = () => {
                   <option className="options" value="Science and Mathematics">
                     Education
                   </option>
-            </Select>
-          </Label>
+                </select>
+              </label>
 
-          <Label>
-            Title:
-            <Input
-              type="text"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-            />
-          </Label>
+              <label className="form-label">
+                Title:
+                <input
+                  className="form-input"
+                  type="text"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleChange}
+                />
+              </label>
 
-          <Label>
-            Tutor:
-            <Input
-              type="text"
-              name="tutor"
-              value={formData.tutor}
-              onChange={handleChange}
-            />
-          </Label>
+              <label className="form-label">
+                Tutor:
+                <input
+                  className="form-input"
+                  type="text"
+                  name="tutor"
+                  value={formData.tutor}
+                  onChange={handleChange}
+                />
+              </label>
 
-          <Label>
-            Duration:
-            <Input
-              type="number"
-              name="duration"
-              value={formData.duration}
-              onChange={handleChange}
-            />
-          </Label>
+              <label className="form-label">
+                Duration:
+                <input
+                  className="form-input"
+                  type="number"
+                  name="duration"
+                  value={formData.duration}
+                  onChange={handleChange}
+                />
+              </label>
 
-          <Label>
-            Description:
-            <Input
-              type="text"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-            />
-          </Label>
+              <label className="form-label">
+                Description:
+                <input
+                  className="form-input"
+                  type="text"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                />
+              </label>
 
-          <Label>
-            Select Image:
-            <FileInput
-              type="file"
-              name="image"
-              accept="image/*"
-              onChange={handleFileChange}
-            />
-          </Label>
+              <label className="form-label">
+                Select Image:
+                <input
+                  className="form-file"
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                />
+              </label>
 
-          <Label>
-            Select Video:
-            <FileInput
-              type="file"
-              name="video"
-              accept="video/*"
-              onChange={handleFileChange}
-            />
-          </Label>
+              <label className="form-label">
+                Select Video:
+                <input
+                  className="form-file"
+                  type="file"
+                  name="video"
+                  accept="video/*"
+                  onChange={handleFileChange}
+                />
+              </label>
 
-          <SubmitButton className={loading ? "loading" : ""} type="submit">
-            {loading ? (
-              <Spinner xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
-                <Circle cx="50" cy="50" r="45" strokeWidth="10" stroke="#fff" strokeDasharray="283" strokeDashoffset="75" />
-              </Spinner>
-            ) : (
-              <SubmitText>Upload File</SubmitText>
-            )}
-          </SubmitButton>
-        </Form>
-      </FormContainer>
-      <ToastContainer />
+              <button className={`button ${loading ? "loading" : ""}`} type="submit">
+                {loading ? (
+                  <svg
+                    className="spinner"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 100 100"
+                    fill="none"
+                  >
+                    <circle
+                      className="path"
+                      cx="50"
+                      cy="50"
+                      r="45"
+                      strokeWidth="10"
+                      stroke="#fff"
+                      strokeDasharray="283"
+                      strokeDashoffset="75"
+                    ></circle>
+                  </svg>
+                ) : (
+                  <span className="submitMessage">Course Update</span>
+                )}
+              </button>
+            </form>
+          </div>
+
+
+          <div>
+            <img src={courseBG} alt="Image" />
+          </div>
+        </div>
+      </Container>
+      <ToastContainer/>
     </>
   );
 };
 
 export default CourseUpdate;
 
-// Styled Components
-const FormContainer = styled.div`
+const Container = styled.div`
+  height: 100vh;
+  width: 100vw;
   display: flex;
   justify-content: center;
-  padding: 20px;
-`;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  flex-direction: column;
+  position: absolute;
 
-const Form = styled.form`
-  width: 100%;
-  max-width: 500px;
-  padding: 20px;
-  background: #f4f4f4;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-`;
-
-const Label = styled.label`
-  display: block;
-  margin-bottom: 15px;
-  font-weight: bold;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-`;
-
-const Select = styled.select`
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-`;
-
-const Option = styled.option`
-  padding: 10px;
-`;
-
-const FileInput = styled.input`
-  margin-top: 5px;
-`;
-
-const SubmitButton = styled.button`
-  width: 100%;
-  padding: 12px;
-  background: #4CAF50;
-  color: #fff;
-  font-size: 16px;
-  border-radius: 4px;
-  border: none;
-  cursor: pointer;
-  &:hover {
-    background: #45a049;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(${BGImage});
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: -1;
+      background-attachment: fixed;  
   }
-  &.loading {
-    background: #cccccc;
-    cursor: not-allowed;
-  }
-`;
 
-const Spinner = styled.svg`
-  width: 30px;
-  height: 30px;
-  animation: rotate 2s linear infinite;
-  @keyframes rotate {
-    100% {
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background-color: rgba(255, 255, 255, 0.2); 
+    border-radius: 1rem;
+    padding: 2rem 6rem;
+    max-width: 1200px;
+    width: 900px;
+    overflow-y: auto;
+    top: 4rem;
+    padding-top: -3rem;
+    padding-right: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 2rem;
+    box-shadow: none;
+
+    .upload-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding-top: -5rem;
+      animation: fadeIn 1.2s ease-in-out; 
+
+      .form-label {
+        display: flex;
+        flex-direction: column;
+        font-size: 20px;
+        font-weight: bold;
+        animation: fadeIn 1.2s ease-in-out; 
+      }
+
+      .form-select,
+      .form-input,
+      .form-file {
+        width: auto;
+        padding: 1px;
+        margin-top: 0.1rem;
+        border-radius: 0.3rem;
+        border: 1px solid #444;
+        font-size: 18px;
+        color: #ffffff;
+        animation: fadeIn 1.2s ease-in-out; 
+      }
+
+      .form-select {
+        background-color: #666;
+        color: #ffffff;
+        
+      }
+
+      .options {
+        background-color: #666;
+        color: #ffffff;
+      }
+
+      input {
+        background-color: #666;
+        padding: 1rem;
+        border: 0.1rem solid #0202a1;
+        border-radius: 0.4rem;
+        color: white;
+        width: 100%;
+        font-size: 1rem;
+        animation: fadeIn 1.2s ease-in-out; 
+
+        &:focus {
+          border: 0.1rem solid #0202a1;
+          outline: none;
+        }
+      }
+
+      .button {
+        background: linear-gradient(135deg, #3005a4, #0202a1);
+        border: none;
+        color: #ffffff;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        height: 40px;
+        padding: 0 10px;
+        border-radius: 0.5rem;
+        outline: none;
+        position: relative;
+        transition: background 0.3s ease, transform 0.2s ease;
+        animation: fadeIn 1.2s ease-in-out; 
+
+        &:hover {
+          background: linear-gradient(135deg, #0202a1, #3005a4);
+          transform: scale(1.05);
+        }
+
+        &:active {
+          transform: scale(0.95);
+        }
+
+        &.loading {
+          background: linear-gradient(135deg, #666, #444);
+          pointer-events: none;
+
+          .spinner {
+            animation: spin 1s linear infinite;
+          }
+        }
+
+        .spinner {
+          width: 20px;
+          height: 20px;
+        }
+
+        .submitMessage {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 5px;
+        }
+      }
+    }
+  }
+
+  .flex-direction {
+  display: flex;
+  flex-direction: row; 
+  justify-content: center; 
+  align-items: center; 
+  gap: 10rem;
+  
+  img {
+  width: 550px;
+  height: auto;
+  border-radius: 1rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.7); 
+  animation: fadeIn 1.2s ease-in-out; 
+}
+
+}
+
+  
+@keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
       transform: rotate(360deg);
     }
   }
-`;
 
-const Circle = styled.circle`
-  fill: none;
-  stroke: #fff;
-  stroke-width: 10;
-  stroke-dasharray: 283;
-  stroke-dashoffset: 75;
-`;
 
-const SubmitText = styled.span`
-  font-size: 16px;
-  font-weight: bold;
+  @media (max-width: 1200px) {
+    .form-container {
+      width: 80%;
+      padding: 1.5rem;
+    }
+
+    .flex-direction {
+      flex-direction: column;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    .flex-direction img {
+      width: 80%;
+      max-width: 400px;
+      height: auto;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .form-container {
+      width: 100%;
+      padding: 1rem;
+    }
+
+    .flex-direction {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .flex-direction img {
+      width: 100%;
+      max-width: none;
+      height: auto;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .form-container {
+      padding: 1rem;
+      width: 100%;
+    }
+
+    .upload-form {
+      gap: 0.5rem;
+    }
+
+    .form-label {
+      font-size: 16px;
+    }
+
+    input,
+    select {
+      font-size: 16px;
+      padding: 0.8rem;
+    }
+
+    .button {
+      font-size: 12px;
+      height: 35px;
+      padding: 0 8px;
+    }
+
+    .flex-direction img {
+      width: 100%;
+      max-width: none;
+      height: auto;
+    }
+  }
 `;

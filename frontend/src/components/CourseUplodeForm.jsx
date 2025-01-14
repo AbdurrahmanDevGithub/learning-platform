@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import bgImage from "../assets/newBG.jpg";
+import BGImage from "../assets/smoke-376543.jpg";
 import Navbar from "./Navbar";
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
@@ -270,7 +270,6 @@ const Container = styled.div`
   position: relative;
   overflow: hidden;
   flex-direction: column;
-  top: 4rem;
   position: absolute;
 
   &::before {
@@ -280,11 +279,12 @@ const Container = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient( #87CEFA, #B0C4DE);
-    filter: blur(5px); 
-    z-index: -1;
-    background-size: cover;
-    background-attachment: fixed;  
+    background-image: url(${BGImage});
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: -1;
+      background-attachment: fixed;  
   }
 
   .form-container {
@@ -309,12 +309,14 @@ const Container = styled.div`
       flex-direction: column;
       gap: 1rem;
       padding-top: -5rem;
+      animation: fadeIn 1.2s ease-in-out; 
 
       .form-label {
         display: flex;
         flex-direction: column;
         font-size: 20px;
         font-weight: bold;
+        animation: fadeIn 1.2s ease-in-out; 
       }
 
       .form-select,
@@ -326,11 +328,14 @@ const Container = styled.div`
         border-radius: 0.3rem;
         border: 1px solid #444;
         font-size: 18px;
+        color: #ffffff;
+        animation: fadeIn 1.2s ease-in-out; 
       }
 
       .form-select {
         background-color: #666;
         color: #ffffff;
+        
       }
 
       .options {
@@ -341,20 +346,21 @@ const Container = styled.div`
       input {
         background-color: #666;
         padding: 1rem;
-        border: 0.1rem solid #3005a4;
+        border: 0.1rem solid #0202a1;
         border-radius: 0.4rem;
         color: white;
         width: 100%;
         font-size: 1rem;
+        animation: fadeIn 1.2s ease-in-out; 
 
         &:focus {
-          border: 0.1rem solid #997af0;
+          border: 0.1rem solid #0202a1;
           outline: none;
         }
       }
 
       .button {
-        background: linear-gradient(135deg, #3005a4, #997af0);
+        background: linear-gradient(135deg, #3005a4, #0202a1);
         border: none;
         color: #ffffff;
         cursor: pointer;
@@ -366,9 +372,10 @@ const Container = styled.div`
         outline: none;
         position: relative;
         transition: background 0.3s ease, transform 0.2s ease;
+        animation: fadeIn 1.2s ease-in-out; 
 
         &:hover {
-          background: linear-gradient(135deg, #997af0, #3005a4);
+          background: linear-gradient(135deg, #0202a1, #3005a4);
           transform: scale(1.05);
         }
 
@@ -405,13 +412,14 @@ const Container = styled.div`
   flex-direction: row; 
   justify-content: center; 
   align-items: center; 
-  gap: 4rem;
+  gap: 10rem;
   
   img {
-  width: 400px;
+  width: 550px;
   height: auto;
   border-radius: 1rem;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.7); /* Soft shadow */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.7); 
+  animation: fadeIn 1.2s ease-in-out; 
 }
 
 }
@@ -426,7 +434,7 @@ const Container = styled.div`
     }
   }
 
-  /* Media Queries */
+
   @media (max-width: 1200px) {
     .form-container {
       width: 80%;
@@ -497,6 +505,5 @@ const Container = styled.div`
     }
   }
 `;
-
 
 export default CourseUploadForm;
