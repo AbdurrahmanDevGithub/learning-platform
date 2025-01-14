@@ -1,4 +1,6 @@
 const courseServices = require('../services/Course.services')
+const mongoose = require('mongoose');
+
 
 const controller = {
   fetchCourseById:async(req,res)=>{
@@ -63,7 +65,31 @@ const controller = {
       console.log(error);
       return res.status(500).json({"err":error})
     }
+  },
+
+
+  viewCourseDetails: async (req, res) => {
+  try {
+    const { course_id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(course_id)) {
+      return res.status(400).json({ error: "Invalid course ID format" });
+    }
+
+    console.log(course_id,"helllloooo");
+
+    const details = await courseServices.viewCourseDetails(course_id);
+    if (details.error) {
+      return res.status(details.statuscode).json({ error: details.error });
+    }
+
+    return res.status(details.statuscode).json(details.details);
+  } catch (error) {
+    console.log(error, "Error in viewCourseDetails controller");
+    return res.status(500).json({ error: "Internal server error" });
   }
+}
+
 }
 
 module.exports = controller

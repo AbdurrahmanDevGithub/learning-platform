@@ -7,11 +7,13 @@ import SearchIcon from '@mui/icons-material/Search';
 import BGImage from '../assets/smoke-376543.jpg'
 import { motion } from "framer-motion";
 import { TextField, Box, Typography, Button, List, ListItem, Card, CardContent, CardMedia, Grid, CircularProgress, IconButton } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate()
 
   const categories = [
     "Engineering",
@@ -104,6 +106,16 @@ const Courses = () => {
       }
     }
   };
+
+
+  const handleViewCourseDetails = async(course_id)=>{
+    try{
+      navigate(`/viewcoursedetails/${course_id}`)
+    }catch(error){
+      console.log(error);
+    }
+  }
+
 
   return (
     <>
@@ -198,81 +210,81 @@ const Courses = () => {
             </Box>
           </motion.div>
 
-          {/* Courses Grid */}
-          <Box sx={{ flexGrow: 1, padding: 2 }}>
-            {loading ? (
-              <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "80vh" }}>
-                <CircularProgress />
-              </Box>
-            ) : (
-              <Grid container spacing={3}>
-                {courses.map((course) => (
-                  <Grid item xs={10} sm={6} md={3} key={course._id}>
-                    <Card
+        {/* Courses Grid */}
+        <Box sx={{ flexGrow: 1, padding: 2 }}>
+          {loading ? (
+            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "80vh" }}>
+              <CircularProgress />
+            </Box>
+          ) : (
+            <Grid container spacing={3}>
+              {courses.map((course) => (
+                <Grid item xs={10} sm={6} md={3} key={course._id}>
+                  <Card
+                    sx={{
+                      maxWidth: 300,
+                      margin: "auto",
+                      borderRadius: "12px",
+                      transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                      "&:hover": {
+                        transform: "scale(1.05)",
+                        boxShadow: "0 6px 20px rgba(0,0,0,0.2)",
+                      },
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      height="140"
+                      image={`http://localhost:3001/image/${course.image}`}
+                      alt={course.title}
                       sx={{
-                        maxWidth: 300,
-                        margin: "auto",
-                        borderRadius: "12px",
-                        transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                        "&:hover": {
-                          transform: "scale(1.05)",
-                          boxShadow: "0 6px 20px rgba(0,0,0,0.2)",
-                        },
+                        width: "50px",             // Set the width
+                        height: "50px",            // Set the height
+                        objectFit: "cover",        // Ensure the image covers the entire area without distortion
+                        marginLeft: "10px",
+                        marginTop: "10px",
+                        borderRadius: "50%"       // This will make the image round
                       }}
-                    >
-                      <CardMedia
-                        component="img"
-                        height="140"
-                        image={`http://localhost:3001/image/${course.image}`}
-                        alt={course.title}
+                    />
+                    <CardContent sx={{ padding: 1 }}>
+                      <Typography gutterBottom variant="h6" component="div">
+                        {course.title}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary" sx={{ fontSize: "0.875rem" }}>
+                        {course.description}
+                      </Typography>
+                      <Typography variant="body2" sx={{ marginTop: 1, fontSize: "0.875rem" }}>
+                        <strong>Category:</strong> {course.category}
+                      </Typography>
+                      <Typography variant="body2" sx={{ fontSize: "0.875rem" }}>
+                        <strong>Tutor:</strong> {course.tutor}
+                      </Typography>
+                      <Typography variant="body2" sx={{ fontSize: "0.875rem" }}>
+                        <strong>Duration:</strong> {course.duration} hours
+                      </Typography>
+                      <Button
+                        variant="contained"
+                        fullWidth
                         sx={{
-                          width: "50px",
-                          height: "50px",
-                          objectFit: "cover",
-                          marginLeft: "10px",
-                          marginTop: "10px",
-                          borderRadius: "50%"
+                          marginTop: 2,
+                          fontSize: "0.875rem",
+                          background: "linear-gradient(135deg, #3005a4, #997af0)",
+                          "&:hover": {
+                            background: "linear-gradient(135deg, #997af0, #3005a4)",
+                          },
                         }}
-                      />
-                      <CardContent sx={{ padding: 1 }}>
-                        <Typography gutterBottom variant="h6" component="div">
-                          {course.title}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary" sx={{ fontSize: "0.875rem" }}>
-                          {course.description}
-                        </Typography>
-                        <Typography variant="body2" sx={{ marginTop: 1, fontSize: "0.875rem" }}>
-                          <strong>Category:</strong> {course.category}
-                        </Typography>
-                        <Typography variant="body2" sx={{ fontSize: "0.875rem" }}>
-                          <strong>Tutor:</strong> {course.tutor}
-                        </Typography>
-                        <Typography variant="body2" sx={{ fontSize: "0.875rem" }}>
-                          <strong>Duration:</strong> {course.duration} hours
-                        </Typography>
-                        <Button
-                          variant="contained"
-                          fullWidth
-                          sx={{
-                            marginTop: 2,
-                            fontSize: "0.875rem",
-                            background: "linear-gradient(135deg, #3005a4, #997af0)",
-                            "&:hover": {
-                              background: "linear-gradient(135deg, #997af0, #3005a4)",
-                            },
-                          }}
-                          onClick={() => enroleCourse(course._id, course.tutorId, course.category)}
-                        >
-                          Add to Favourite
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  </Grid>
-                ))}
-              </Grid>
-            )}
-          </Box>
+                        onClick={() => enroleCourse(course._id, course.tutorId, course.category)}
+                      >
+                        Add to Favourite
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          )}
         </Box>
+      </Box>
 
         <ToastContainer />
       </div>
