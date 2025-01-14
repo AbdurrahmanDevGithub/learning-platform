@@ -33,7 +33,7 @@ const App = () => {
         <Route path="/updatecourse/:id" element={<ProtectedRoute> <CourseUpdate /> </ProtectedRoute>} />
         <Route path="/allcourses" element={<ProtectedRoute> <Courses /> </ProtectedRoute> } />
         <Route path="/mycourses" element={<ProtectedRoute> <MyCourses /> </ProtectedRoute>} />
-        <Route path="/viewcoursedetails/:course_id" element={ <ViewCourseDetails />} />
+        <Route path="/viewcoursedetails/:course_id" element={ <ProtectedRoute><ViewCourseDetails /></ProtectedRoute>} />
       </Routes>
 
     </AnimatePresence>
