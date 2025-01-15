@@ -50,6 +50,7 @@ const Navbar = () => {
           {/* Default links for all users */}
           <li><Link to="/allcourses">View Courses</Link></li>
           <li><Link to="/mycourses">My Courses</Link></li>
+          <li><Link to="/ViewBooks">Checkout Books</Link></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
 
