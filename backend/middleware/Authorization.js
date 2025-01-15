@@ -21,7 +21,7 @@ const verifyToken = async (req, res, next) => {
   try {
     const authHeader = req.headers['authorization'];
     // console.log("Authorization Header:", authHeader);
-
+   
     const token = authHeader && authHeader.split(' ')[1];
     // console.log("Token:", token);
 
