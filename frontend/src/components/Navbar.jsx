@@ -6,11 +6,23 @@ import { logout } from "../redux/features/AuthSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 const Navbar = () => {
-  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token); 
 
   const handleLogout = () => {
     dispatch(logout());
+  };
+
+  const handleTutorAccess = () => {
+    if (token) {
+      const userConfirmed = window.confirm('You have access to tutor content. Click OK to return to the dashboard.');
+      if (userConfirmed) {
+        window.location.href = "/"; 
+      }
+    } else {
+      alert('Please log in to access tutor content.');
+    }
   };
 
   return (
@@ -21,17 +33,32 @@ const Navbar = () => {
         </div>
         <ul className="navbar-link">
           <li><Link to="/">Dashboard</Link></li>
-          <li><Link to="/courses">Manage Courses</Link></li>
-          <li><Link to="/uplodecourse">Upload Courses</Link></li>
-          <li><a href="#contact">Contact</a></li>
+
+          {/* Tutor section only visible if authenticated */}
+          {token && (
+            <li>
+              <a href="#" className="nav-link" onClick={handleTutorAccess}>
+                Tutor ▼
+              </a>
+              <ul className="dropdown">
+                <li><Link to="/courses" className="dropdown-item" onClick={handleTutorAccess}>Manage Course</Link></li>
+                <li><Link to="/uploadcourse" className="dropdown-item" onClick={handleTutorAccess}>Upload Course</Link></li>
+              </ul>
+            </li>
+          )}
+
+          {/* Default links for all users */}
           <li><Link to="/allcourses">View Courses</Link></li>
           <li><Link to="/mycourses">My Courses</Link></li>
+          <li><a href="#contact">Contact</a></li>
         </ul>
 
         {isAuthenticated ? (
-          <button onClick={handleLogout} className="signin-button">
-            Logout
-          </button>
+          <>
+            <button onClick={handleLogout} className="signin-button">
+              Logout
+            </button>
+          </>
         ) : (
           <Link to="/login" className="signin-button">
             <FontAwesomeIcon icon={faSignInAlt} className="icon" />
@@ -50,14 +77,14 @@ const Container = styled.div`
     left: 0;
     right: 0;
     width: 100%;
-    z-index: 10;  
+    z-index: 10;
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: transparent; 
+    background-color: transparent;
     padding: 2rem 12rem;
-    animation: slideDown 1s ease-in-out; /* Navbar slide-in animation */
+    animation: slideDown 1s ease-in-out;
   }
 
   .navbar a {
@@ -65,19 +92,19 @@ const Container = styled.div`
     color: white;
     font-weight: 1300;
     font-size: 20px;
-    transition: color 0.3s ease, transform 0.3s ease; 
+    transition: color 0.3s ease, transform 0.3s ease;
   }
 
   .navbar a:hover {
     color: #0202a1;
-    transform: scale(1.1); 
+    transform: scale(1.1);
   }
 
   .navbar-brand {
     font-size: 4.2rem;
     font-weight: 900;
-    color: white; 
-    animation: fadeIn 1.2s ease-in-out; 
+    color: white;
+    animation: fadeIn 1.2s ease-in-out;
   }
 
   .navbar-link {
@@ -85,16 +112,48 @@ const Container = styled.div`
     list-style: none;
     gap: 1.5rem;
     font-weight: 600;
-    animation: slideUp 1.2s ease-in-out; /* Slide-up animation for links */
+    animation: slideUp 1.2s ease-in-out;
+    position: relative;
   }
 
   .navbar-link li {
     font-size: 1rem;
-    transition: color 0.3s ease;
+    position: relative;
   }
 
   .navbar-link li a:hover {
     color: #0202a1;
+  }
+
+  .dropdown {
+    list-style: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 1px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 0.7rem 0;
+    display: none;
+    z-index: 1000;
+  }
+
+  .dropdown-item {
+    padding: 0.8rem 5rem;
+    text-decoration: none;
+    color: black;
+    font-size: 2rem;
+    display: block;
+  }
+
+  .dropdown-item:hover {
+    background-color: transparent;
+  }
+
+  .nav-link:hover + .dropdown,
+  .dropdown:hover {
+    display: block;
   }
 
   .signin-button {
@@ -110,8 +169,8 @@ const Container = styled.div`
     cursor: pointer;
     transition: background 0.3s ease, transform 0.2s ease;
     font-size: 1.2rem;
-    text-decoration: none;  
-    animation: bounceIn 1s ease; /* Button animation on load */
+    text-decoration: none;
+    animation: bounceIn 1s ease;
   }
 
   .signin-button:hover {
@@ -128,7 +187,6 @@ const Container = styled.div`
     font-size: 1.2rem;
   }
 
-  /* Keyframes for animations */
   @keyframes slideDown {
     from {
       transform: translateY(-100%);
@@ -172,7 +230,6 @@ const Container = styled.div`
     }
   }
 
-  /* Mobile Responsiveness */
   @media (max-width: 768px) {
     .navbar {
       flex-direction: column;
@@ -180,7 +237,7 @@ const Container = styled.div`
     }
 
     .navbar-brand {
-      font-size: 1.2rem; 
+      font-size: 1.2rem;
       margin-bottom: 1rem;
     }
 
@@ -192,19 +249,19 @@ const Container = styled.div`
     }
 
     .navbar-link li {
-      text-align: center; 
+      text-align: center;
     }
 
     .signin-button {
-      width: 100%; 
-      justify-content: center; 
-      padding: 0.8rem 0; 
+      width: 100%;
+      justify-content: center;
+      padding: 0.8rem 0;
     }
   }
 
   @media (max-width: 480px) {
     .navbar {
-      padding: 1rem; 
+      padding: 1rem;
     }
 
     .navbar-brand {
@@ -216,7 +273,7 @@ const Container = styled.div`
     }
 
     .signin-button {
-      font-size: 0.9rem; 
+      font-size: 0.9rem;
     }
   }
 `;
