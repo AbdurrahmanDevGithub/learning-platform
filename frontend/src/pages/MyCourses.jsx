@@ -6,7 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import BGImage from "../assets/smoke-376543.jpg";
-import {jwtDecode} from "jwt-decode"; // Correct import
+import { jwtDecode } from "jwt-decode";
 
 const MyCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -29,15 +29,15 @@ const MyCourses = () => {
           navigate("/");
           return;
         }
-  
+
         const decodedToken = jwtDecode(token);
         const userRole = decodedToken.role;
-  
+
         if (userRole !== "tutor") {
           toast.error("You do not have access to this page");
-          return; // Ensure the function exits here
+          return; 
         }
-  
+
         const response = await axios.get(`${host}/api/user/mycourses`, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -56,10 +56,10 @@ const MyCourses = () => {
         }
       }
     };
-  
+
     fetchMyCourses();
   }, [navigate]);
-  
+
 
   return (
     <div
@@ -87,10 +87,10 @@ const MyCourses = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Course Image</TableCell>
-                <TableCell>Course Title</TableCell>
-                <TableCell>Category</TableCell>
-                <TableCell>Actions</TableCell>
+                <TableCell sx={{ fontWeight: "bold", fontSize: "20px", color: "white" }}>Course Image</TableCell>
+                <TableCell sx={{ fontWeight: "bold", fontSize: "20px", color: "white" }}>Course Title</TableCell>
+                <TableCell sx={{ fontWeight: "bold", fontSize: "20px", color: "white" }}>Category</TableCell>
+                <TableCell sx={{ fontWeight: "bold", fontSize: "20px", color: "white" }}>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -104,13 +104,23 @@ const MyCourses = () => {
                         style={{ width: "50px", height: "50px" }}
                       />
                     </TableCell>
-                    <TableCell>{course.title}</TableCell>
-                    <TableCell>{course.category}</TableCell>
-                    <TableCell>
+                    <TableCell sx={{ fontSize: "15px", color: "white" }}>{course.title}</TableCell>
+                    <TableCell sx={{ fontSize: "15px", color: "white" }}>{course.category}</TableCell>
+                    <TableCell sx={{ fontSize: "15px", color: "white" }}>
                       <Button
                         variant="contained"
-                        color="primary"
                         onClick={() => handleViewCourseDetails(course._id)}
+
+                        sx={{
+                          background: "linear-gradient(135deg, white, #a69090)",
+                          color: "navy",
+                          "&:hover": {
+                            background: "linear-gradient(135deg, navy, #0505f1)", 
+                            color: "white", 
+                            transform: "scale(1.05)", 
+                            transition: "all 0.3s ease", 
+                          },
+                        }}
                       >
                         View Details
                       </Button>

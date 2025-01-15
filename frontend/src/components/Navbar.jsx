@@ -4,6 +4,7 @@ import { faSignInAlt, faGraduationCap } from "@fortawesome/free-solid-svg-icons"
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../redux/features/AuthSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { jwtDecode } from 'jwt-decode';
 
 const Navbar = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -53,7 +54,6 @@ const Navbar = () => {
         <ul className="navbar-link">
           <li><Link to="/">Dashboard</Link></li>
 
-          {/* Tutor section only visible if authenticated */}
           {token && (
             <li>
               <a href="#" className="nav-link">
@@ -66,10 +66,9 @@ const Navbar = () => {
             </li>
           )}
 
-          {/* Default links for all users */}
           <li><Link to="/allcourses">View Courses</Link></li>
           <li><Link to="/mycourses">My Courses</Link></li>
-          <li><Link to="/ViewBooks">Checkout Books</Link></li>
+          <li><Link to="/viewbook">Get Books</Link></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
 
