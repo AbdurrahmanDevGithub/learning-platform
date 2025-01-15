@@ -34,7 +34,6 @@ const Navbar = () => {
         <ul className="navbar-link">
           <li><Link to="/">Dashboard</Link></li>
 
-          {/* Tutor section only visible if authenticated */}
           {token && (
             <li>
               <a href="#" className="nav-link" onClick={handleTutorAccess}>
@@ -47,10 +46,9 @@ const Navbar = () => {
             </li>
           )}
 
-          {/* Default links for all users */}
           <li><Link to="/allcourses">View Courses</Link></li>
           <li><Link to="/mycourses">My Courses</Link></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><Link to="/contact">Contact</Link></li>
         </ul>
 
         {isAuthenticated ? (
