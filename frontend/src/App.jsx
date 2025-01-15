@@ -12,6 +12,7 @@ import PublicRoute from "./components/PublicRoute";
 import Courses from "./pages/Courses";
 import MyCourses from "./pages/MyCourses";
 import ViewCourseDetails from "./pages/ViewCourseDetails";
+import ViewBooks from "./pages/ViewBooks";
 
 
 
@@ -34,7 +35,6 @@ const App = () => {
         <Route path="/allcourses" element={<ProtectedRoute> <Courses /> </ProtectedRoute> } />
         <Route path="/mycourses" element={<ProtectedRoute> <MyCourses /> </ProtectedRoute>} />
         <Route path="/viewcoursedetails/:course_id" element={ <ProtectedRoute><ViewCourseDetails /></ProtectedRoute>} />
-        
       </Routes>
 
     </AnimatePresence>

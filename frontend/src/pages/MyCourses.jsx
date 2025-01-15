@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from "@mui/material";
 import { host } from "../utils/APIRoutes";
-import { toast } from "react-toastify";
-import axios from 'axios';
+import { toast, ToastContainer } from "react-toastify";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import BGImage from '../assets/smoke-376543.jpg'
+import BGImage from "../assets/smoke-376543.jpg";
+import {jwtDecode} from "jwt-decode"; // Correct import
 
 const MyCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -19,42 +20,57 @@ const MyCourses = () => {
     }
   };
 
-
   useEffect(() => {
     const fetchMyCourses = async () => {
       try {
         const token = localStorage.getItem("token");
+        if (!token) {
+          toast.error("You must be logged in to access this page");
+          navigate("/");
+          return;
+        }
+  
+        const decodedToken = jwtDecode(token);
+        const userRole = decodedToken.role;
+  
+        if (userRole !== "tutor") {
+          toast.error("You do not have access to this page");
+          return; // Ensure the function exits here
+        }
+  
         const response = await axios.get(`${host}/api/user/mycourses`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log("API response:", response.data);
         setCourses(response.data);
       } catch (error) {
+        console.error("Error fetching courses:", error);
         if (error.response && error.response.status === 404) {
           toast.error("No courses found for this user!");
         } else if (error.response && error.response.status === 500) {
           toast.error("Internal server error");
         } else {
           toast.error("An unexpected error occurred");
-          console.log("An unexpected error occurred", error);
         }
       }
     };
+  
     fetchMyCourses();
-  }, []);
-
-  console.log(courses);
-
+  }, [navigate]);
+  
 
   return (
-    <div style={{
-      backgroundImage: `url(${BGImage})`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
-      minHeight: '100vh',
-    }}>
+    <div
+      style={{
+        backgroundImage: `url(${BGImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        minHeight: "100vh",
+      }}
+    >
       <Navbar />
       <Box sx={{ padding: 15 }}>
         <Typography variant="h4" gutterBottom>
@@ -63,22 +79,23 @@ const MyCourses = () => {
         <TableContainer
           component={Paper}
           style={{
-            backgroundColor: "rgba(255, 255, 255, 0.3)", 
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", 
-            borderRadius: "8px", 
+            backgroundColor: "rgba(255, 255, 255, 0.3)",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+            borderRadius: "8px",
           }}
         >
           <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Course Image</TableCell>
-                  <TableCell>Course Title</TableCell>
-                  <TableCell>Category</TableCell>
-                  <TableCell>Actions</TableCell> 
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {courses.map((course) => (
+            <TableHead>
+              <TableRow>
+                <TableCell>Course Image</TableCell>
+                <TableCell>Course Title</TableCell>
+                <TableCell>Category</TableCell>
+                <TableCell>Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {Array.isArray(courses) &&
+                courses.map((course) => (
                   <TableRow key={course._id}>
                     <TableCell>
                       <img
@@ -90,7 +107,6 @@ const MyCourses = () => {
                     <TableCell>{course.title}</TableCell>
                     <TableCell>{course.category}</TableCell>
                     <TableCell>
-                      {/* Add a View Details button */}
                       <Button
                         variant="contained"
                         color="primary"
@@ -101,10 +117,11 @@ const MyCourses = () => {
                     </TableCell>
                   </TableRow>
                 ))}
-              </TableBody>
-            </Table>
+            </TableBody>
+          </Table>
         </TableContainer>
       </Box>
+      <ToastContainer />
     </div>
   );
 };

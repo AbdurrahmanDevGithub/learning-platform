@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt, faGraduationCap } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../redux/features/AuthSlice";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -9,19 +9,38 @@ const Navbar = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token); 
+  const navigate = useNavigate()
 
   const handleLogout = () => {
     dispatch(logout());
   };
 
-  const handleTutorAccess = () => {
-    if (token) {
-      const userConfirmed = window.confirm('You have access to tutor content. Click OK to return to the dashboard.');
-      if (userConfirmed) {
-        window.location.href = "/"; 
+  const handleManageCourses = () => {
+    const token = localStorage.getItem('token')
+    const decodedToken = jwtDecode(token);
+            const userRole = decodedToken.role;
+      
+            if (userRole !== "tutor") {
+              toast.error("You do not have access to this page");
+              return;
+            }
+
+    if (userRole==="tutor") {
+      navigate('/mycourses')
+    }
+  };
+
+  const handleUploadCourses = () => {
+    const token = localStorage.getItem('token')
+    const decodedToken = jwtDecode(token);
+    const userRole = decodedToken.role;
+      if (userRole !== "tutor") {
+        toast.error("You do not have access to this page");
+        return;
       }
-    } else {
-      alert('Please log in to access tutor content.');
+
+    if (userRole==="tutor") {
+      navigate('/uplodecourse')
     }
   };
 
@@ -36,19 +55,19 @@ const Navbar = () => {
 
           {token && (
             <li>
-              <a href="#" className="nav-link" onClick={handleTutorAccess}>
+              <a href="#" className="nav-link">
                 Tutor ▼
               </a>
               <ul className="dropdown">
-                <li><Link to="/courses" className="dropdown-item" onClick={handleTutorAccess}>Manage Course</Link></li>
-                <li><Link to="/uploadcourse" className="dropdown-item" onClick={handleTutorAccess}>Upload Course</Link></li>
+                <li><Link to="/courses" className="dropdown-item" onClick={handleManageCourses}>Manage Course</Link></li>
+                <li><Link to="/uploadcourse" className="dropdown-item" onClick={handleUploadCourses}>Upload Course</Link></li>
               </ul>
             </li>
           )}
 
           <li><Link to="/allcourses">View Courses</Link></li>
           <li><Link to="/mycourses">My Courses</Link></li>
-          <li><Link to="/contact">Contact</Link></li>
+          <li><a href="#contact">Contact</a></li>
         </ul>
 
         {isAuthenticated ? (

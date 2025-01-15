@@ -21,25 +21,6 @@ const signup = async (username, email, password, role) => {
 }
 
 
-// const signin = async(email, password) => {
-//   try {
-//     const user = await User.findOne({ email });
-//     if (!user) {
-//       return { status: false, msg: "Invalid email" }; 
-//     }
-
-//     const isMatch = await user.comparePassword(password);
-//     if (!isMatch) {
-//       return { status: false, msg: "Invalid password" }; 
-//     }
-
-//     const token = await authMiddleware.generateToken(user);
-//     return { status: true, user, token }; 
-//   } catch (error) {
-//     console.error(error);
-//     return { status: false, msg: "Something went wrong" }; 
-//   }
-// };
 const signin = async (email, password) => {
   try {
     const user = await User.findOne({ email });
