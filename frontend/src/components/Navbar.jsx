@@ -4,6 +4,7 @@ import { faSignInAlt, faGraduationCap } from "@fortawesome/free-solid-svg-icons"
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../redux/features/AuthSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { jwtDecode } from 'jwt-decode';
 
 const Navbar = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -67,6 +68,7 @@ const Navbar = () => {
 
           <li><Link to="/allcourses">View Courses</Link></li>
           <li><Link to="/mycourses">My Courses</Link></li>
+          <li><Link to="/viewbook">Get Books</Link></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
 
