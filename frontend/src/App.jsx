@@ -13,6 +13,7 @@ import Courses from "./pages/Courses";
 import MyCourses from "./pages/MyCourses";
 import ViewCourseDetails from "./pages/ViewCourseDetails";
 import ViewBooks from "./pages/ViewBooks";
+import Footer from "./components/Footer";
 
 
 
@@ -36,6 +37,7 @@ const App = () => {
         <Route path="/mycourses" element={<ProtectedRoute> <MyCourses /> </ProtectedRoute>} />
         <Route path="/viewcoursedetails/:course_id" element={ <ProtectedRoute><ViewCourseDetails /></ProtectedRoute>} />
         <Route path="/viewbook" element={<ProtectedRoute><ViewBooks/></ProtectedRoute>}/>
+        <Route path="/footer" element={<ProtectedRoute><Footer/></ProtectedRoute>}/>
       </Routes>
 
     </AnimatePresence>

@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar";
 import styled from "styled-components";
 import courseBG from '../assets/vecteezy_digital-marketing-3d-icon-illustration-for-your-website_11997005.png'
 import BGImage from '../assets/smoke-376543.jpg'
+import Footer from "../components/Footer";
 
 const CourseUpdate = () => {
   const [loading, setLoading] = useState(false);
@@ -40,7 +41,7 @@ const CourseUpdate = () => {
     const { name, files } = e.target;
     setFormData({
       ...formData,
-      [name]: files[0], 
+      [name]: files[0],
     });
   };
 
@@ -71,7 +72,7 @@ const CourseUpdate = () => {
         toast.error("You must be logged in to update a course!", toastOptions);
         return;
       }
-      
+
       const response = await updateCourse(courseId, data, token);
       console.log("Course Updated Successfully!", response);
       toast.success("Course updated successfully!", toastOptions);
@@ -262,8 +263,10 @@ const CourseUpdate = () => {
             <img src={courseBG} alt="Image" />
           </div>
         </div>
+        <Footer />
       </Container>
-      <ToastContainer/>
+      <ToastContainer />
+
     </>
   );
 };
