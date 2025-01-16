@@ -1,13 +1,15 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
-import { TextField, Box, Button } from '@mui/material';
+import { TextField, Box, Button, CircularProgress } from '@mui/material';
 import { motion } from 'framer-motion';
 import BGImage from '../assets/smoke-376543.jpg';
+import Footer from '../components/Footer';
 
 const ViewBooks = () => {
   const [data, setData] = useState('');
   const [responseData, setResponseData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     setData(e.target.value);
@@ -15,11 +17,14 @@ const ViewBooks = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true); // Show loading spinner
     try {
       const response = await axios(`https://openlibrary.org/search.json?title=${encodeURIComponent(data)}`);
       setResponseData(response.data.docs);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false); // Hide loading spinner
     }
   };
 
@@ -68,7 +73,7 @@ const ViewBooks = () => {
                     fontWeight: 'bold',
                   },
                   "& input": {
-                    color: 'white',  
+                    color: 'white',
                   }
                 },
                 "& .MuiInputLabel-root": {
@@ -105,8 +110,9 @@ const ViewBooks = () => {
                   fontWeight: 'bold',
                 },
               }}
+              disabled={isLoading}
             >
-              Search
+              {isLoading ? <CircularProgress size={24} color="inherit" /> : "Search"}
             </Button>
           </motion.div>
         </Box>
@@ -131,10 +137,10 @@ const ViewBooks = () => {
                 borderRadius: '10px',
                 boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
                 textAlign: 'center',
-                display: 'flex', 
-                flexDirection: 'column', 
-                justifyContent: 'space-between', 
-                height: '250px', 
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                height: '250px',
               }}
             >
               <p style={{ fontWeight: 'bold' }}>
@@ -164,8 +170,9 @@ const ViewBooks = () => {
             </div>
           ))}
         </div>
-
+        <Footer />
       </div >
+
     </>
   );
 };

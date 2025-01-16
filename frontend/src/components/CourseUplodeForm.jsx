@@ -6,6 +6,7 @@ import Navbar from "./Navbar";
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
 import courseBG from '../assets/vecteezy_digital-marketing-3d-icon-illustration-for-your-website_11997005.png';
+import Footer from "./Footer";
 
 //wsbhqbsw swbshwqjbs swb2hsbkq
 const CourseUploadForm = ({ onSubmit }) => {
@@ -252,7 +253,9 @@ const CourseUploadForm = ({ onSubmit }) => {
             <img src={courseBG} alt="Image" />
           </div>
         </div>
+
       </Container>
+
     </>
   );
 };

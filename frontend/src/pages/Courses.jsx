@@ -8,6 +8,7 @@ import BGImage from '../assets/smoke-376543.jpg'
 import { motion } from "framer-motion";
 import { TextField, Box, Typography, Button, List, ListItem, Card, CardContent, CardMedia, Grid, CircularProgress, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
@@ -164,7 +165,7 @@ const Courses = () => {
               sx={{
                 width: "250px",
                 padding: 1,
-                backgroundColor: "rgba(1, 1, 27, 0.9)",
+                backgroundColor: "transparent",
                 backdropFilter: "blur(10px)",
                 maxHeight: "calc(100vh - 60px)",
                 overflowY: "auto",
@@ -183,7 +184,7 @@ const Courses = () => {
                   background: "rgba(1, 1, 27, 0.9)",
                 },
                 scrollbarWidth: "thin",
-                scrollbarColor: "rgba(3, 3, 63, 0.9) rgba(51, 51, 82, 0.9)",
+                scrollbarColor: "linear-gradient(135deg, white, #a69090)",
                 marginTop: "16px",
               }}
             >
@@ -192,9 +193,11 @@ const Courses = () => {
                   <ListItem key={category}>
                     <Button
                       sx={{
-                        background: "linear-gradient(135deg, #3005a4, #997af0)",
+                        background: "linear-gradient(135deg, white, #a69090)",
+                        color: "black",
                         "&:hover": {
-                          background: "linear-gradient(135deg, #997af0, #3005a4)",
+                          background: "linear-gradient(135deg, navy, #0505f1)",
+                          color: "white",
                           transform: "scale(1.06)",
                         },
                       }}
@@ -211,101 +214,119 @@ const Courses = () => {
           </motion.div>
 
           {/* Courses Grid */}
-          <Box sx={{ flexGrow: 1, padding: 2 }}>
-            {loading ? (
-              <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "80vh" }}>
-                <CircularProgress />
-              </Box>
-            ) : (
-              <Grid container spacing={3}>
-                {courses.map((course) => (
-                  <Grid item xs={10} sm={6} md={3} key={course._id}>
-                    <Card
-                      sx={{
-                        maxWidth: 300,
-                        margin: "auto",
-                        borderRadius: "12px",
-                        transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                        "&:hover": {
-                          transform: "scale(1.05)",
-                          boxShadow: "0 6px 20px rgba(0,0,0,0.2)",
-                        },
-                      }}
-                    >
-                      <CardMedia
-                        component="img"
-                        height="140"
-                        image={`http://localhost:3001/image/${course.image}`}
-                        alt={course.title}
-                        sx={{
-                          width: "50px",             
-                          height: "50px",            
-                          objectFit: "cover",        
-                          marginLeft: "10px",
-                          marginTop: "10px",
-                          borderRadius: "50%"      
-                        }}
-                      />
-                      <CardContent sx={{ padding: 1 }}>
-                        <Typography gutterBottom variant="h6" component="div">
-                          {course.title}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary" sx={{ fontSize: "0.875rem" }}>
-                          {course.description}
-                        </Typography>
-                        <Typography variant="body2" sx={{ marginTop: 1, fontSize: "0.875rem" }}>
-                          <strong>Category:</strong> {course.category}
-                        </Typography>
-                        <Typography variant="body2" sx={{ fontSize: "0.875rem" }}>
-                          <strong>Tutor:</strong> {course.tutor}
-                        </Typography>
-                        <Typography variant="body2" sx={{ fontSize: "0.875rem" }}>
-                          <strong>Duration:</strong> {course.duration} hours
-                        </Typography>
-                        <Button
-                          variant="contained"
-                          fullWidth
-                          sx={{
-                            marginTop: 2,
-                            fontSize: "0.875rem",
-                            background: "linear-gradient(135deg, #3005a4, #997af0)",
-                            "&:hover": {
-                              background: "linear-gradient(135deg, #997af0, #3005a4)",
-                            },
-                          }}
-                          onClick={() => enroleCourse(course._id, course.tutorId, course.category)}
-                        >
-                          Add to Favourite
-                        </Button>
-                        <Button
-                          variant="outlined"
-                          fullWidth
-                          sx={{
-                            marginTop: 1,
-                            fontSize: "0.875rem",
-                            color: "#3005a4",
-                            borderColor: "#997af0",
-                            "&:hover": {
-                              background: "rgba(48, 5, 164, 0.1)",
-                              borderColor: "#3005a4",
-                            },
-                          }}
-                          onClick={() => handleViewCourseDetails(course._id)}
-                        >
-                          View Details
-                        </Button>
 
-                      </CardContent>
-                    </Card>
-                  </Grid>
-                ))}
-              </Grid>
-            )}
+          <Box sx={{ flexGrow: 1, padding: 2 }}>
+            <motion.div
+              initial={{ x: -250 }}
+              animate={{ x: 0 }}
+              transition={{ type: "spring", stiffness: 150, damping: 45 }}
+            >
+              {loading ? (
+                <Box sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "80vh",
+                }}>
+                  <CircularProgress />
+                </Box>
+              ) : (
+                <Grid container spacing={3}>
+                  {courses.map((course) => (
+                    <Grid item xs={10} sm={6} md={3} key={course._id}>
+                      <Card
+                        sx={{
+                          maxWidth: 300,
+                          margin: "auto",
+                          borderRadius: "12px",
+                          backgroundColor: "rgba(255, 255, 255, 0.3)",
+                          transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                          "&:hover": {
+                            transform: "scale(1.05)",
+                            boxShadow: "0 6px 20px rgba(0,0,0,0.2)",
+                          },
+                        }}
+                      >
+                        <CardMedia
+                          component="img"
+                          height="140"
+                          image={`http://localhost:3001/image/${course.image}`}
+                          alt={course.title}
+                          sx={{
+                            width: "50px",
+                            height: "50px",
+                            objectFit: "cover",
+                            marginLeft: "10px",
+                            marginTop: "10px",
+                            borderRadius: "50%"
+                          }}
+                        />
+                        <CardContent sx={{ padding: 1, color: "white" }}>
+                          <Typography gutterBottom variant="h6" component="div">
+                            {course.title}
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary" sx={{ fontSize: "0.875rem", color: "white" }}>
+                            {course.description}
+                          </Typography>
+                          <Typography variant="body2" sx={{ marginTop: 1, fontSize: "0.875rem" }}>
+                            <strong>Category:</strong> {course.category}
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontSize: "0.875rem" }}>
+                            <strong>Tutor:</strong> {course.tutor}
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontSize: "0.875rem" }}>
+                            <strong>Duration:</strong> {course.duration} hours
+                          </Typography>
+                          <Button
+                            variant="contained"
+                            fullWidth
+                            sx={{
+                              marginTop: 2,
+                              fontSize: "0.875rem",
+                              background: "linear-gradient(135deg, white, #a69090)",
+                              color: "black",
+                              "&:hover": {
+                                background: "linear-gradient(135deg, navy, #0505f1)",
+                                color: "white"
+                              },
+                            }}
+                            onClick={() => enroleCourse(course._id, course.tutorId, course.category)}
+                          >
+                            Add to Favourite
+                          </Button>
+                          <Button
+                            variant="outlined"
+                            fullWidth
+                            sx={{
+                              marginTop: 1,
+                              fontSize: "0.875rem",
+                              color: "black",
+                              borderColor: "linear-gradient(135deg, navy, #0505f1)",
+                              "&:hover": {
+                                background: "linear-gradient(135deg, navy, #0505f1)",
+                                borderColor: "black",
+                              },
+                            }}
+                            onClick={() => handleViewCourseDetails(course._id)}
+                          >
+                            View Details
+                          </Button>
+
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                  ))}
+                </Grid>
+              )}
+            </motion.div>
           </Box>
+
         </Box>
 
         <ToastContainer />
+        <Footer />
       </div>
+
     </>
   );
 

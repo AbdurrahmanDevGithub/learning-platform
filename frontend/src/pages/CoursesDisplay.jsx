@@ -6,6 +6,7 @@ import styled from "styled-components";
 import BGImage from "../assets/smoke-376543.jpg";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Footer from "../components/Footer";
 
 const FetcheCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -99,7 +100,7 @@ const FetcheCourses = () => {
                   src={`http://localhost:3001/video/${course.video}`}
                   className="course-video"
                   controls
-                  type="video/mp4" 
+                  type="video/mp4"
                 >
                   Your browser does not support the video tag.
                 </video>
@@ -130,7 +131,9 @@ const FetcheCourses = () => {
             <p>No courses available.</p>
           )}
         </div>
+        <Footer />
       </Container>
+      x
     </>
   );
 };
