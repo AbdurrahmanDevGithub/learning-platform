@@ -31,19 +31,14 @@ const MyCourses = () => {
           return;
         }
 
-        const decodedToken = jwtDecode(token);
-        const userRole = decodedToken.role;
-
-        if (userRole !== "tutor") {
-          toast.error("You do not have access to this page");
-          return;
-        }
-
         const response = await axios.get(`${host}/api/user/mycourses`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
+        if(response.data.length==0){
+          toast.error("You not added any courses to this")
+        }
         console.log("API response:", response.data);
         setCourses(response.data);
       } catch (error) {
