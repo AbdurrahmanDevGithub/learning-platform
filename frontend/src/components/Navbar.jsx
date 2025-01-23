@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../redux/features/AuthSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { jwtDecode } from 'jwt-decode';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Navbar = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -16,34 +17,38 @@ const Navbar = () => {
     dispatch(logout());
   };
 
-  const handleManageCourses = () => {
-    const token = localStorage.getItem('token')
-    const decodedToken = jwtDecode(token);
-            const userRole = decodedToken.role;
-      
-            if (userRole !== "tutor") {
-              toast.error("You do not have access to this page");
-              return;
-            }
-
-    if (userRole==="tutor") {
-      navigate('/mycourses')
-    }
-  };
-
-  const handleUploadCourses = () => {
-    const token = localStorage.getItem('token')
-    const decodedToken = jwtDecode(token);
-    const userRole = decodedToken.role;
-      if (userRole !== "tutor") {
-        toast.error("You do not have access to this page");
+  const handleManageClick = ()=>{
+    try{
+      const token = localStorage.getItem('token')
+      const decodedToken = jwtDecode(token);
+      const role = decodedToken.role;
+      if(role!='tutor'){
+        toast.error("Only tutors can access this page");
         return;
+      }else if(role=='tutor'){
+        navigate("/courses")
       }
-
-    if (userRole==="tutor") {
-      navigate('/uplodecourse')
+    }catch(error){
+      console.log(error);
     }
-  };
+  }
+
+  const handleUploadClick = ()=>{
+    try{
+      const token = localStorage.getItem('token')
+      const decodedToken = jwtDecode(token);
+      const role = decodedToken.role;
+      if(role!='tutor'){
+        toast.error("Only tutors can access this page");
+        return;
+      }else if(role=='tutor'){
+        navigate("/uploadcourse")
+      }
+    }catch(error){
+      console.log(error);
+    }
+  }
+  
 
   return (
     <Container>
@@ -54,7 +59,16 @@ const Navbar = () => {
         <ul className="navbar-link">
           <li><Link to="/">Dashboard</Link></li>
 
-          {token && (
+
+            <a href="#" className="nav-link">
+                Tutor ▼
+              </a>
+              <ul className="dropdown">
+                <li className="dropdown-item" onClick={()=>handleManageClick()}>Manage Course </li>
+                <li className="dropdown-item" onClick={()=>handleUploadClick()}>Upload Course</li>
+              </ul>
+
+          {/* {token && (
             <li>
               <a href="#" className="nav-link">
                 Tutor ▼
@@ -64,7 +78,7 @@ const Navbar = () => {
                 <li><Link to="/uploadcourse" className="dropdown-item" onClick={handleUploadCourses}>Upload Course</Link></li>
               </ul>
             </li>
-          )}
+          )} */}
 
           <li><Link to="/allcourses">View Courses</Link></li>
           <li><Link to="/mycourses">My Courses</Link></li>
@@ -85,6 +99,7 @@ const Navbar = () => {
           </Link>
         )}
       </nav>
+      <ToastContainer/>
     </Container>
   );
 };
