@@ -10,45 +10,45 @@ import { toast, ToastContainer } from 'react-toastify';
 const Navbar = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
-  const token = useSelector((state) => state.auth.token); 
+  const token = useSelector((state) => state.auth.token);
   const navigate = useNavigate()
 
   const handleLogout = () => {
     dispatch(logout());
   };
 
-  const handleManageClick = ()=>{
-    try{
+  const handleManageClick = () => {
+    try {
       const token = localStorage.getItem('token')
       const decodedToken = jwtDecode(token);
       const role = decodedToken.role;
-      if(role!='tutor'){
+      if (role != 'tutor') {
         toast.error("Only tutors can access this page");
         return;
-      }else if(role=='tutor'){
+      } else if (role == 'tutor') {
         navigate("/courses")
       }
-    }catch(error){
+    } catch (error) {
       console.log(error);
     }
   }
 
-  const handleUploadClick = ()=>{
-    try{
+  const handleUploadClick = () => {
+    try {
       const token = localStorage.getItem('token')
       const decodedToken = jwtDecode(token);
       const role = decodedToken.role;
-      if(role!='tutor'){
+      if (role != 'tutor') {
         toast.error("Only tutors can access this page");
         return;
-      }else if(role=='tutor'){
+      } else if (role == 'tutor') {
         navigate("/uploadcourse")
       }
-    }catch(error){
+    } catch (error) {
       console.log(error);
     }
   }
-  
+
 
   return (
     <Container>
@@ -60,25 +60,13 @@ const Navbar = () => {
           <li><Link to="/">Dashboard</Link></li>
 
 
-            <a href="#" className="nav-link">
-                Tutor ▼
-              </a>
-              <ul className="dropdown">
-                <li className="dropdown-item" onClick={()=>handleManageClick()}>Manage Course </li>
-                <li className="dropdown-item" onClick={()=>handleUploadClick()}>Upload Course</li>
-              </ul>
-
-          {/* {token && (
-            <li>
-              <a href="#" className="nav-link">
-                Tutor ▼
-              </a>
-              <ul className="dropdown">
-                <li><Link to="/courses" className="dropdown-item" onClick={handleManageCourses}>Manage Course</Link></li>
-                <li><Link to="/uploadcourse" className="dropdown-item" onClick={handleUploadCourses}>Upload Course</Link></li>
-              </ul>
-            </li>
-          )} */}
+          <a href="#" className="nav-link">
+            Tutor ▼
+          </a>
+          <ul className="dropdown">
+            <li className="dropdown-item" onClick={() => handleManageClick()}>Manage Course </li>
+            <li className="dropdown-item" onClick={() => handleUploadClick()}>Upload Course</li>
+          </ul>
 
           <li><Link to="/allcourses">View Courses</Link></li>
           <li><Link to="/mycourses">My Courses</Link></li>
@@ -99,7 +87,7 @@ const Navbar = () => {
           </Link>
         )}
       </nav>
-      <ToastContainer/>
+      <ToastContainer />
     </Container>
   );
 };
@@ -164,31 +152,36 @@ const Container = styled.div`
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: rgba(255, 255, 255, 0.3);
-    border: 1px;
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly more opaque */
+    border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 0.7rem 0;
     display: none;
     z-index: 1000;
+    min-width: 200px; /* Ensure proper width for items */
   }
 
   .dropdown-item {
-    padding: 0.8rem 5rem;
+    padding: 0.8rem 1.5rem; /* Adjust spacing */
     text-decoration: none;
     color: black;
-    font-size: 2rem;
+    font-size: 1rem; /* Adjust font size */
     display: block;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   .dropdown-item:hover {
-    background-color: transparent;
+    background: linear-gradient(135deg, navy, #0505f1); /* Add visible hover background */
+    color: white; /* Make text color darker on hover */
+    cursor: pointer; /* Show a pointer on hover */
   }
 
   .nav-link:hover + .dropdown,
   .dropdown:hover {
     display: block;
   }
+
 
   .signin-button {
     display: flex;
