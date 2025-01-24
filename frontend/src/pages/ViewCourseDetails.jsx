@@ -281,12 +281,12 @@ const ViewCourseDetails = () => {
           ) : (
             <p>Loading course details...</p>
           )}
+         
         </div>
-
+        <Footer/>
 
       </div>
 
-      <Footer />
     </>
   );
 };
