@@ -131,9 +131,8 @@ const FetcheCourses = () => {
             <p>No courses available.</p>
           )}
         </div>
-        <Footer />
+        
       </Container>
-      x
     </>
   );
 };

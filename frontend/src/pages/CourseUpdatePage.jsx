@@ -263,7 +263,7 @@ const CourseUpdate = () => {
             <img src={courseBG} alt="Image" />
           </div>
         </div>
-        <Footer />
+        
       </Container>
       <ToastContainer />
 
