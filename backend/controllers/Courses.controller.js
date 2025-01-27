@@ -1,5 +1,6 @@
 const courseServices = require('../services/Course.services')
 const mongoose = require('mongoose');
+const CourseCSV = require('../models/CourseCSV.model')
 
 
 const controller = {
@@ -88,6 +89,23 @@ const controller = {
     console.log(error, "Error in viewCourseDetails controller");
     return res.status(500).json({ error: "Internal server error" });
   }
+},
+
+  fetchRecommandation:async(req,res)=>{
+    const {category} = req.params
+    try{
+      const courseCSV = await CourseCSV.find({category})
+      if(courseCSV.length > 0){
+        res.json(courseCSV)
+      }else{
+        res.status(404).json({message:"no courses found on this category"})
+      }
+      console.log("fetchRecommandation works");
+      
+    }catch(error){
+      console.log(error);
+      res.status(500).json({ error: 'Error fetching courses.' });
+    }
 }
 
 }

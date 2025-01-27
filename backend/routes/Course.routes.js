@@ -15,7 +15,9 @@ router.get('/fetchallcourses/:category',courseController.fetchAllCourses)
 
 //corse fetch by id
 router.get('/fetchcourse/:id',courseController.fetchCourseById)
- 
+
+router.get('/coursebyrecommendation/:category',authMiddleware.verifyToken,courseController.fetchRecommandation)
+
 router.get('/viewcoursedetails/:course_id',authMiddleware.verifyToken,courseController.viewCourseDetails)
 
 module.exports = router
