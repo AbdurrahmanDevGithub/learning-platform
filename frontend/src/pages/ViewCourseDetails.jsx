@@ -21,13 +21,20 @@ const ViewCourseDetails = () => {
           toast.error("You need to sign in first");
           return;
         }
-
+  
         const response = await axios.get(`http://localhost:3001/api/course/viewcoursedetails/${course_id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-
+  
         if (response.data) {
           setCourse(response.data);
+          console.log(response.data.category);          
+          const response2 = await axios.get(
+            `http://localhost:3001/api/course/coursebyrecommendation/${response.data.category}`,{
+              headers: { Authorization: `Bearer ${token}` }
+            }
+          );
+          console.log("Recommended data is:", response2.data);
         } else {
           toast.error("Course details not found");
         }
@@ -36,9 +43,10 @@ const ViewCourseDetails = () => {
         toast.error("An error occurred while fetching course details");
       }
     };
-
+  
     fetchCourseDetails();
   }, [course_id]);
+  
 
   const handleLike = () => {
     toast.success("You liked this course!");
