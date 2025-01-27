@@ -4,7 +4,8 @@ import { host } from "../utils/APIRoutes";
 import { toast, ToastContainer } from "react-toastify";
 import Navbar from "../components/Navbar";
 import SearchIcon from '@mui/icons-material/Search';
-import BGImage from '../assets/smoke-376543.jpg'
+import BGImage from '../assets/smoke-376543.jpg';
+import Pngtree from '../assets/Pngtree.png';
 import { motion } from "framer-motion";
 import { TextField, Box, Typography, Button, List, ListItem, Card, CardContent, CardMedia, Grid, CircularProgress, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -46,7 +47,6 @@ const Courses = () => {
       if (response.data && response.data.length > 0) {
         setCourses(response.data);
         console.log(response.data);
-
       } else {
         toast.error(`Sorry! currently no courses available in ${category} category.`);
       }
@@ -108,7 +108,6 @@ const Courses = () => {
     }
   };
 
-
   const handleViewCourseDetails = async (course_id) => {
     try {
       navigate(`/viewcoursedetails/${course_id}`)
@@ -116,7 +115,6 @@ const Courses = () => {
       console.log(error);
     }
   }
-
 
   return (
     <>
@@ -214,7 +212,6 @@ const Courses = () => {
           </motion.div>
 
           {/* Courses Grid */}
-
           <Box sx={{ flexGrow: 1, padding: 2 }}>
             <motion.div
               initial={{ x: -250 }}
@@ -258,7 +255,7 @@ const Courses = () => {
                             objectFit: "cover",
                             marginLeft: "10px",
                             marginTop: "10px",
-                            borderRadius: "50%"
+                            borderRadius: "50%",
                           }}
                         />
                         <CardContent sx={{ padding: 1, color: "white" }}>
@@ -311,7 +308,6 @@ const Courses = () => {
                           >
                             View Details
                           </Button>
-
                         </CardContent>
                       </Card>
                     </Grid>
