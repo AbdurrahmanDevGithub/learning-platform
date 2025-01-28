@@ -6,7 +6,6 @@ import styled from "styled-components";
 import BGImage from "../assets/smoke-376543.jpg";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Footer from "../components/Footer";
 
 const FetcheCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -14,7 +13,7 @@ const FetcheCourses = () => {
   const [error, setError] = useState(null);
 
   const token = localStorage.getItem("token");
-  const username = localStorage.getItem("username") || "Guest";
+  const username = JSON.parse(localStorage.getItem("app-user"))?.username || "Guest";
 
   const toastOptions = {
     position: "top-right",
@@ -174,7 +173,7 @@ const Container = styled.div`
     width: 100%;
     max-height: 70vh;
     overflow-y: auto;
-    padding: 1rem;
+    padding: 4rem;
   }
 
   .courses-container::-webkit-scrollbar {
@@ -191,7 +190,7 @@ const Container = styled.div`
   }
 
   .course-card {
-    background-color: rgba(173, 216, 230, 0.5);
+    background-color: rgba(255, 255, 255, 0.1);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     overflow: hidden;
     border: 1px solid black;
@@ -210,12 +209,12 @@ const Container = styled.div`
 
     h2 {
       margin-bottom: 0.5rem;
-      color: black;
+      color: #efc6c6;
     }
 
     p {
       margin: 0.3rem 0;
-      color: black;
+      color: white;
     }
 
     .course-image {
