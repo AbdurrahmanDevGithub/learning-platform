@@ -29,15 +29,15 @@ const App = () => {
 
         {/* Protected Routes */}
         <Route path="/" element=
-        {<ProtectedRoute> <Dashboard /> </ProtectedRoute>} />
+          {<ProtectedRoute> <Dashboard /> </ProtectedRoute>} />
         <Route path="/uploadcourse" element={<ProtectedRoute> <CourseUplodePage /> </ProtectedRoute>} />
         <Route path="/courses" element={<ProtectedRoute> <FetcheCourses /> </ProtectedRoute>} />
         <Route path="/updatecourse/:id" element={<ProtectedRoute> <CourseUpdate /> </ProtectedRoute>} />
-        <Route path="/allcourses" element={<ProtectedRoute> <Courses /> </ProtectedRoute> } />
+        <Route path="/allcourses" element={<ProtectedRoute> <Courses /> </ProtectedRoute>} />
         <Route path="/mycourses" element={<ProtectedRoute> <MyCourses /> </ProtectedRoute>} />
-        <Route path="/viewcoursedetails/:course_id" element={ <ProtectedRoute><ViewCourseDetails /></ProtectedRoute>} />
-        <Route path="/viewbook" element={<ProtectedRoute><ViewBooks/></ProtectedRoute>}/>
-        <Route path="/footer" element={<ProtectedRoute><Footer/></ProtectedRoute>}/>
+        <Route path="/viewcoursedetails/:course_id" element={<ProtectedRoute><ViewCourseDetails /></ProtectedRoute>} />
+        <Route path="/viewbook" element={<ProtectedRoute><ViewBooks /></ProtectedRoute>} />
+        <Route path="/footer" element={<ProtectedRoute><Footer /></ProtectedRoute>} />
       </Routes>
 
     </AnimatePresence>

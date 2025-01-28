@@ -107,7 +107,7 @@ const ViewCourseDetails = () => {
         >
           {/* Main Course Details */}
           {course ? (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px',  }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', }}>
               {/* Video Section */}
               <div style={{ margin: '0 auto', maxWidth: '100%', textAlign: 'center' }}>
                 <video
@@ -190,16 +190,6 @@ const ViewCourseDetails = () => {
                       color: 'white',
                     }}
                   >
-                    {/* <img
-                      src={`http://localhost:3001/image/${recommendedCourse.image}`}
-                      alt={recommendedCourse.title}
-                      style={{
-                        width: '100%',
-                        height: '150px',
-                        objectFit: 'cover',
-                        borderRadius: '8px',
-                      }}
-                    /> */}
                     <h4 style={{ margin: '10px 0' }}>{recommendedCourse.title}</h4>
                     <p><strong>Category:</strong> {recommendedCourse.category}</p>
                     <div
@@ -211,22 +201,22 @@ const ViewCourseDetails = () => {
                       }}
                     >
                       <Button
-                          variant="contained"
-                          onClick={() => handleViewCourseDetails(recommendedCourse._id)}
+                        variant="contained"
+                        onClick={() => handleViewCourseDetails(recommendedCourse._id)}
 
-                          sx={{
-                            background: "linear-gradient(135deg, white, #a69090)",
-                            color: "navy",
-                            "&:hover": {
-                              background: "linear-gradient(135deg, navy, #0505f1)",
-                              color: "white",
-                              transform: "scale(1.05)",
-                              transition: "all 0.3s ease",
-                            },
-                          }}
-                        >
-                          View Details
-                        </Button>
+                        sx={{
+                          background: "linear-gradient(135deg, white, #a69090)",
+                          color: "navy",
+                          "&:hover": {
+                            background: "linear-gradient(135deg, navy, #0505f1)",
+                            color: "white",
+                            transform: "scale(1.05)",
+                            transition: "all 0.3s ease",
+                          },
+                        }}
+                      >
+                        View Details
+                      </Button>
                     </div>
                   </div>
                 ))}
