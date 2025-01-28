@@ -131,7 +131,7 @@ const Courses = () => {
         }}
       >
 
-        {/* Search Bar with animation */}
+        {/* Search Bar*/}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -147,14 +147,14 @@ const Courses = () => {
               fullWidth
               sx={{ backgroundColor: "white", borderRadius: 2 }}
             />
-            <IconButton onClick={handleSearchSubmit} sx={{ marginLeft: 1 }}>
+            <IconButton onClick={handleSearchSubmit} sx={{ marginLeft: 1, color: "white" }}>
               <SearchIcon />
             </IconButton>
           </Box>
         </motion.div>
 
         <Box sx={{ display: "flex", marginTop: "16px" }}>
-          {/* Categories Sidebar with animation */}
+          {/* Categories Sidebar */}
           <motion.div
             initial={{ x: -200 }}
             animate={{ x: 0 }}

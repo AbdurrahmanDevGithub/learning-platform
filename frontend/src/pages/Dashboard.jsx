@@ -5,7 +5,6 @@ import BGImage from "../assets/smoke-376543.jpg";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 
-// Animated Text Component
 const AnimatedText = () => {
   const text = "Empower Your Learning with AI";
 
@@ -92,9 +91,6 @@ export default function Dashboard() {
             transition={{ duration: 0.7 }}
           >
             <AnimatedText />
-            {/* <Typography variant="h6" sx={{ maxWidth: "700px", mb: 5, paddingLeft: "140px" }}>
-              Discover tailored courses, expert mentors, and cutting-edge resources to accelerate your career.
-            </Typography> */}
           </motion.div>
         </Box>
 

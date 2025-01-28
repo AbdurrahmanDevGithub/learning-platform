@@ -77,12 +77,10 @@ const FetcheCourses = () => {
   }
 
   return (
-
     <>
       <Navbar />
       <ToastContainer />
       <Container>
-
         <h1>Welcome, <span>{username}!</span></h1>
         <div className="courses-container">
           {Array.isArray(courses) && courses.length > 0 ? (
@@ -103,7 +101,6 @@ const FetcheCourses = () => {
                 >
                   Your browser does not support the video tag.
                 </video>
-
                 <p>
                   <strong>Category:</strong> {course.category}
                 </p>
@@ -127,10 +124,14 @@ const FetcheCourses = () => {
               </div>
             ))
           ) : (
-            <p>No courses available.</p>
+            <div className="no-courses-message-container">
+              <p className="no-courses-message">No courses available.</p>
+              <Link to="/uploadcourse">
+                <button className="button upload-course-button">Upload Course</button>
+              </Link>
+            </div>
           )}
         </div>
-        
       </Container>
     </>
   );
@@ -159,7 +160,7 @@ const Container = styled.div`
     color: white;
     animation: fadeInUp 0.8s ease-out forwards;
 
-    span{
+    span {
       color: #0505bd;
     }
   }
@@ -201,7 +202,6 @@ const Container = styled.div`
     padding: 2rem;
     width: 300px;
     color: #ddd;
-    
 
     &:hover {
       transform: scale(1.05);
@@ -259,6 +259,51 @@ const Container = styled.div`
         }
       }
     }
+  }
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .no-courses-message-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  .upload-course-button {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 2rem;
+    padding: 0.5rem 2rem;
+    border: none;
+    border-radius: 5px;
+    background: linear-gradient(135deg, white, #a69090);
+    color: black;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background: linear-gradient(135deg, navy, #0505f1);
+      color: white;
+      transform: scale(1.05);
+    }
+  }
+
+  .no-courses-message {
+    font-size: 2.7rem;
+    color: #fff;
+    animation: fadeInUp 1s ease-out forwards;
   }
 `;
 

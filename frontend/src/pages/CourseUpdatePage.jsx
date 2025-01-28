@@ -7,7 +7,6 @@ import Navbar from "../components/Navbar";
 import styled from "styled-components";
 import courseBG from '../assets/vecteezy_digital-marketing-3d-icon-illustration-for-your-website_11997005.png'
 import BGImage from '../assets/smoke-376543.jpg'
-import Footer from "../components/Footer";
 
 const CourseUpdate = () => {
   const [loading, setLoading] = useState(false);
@@ -263,7 +262,7 @@ const CourseUpdate = () => {
             <img src={courseBG} alt="Image" />
           </div>
         </div>
-        
+
       </Container>
       <ToastContainer />
 

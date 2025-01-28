@@ -152,29 +152,29 @@ const Container = styled.div`
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: rgba(255, 255, 255, 0.9); /* Slightly more opaque */
+    background-color: rgba(255, 255, 255, 0.9);
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 0.7rem 0;
     display: none;
     z-index: 1000;
-    min-width: 200px; /* Ensure proper width for items */
+    min-width: 200px; 
   }
 
   .dropdown-item {
-    padding: 0.8rem 1.5rem; /* Adjust spacing */
+    padding: 0.8rem 1.5rem; 
     text-decoration: none;
     color: black;
-    font-size: 1rem; /* Adjust font size */
+    font-size: 1rem;
     display: block;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   .dropdown-item:hover {
-    background: linear-gradient(135deg, navy, #0505f1); /* Add visible hover background */
-    color: white; /* Make text color darker on hover */
-    cursor: pointer; /* Show a pointer on hover */
+    background: linear-gradient(135deg, navy, #0505f1); 
+    color: white; 
+    cursor: pointer;
   }
 
   .nav-link:hover + .dropdown,
