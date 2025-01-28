@@ -14,8 +14,8 @@ const AuthSlice = createSlice({
     reducers: {
         loginSuccess: (state, action) => {
             state.isAuthenticated = true;
-            state.token = action.payload.token; //Update Token
-            state.username = action.payload.username; // Update username
+            state.token = action.payload.token; 
+            state.username = action.payload.username; 
             localStorage.setItem('token', action.payload.token); //Save token in localStorage
             localStorage.setItem("app-user", JSON.stringify({ username: action.payload.username })
             );
@@ -25,7 +25,6 @@ const AuthSlice = createSlice({
             state.token = null;
             state.username = "Guest";
 
-            // Remove all user-related info from localStorage
             localStorage.removeItem("token");
             localStorage.removeItem("app-user");
         },
