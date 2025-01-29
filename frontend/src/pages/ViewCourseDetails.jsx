@@ -59,22 +59,22 @@ const ViewCourseDetails = () => {
 
   const handleLike = () => {
     setLikeCount(likeCount + 1);
-    toast.success("You liked this course!");
+    console.log("You liked this course!");
   };
 
   const handleDislike = () => {
     setDislikeCount(dislikeCount + 1);
-    toast.warn("You disliked this course.");
+    console.log("You disliked this course.");
   };
 
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href);
-    toast.success("Course link copied to clipboard!");
+    console.log("Course link copied to clipboard!");
   };
 
   const handleAddComment = () => {
     if (newComment.trim() === "") {
-      toast.error("Comment cannot be empty.");
+      console.log("Comment cannot be empty.");
       return;
     }
     setComments([...comments, newComment]);
@@ -217,46 +217,46 @@ const ViewCourseDetails = () => {
             <p>Loading course details...</p>
           )}
 
-           {/* Recommended Courses */}
-        <div>
-          <h3 style={{padding: "20px", fontWeight: "bold"}}>Recommended Courses</h3>
-          {recommendedCourses.length > 0 ? (
-            <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-              {recommendedCourses.map((recommendedCourse) => (
-                <div
-                  key={recommendedCourse._id}
-                  style={{
-                    background: "rgba(255, 255, 255, 0.2)",
-                    borderRadius: "12px",
-                    padding: "16px",
-                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-                    color: "white",
-                  }}
-                >
-                  <h4>{recommendedCourse.title}</h4>
-                  <p>
-                    <strong>Category:</strong> {recommendedCourse.category}
-                  </p>
-                  <Button
-                    variant="contained"
-                    onClick={() => handleViewCourseDetails(recommendedCourse._id)}
-                    sx={{
-                      background: "linear-gradient(135deg, white, #a69090)",
-                      color: "navy",
-                      "&:hover": { background: "linear-gradient(135deg, navy, #0505f1)", color: "white" },
+          {/* Recommended Courses */}
+          <div>
+            <h3 style={{ padding: "20px", fontWeight: "bold" }}>Recommended Courses</h3>
+            {recommendedCourses.length > 0 ? (
+              <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+                {recommendedCourses.map((recommendedCourse) => (
+                  <div
+                    key={recommendedCourse._id}
+                    style={{
+                      background: "rgba(255, 255, 255, 0.2)",
+                      borderRadius: "12px",
+                      padding: "16px",
+                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+                      color: "white",
                     }}
                   >
-                    View Details
-                  </Button>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p>No recommended courses available.</p>
-          )}
+                    <h4>{recommendedCourse.title}</h4>
+                    <p>
+                      <strong>Category:</strong> {recommendedCourse.category}
+                    </p>
+                    <Button
+                      variant="contained"
+                      onClick={() => handleViewCourseDetails(recommendedCourse._id)}
+                      sx={{
+                        background: "linear-gradient(135deg, white, #a69090)",
+                        color: "navy",
+                        "&:hover": { background: "linear-gradient(135deg, navy, #0505f1)", color: "white" },
+                      }}
+                    >
+                      View Details
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p>No recommended courses available.</p>
+            )}
+          </div>
         </div>
-      </div>
-      <Footer />
+        <Footer />
       </div >
     </>
   );

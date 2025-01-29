@@ -68,8 +68,8 @@ const Navbar = () => {
             <li className="dropdown-item" onClick={() => handleUploadClick()}>Upload Course</li>
           </ul>
 
-          <li><Link to="/allcourses">View Courses</Link></li>
-          <li><Link to="/mycourses">My Courses</Link></li>
+          <li><Link to="/allcourses">Courses</Link></li>
+          <li><Link to="/mycourses">My Learning</Link></li>
           <li><Link to="/viewbook">Get Books</Link></li>
         </ul>
 
