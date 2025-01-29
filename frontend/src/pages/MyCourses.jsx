@@ -30,17 +30,22 @@ const MyCourses = () => {
           navigate("/");
           return;
         }
-
+    
         const response = await axios.get(`${host}/api/user/mycourses`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        if(response.data.length==0){
-          toast.error("You not added any courses to this")
+    
+        // Check the response thoroughly
+        console.log("API response:", response);
+    
+        if (response.data && response.data.length === 0) {
+          toast.error("You have not added any courses to this");
+        } else {
+          setCourses(response.data);
         }
-        console.log("API response:", response.data);
-        setCourses(response.data);
+    
       } catch (error) {
         console.error("Error fetching courses:", error);
         if (error.response && error.response.status === 404) {
@@ -52,6 +57,7 @@ const MyCourses = () => {
         }
       }
     };
+    
 
     fetchMyCourses();
   }, [navigate]);
@@ -125,8 +131,9 @@ const MyCourses = () => {
             </Table>
           </TableContainer>
         </Box>
-        <ToastContainer />
+        
         <Footer />
+        <ToastContainer />
       </div>
 
     </>

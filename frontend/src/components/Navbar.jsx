@@ -71,7 +71,6 @@ const Navbar = () => {
           <li><Link to="/allcourses">View Courses</Link></li>
           <li><Link to="/mycourses">My Courses</Link></li>
           <li><Link to="/viewbook">Get Books</Link></li>
-          <li><a href="#contact">Contact</a></li>
         </ul>
 
         {isAuthenticated ? (
