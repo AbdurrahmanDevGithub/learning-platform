@@ -153,12 +153,16 @@ const Courses = () => {
           </Box>
         </motion.div>
 
-        <Box sx={{ display: "flex", marginTop: "16px" }}>
+        <Box sx={{
+          display: "flex",
+          marginTop: "16px",
+          padding: "30px  150px"
+        }}>
           {/* Categories Sidebar */}
           <motion.div
             initial={{ x: -200 }}
             animate={{ x: 0 }}
-            transition={{ type: "spring", stiffness: 100, damping: 25 }}
+            transition={{ type: "spring", stiffness: 100, damping: 30 }}
           >
             <Box
               className="scrollbar-custom"
@@ -236,7 +240,7 @@ const Courses = () => {
                     <Grid item xs={10} sm={6} md={3} key={course._id}>
                       <Card
                         sx={{
-                          maxWidth: 300,
+                          maxWidth: 400,
                           margin: "auto",
                           borderRadius: "12px",
                           backgroundColor: "rgba(255, 255, 255, 0.3)",

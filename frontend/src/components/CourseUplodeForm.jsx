@@ -5,8 +5,8 @@ import BGImage from "../assets/smoke-376543.jpg";
 import Navbar from "./Navbar";
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
-import courseBG from '../assets/vecteezy_digital-marketing-3d-icon-illustration-for-your-website_11997005.png';
-import Footer from "./Footer";
+import courseBG from '../assets/rb_3275.png';
+
 
 //wsbhqbsw swbshwqjbs swb2hsbkq
 const CourseUploadForm = ({ onSubmit }) => {
@@ -418,7 +418,7 @@ const Container = styled.div`
   gap: 10rem;
   
   img {
-  width: 550px;
+  width: 650px;
   height: auto;
   border-radius: 1rem;
   box-shadow: 0 4px 8px rgba(0,0,0,0.7); 
