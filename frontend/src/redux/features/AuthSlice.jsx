@@ -16,7 +16,7 @@ const AuthSlice = createSlice({
             state.isAuthenticated = true;
             state.token = action.payload.token; 
             state.username = action.payload.username; 
-            localStorage.setItem('token', action.payload.token); //Save token in localStorage
+            localStorage.setItem('token', action.payload.token); 
             localStorage.setItem("app-user", JSON.stringify({ username: action.payload.username })
             );
         },
