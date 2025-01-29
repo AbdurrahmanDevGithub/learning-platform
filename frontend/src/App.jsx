@@ -28,8 +28,7 @@ const App = () => {
         <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
 
         {/* Protected Routes */}
-        <Route path="/" element=
-          {<ProtectedRoute> <Dashboard /> </ProtectedRoute>} />
+        <Route path="/" element={<ProtectedRoute> <Dashboard /> </ProtectedRoute>} />
         <Route path="/uploadcourse" element={<ProtectedRoute> <CourseUplodePage /> </ProtectedRoute>} />
         <Route path="/courses" element={<ProtectedRoute> <FetcheCourses /> </ProtectedRoute>} />
         <Route path="/updatecourse/:id" element={<ProtectedRoute> <CourseUpdate /> </ProtectedRoute>} />
