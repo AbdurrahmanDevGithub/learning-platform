@@ -5,7 +5,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "../components/Navbar";
 import styled from "styled-components";
-import courseBG from '../assets/vecteezy_digital-marketing-3d-icon-illustration-for-your-website_11997005.png'
+import courseBG from '../assets/rb_2148575636.png'
 import BGImage from '../assets/smoke-376543.jpg'
 
 const CourseUpdate = () => {
@@ -426,7 +426,7 @@ const Container = styled.div`
   gap: 10rem;
   
   img {
-  width: 550px;
+  width: 650px;
   height: auto;
   border-radius: 1rem;
   box-shadow: 0 4px 8px rgba(0,0,0,0.7); 
