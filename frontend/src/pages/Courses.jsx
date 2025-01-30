@@ -9,12 +9,15 @@ import { motion } from "framer-motion";
 import { TextField, Box, Typography, Button, List, ListItem, Card, CardContent, CardMedia, Grid, CircularProgress, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
+import setTheImage from '../assets/online-tutorials-concept-b.png'
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const navigate = useNavigate()
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [imageVisible, setImageVisible] = useState(true);
+  const navigate = useNavigate();
 
   const categories = [
     "Engineering",
@@ -40,13 +43,14 @@ const Courses = () => {
   ];
 
   const handleClickedCourse = async (category) => {
+    setSelectedCategory(category);
+    setImageVisible(false);
     setLoading(true);
     try {
       const response = await axios.get(`${host}/api/course/fetchallcourses/${category}`);
       if (response.data && response.data.length > 0) {
         setCourses(response.data);
         console.log(response.data);
-
       } else {
         toast.error(`Sorry! currently no courses available in ${category} category.`);
       }
@@ -108,15 +112,13 @@ const Courses = () => {
     }
   };
 
-
   const handleViewCourseDetails = async (course_id) => {
     try {
-      navigate(`/viewcoursedetails/${course_id}`)
+      navigate(`/viewcoursedetails/${course_id}`);
     } catch (error) {
       console.log(error);
     }
-  }
-
+  };
 
   return (
     <>
@@ -156,7 +158,7 @@ const Courses = () => {
         <Box sx={{
           display: "flex",
           marginTop: "16px",
-          padding: "30px  150px"
+          padding: "30px 150px"
         }}>
           {/* Categories Sidebar */}
           <motion.div
@@ -217,9 +219,36 @@ const Courses = () => {
             </Box>
           </motion.div>
 
-          {/* Courses Grid */}
+          {/* Category Image Display */}
+          <div className="flex items-center justify-center relative" style={{ width: '800px', height: '600px', marginLeft: "320px", marginTop: "-30px" }}>
+            {imageVisible ? (
+              <>
+                <h1 style={{
+                  color: "white",
+                  marginLeft: "200px",
+                  whiteSpace: "nowrap",
+                  letterSpacing: "0.5rem",
+                  marginTop: "50px",
+                }}>
+                  ONLINE EDUCATION
+                </h1>
+                <img
+                  src={selectedCategory ? `http://localhost:3001/images/${selectedCategory}.jpg` : setTheImage}
+                  alt="Category"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                  }}
+                />
+              </>
+            ) : null}
+          </div>
 
-          <Box sx={{ flexGrow: 1, padding: 2 }}>
+
+
+
+          {/* Courses Grid */}
+          <Box sx={{ flexGrow: 1, padding: 2, marginLeft: '-450px' }}> {/* Add marginLeft here */}
             <motion.div
               initial={{ x: -250 }}
               animate={{ x: 0 }}
@@ -237,7 +266,7 @@ const Courses = () => {
               ) : (
                 <Grid container spacing={3}>
                   {courses.map((course) => (
-                    <Grid item xs={10} sm={6} md={3} key={course._id}>
+                    <Grid item xs={12} sm={6} md={4} key={course._id}>
                       <Card
                         sx={{
                           maxWidth: 400,
@@ -313,9 +342,8 @@ const Courses = () => {
                             }}
                             onClick={() => handleViewCourseDetails(course._id)}
                           >
-                            View Details
+                            View Course
                           </Button>
-
                         </CardContent>
                       </Card>
                     </Grid>
@@ -326,16 +354,12 @@ const Courses = () => {
           </Box>
 
         </Box>
-
-        <ToastContainer />
         <Footer />
       </div>
+      <ToastContainer />
 
     </>
   );
-
 };
 
 export default Courses;
-
-
