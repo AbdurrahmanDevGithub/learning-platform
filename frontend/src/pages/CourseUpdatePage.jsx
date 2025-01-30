@@ -426,7 +426,7 @@ const Container = styled.div`
   gap: 10rem;
   
   img {
-  width: 650px;
+  width: 550px;
   height: auto;
   border-radius: 1rem;
   box-shadow: 0 4px 8px rgba(0,0,0,0.7); 
