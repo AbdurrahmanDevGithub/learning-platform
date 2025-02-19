@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 require('dotenv').config()
 
+//d
 const MONGO_URI = 'mongodb://localhost:27017/learning'
 const dbconnect = async()=>{
   try{
