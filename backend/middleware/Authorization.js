@@ -20,7 +20,6 @@ const generateToken = async(user)=>{
 const verifyToken = async (req, res, next) => {
   try {
     const authHeader = req.headers['authorization'];
-    // console.log("Authorization Header:", authHeader);
    
     const token = authHeader && authHeader.split(' ')[1];
     // console.log("Token:", token);
@@ -40,7 +39,6 @@ const verifyToken = async (req, res, next) => {
       }
 
       req.user = user;
-      // console.log("Decoded user:", req.user); // Log the decoded user to ensure it's correct
       
       next();
     });

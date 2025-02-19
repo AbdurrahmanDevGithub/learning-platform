@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 require('dotenv').config()
 
-// const MONGO_URI = `mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASS}@cluster1.0gle3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1`
+//d
 const MONGO_URI = 'mongodb://localhost:27017/learning'
 const dbconnect = async()=>{
   try{
