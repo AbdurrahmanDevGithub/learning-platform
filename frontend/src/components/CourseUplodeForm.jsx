@@ -81,7 +81,7 @@ const CourseUploadForm = ({ onSubmit }) => {
         <div className="flex-direction">
           <div className="form-container">
             <form className="upload-form" onSubmit={handleSubmit}>
-              {/* Input fields */}
+              
               <label className="form-label">
                 Category:
                 <select

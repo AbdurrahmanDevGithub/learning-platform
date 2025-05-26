@@ -3,14 +3,14 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 
 const TutorAccessContent = () => {
-  const token = useSelector((state) => state.auth.token); // Retrieve token at the top level
+  const token = useSelector((state) => state.auth.token); 
 
   const handleTutorAccess = async () => {
     try {
       const response = await axios.get('/api/tutor/fetchallcourses', {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log(response.data); // Handle the response to show courses or any tutor content
+      console.log(response.data); 
     } catch (error) {
       if (error.response && error.response.status === 403) {
         alert("Access Denied: You don't have permission to access this page.");
@@ -21,7 +21,7 @@ const TutorAccessContent = () => {
   };
 
   return (
-    <button onClick={handleTutorAccess}>Access Tutor Content</button> // Trigger access
+    <button onClick={handleTutorAccess}>Access Tutor Content</button> 
   );
 };
 

@@ -30,7 +30,6 @@ const CourseUplodePage = () => {
   return (
     <>
       <div>
-      {/* <h1>Upload Course</h1> */}
       <CourseUplodeForm onSubmit={handleCourseUpload} />
     </div>
     </>

@@ -117,7 +117,7 @@ const ViewCourseDetails = () => {
                 color: "white",
               }}
             >
-              {/* Video Section */}
+              
               <div style={{ textAlign: "center" }}>
                 <video
                   src={`http://localhost:3001/video/${course.video}`}
@@ -136,13 +136,13 @@ const ViewCourseDetails = () => {
                 </video>
               </div>
 
-              {/* Course Details */}
+              
               <h2 style={{ fontSize: "28px", fontWeight: "bold", marginTop: "10px" }}>{course.title}</h2>
               <p style={{ fontSize: "18px", fontWeight: "500", marginTop: "10px" }}>
                 <strong>Category:</strong> {course.category}
               </p>
 
-              {/* Like, Dislike, Share Buttons */}
+              
               <div style={{ display: "flex", gap: "40px", alignItems: "center", marginTop: "10px" }}>
                 <button onClick={handleLike} style={{
                   display: "flex",
@@ -176,7 +176,7 @@ const ViewCourseDetails = () => {
                 </button>
               </div>
 
-              {/* Comments Section */}
+              
               <div>
                 <h3 style={{ padding: "0.1rem", marginTop: "10px" }}>Comments</h3>
                 <ul style={{ listStyle: "none", padding: "0.2rem" }}>
@@ -217,7 +217,7 @@ const ViewCourseDetails = () => {
             <p>Loading course details...</p>
           )}
 
-          {/* Recommended Courses */}
+          
           <div>
             <h3 style={{ padding: "20px", fontWeight: "bold" }}>Recommended Courses</h3>
             {recommendedCourses.length > 0 ? (

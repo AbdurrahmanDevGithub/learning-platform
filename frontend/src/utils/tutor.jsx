@@ -7,7 +7,7 @@ export const uploadCourse = async (formData, token) => {
         const config = {
             headers: {
                 "Content-Type": "multipart/form-data",
-                Authorization: `Bearer ${token}`, // Ensure token is passed correctly
+                Authorization: `Bearer ${token}`, 
             },
         };
 
@@ -61,15 +61,15 @@ export const updateCourse = async (id, formData, token) => {
         return response.data;
     } catch (error) {
         if (error.response) {
-            // API returned an error response
+            
             console.error("Course update error:", error.response.data);
             throw new Error(error.response.data.message || "Error updating course");
         } else if (error.request) {
-            // No response was received from the server
+            
             console.error("No response received:", error.request);
             throw new Error("No response from the server");
         } else {
-            // Something went wrong in setting up the request
+            
             console.error("Error setting up the request:", error.message);
             throw new Error("Error in request setup");
         }

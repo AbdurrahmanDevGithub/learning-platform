@@ -37,7 +37,7 @@ const MyCourses = () => {
           },
         });
     
-        // Check the response thoroughly
+
         console.log("API response:", response);
     
         if (response.data && response.data.length === 0) {

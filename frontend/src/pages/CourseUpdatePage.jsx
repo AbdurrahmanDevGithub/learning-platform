@@ -56,7 +56,6 @@ const CourseUpdate = () => {
     data.append("duration", formData.duration);
     data.append("description", formData.description);
 
-    // Append image and video files if present
     if (formData.image) {
       data.append("image", formData.image);
     }
@@ -90,7 +89,7 @@ const CourseUpdate = () => {
         <div className="flex-direction">
           <div className="form-container">
             <form className="upload-form" onSubmit={handleSubmit}>
-              {/* Input fields */}
+              
               <label className="form-label">
                 Category:
                 <select
