@@ -75,7 +75,7 @@ export default function Dashboard() {
           color: "white",
         }}
       >
-        {/* Hero Section */}
+   
         <Box
           sx={{
             padding: "160px 20px 30px",
@@ -94,7 +94,7 @@ export default function Dashboard() {
           </motion.div>
         </Box>
 
-        {/* Features Section */}
+      
         <Box sx={{ padding: "1px 160px 100px" }}>
           <Typography variant="h4" sx={{ fontWeight: "bold", mb: 4, textAlign: "center" }}>
             Why Choose Us?
@@ -156,7 +156,7 @@ export default function Dashboard() {
             </Grid>
           </Grid>
 
-          {/* Additional Section */}
+      
           <Box
             sx={{
               backgroundColor: "rgba(255, 255, 255, 0.1)",

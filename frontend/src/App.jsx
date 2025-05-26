@@ -23,11 +23,10 @@ const App = () => {
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        {/* Public Routes */}
+        
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
 
-        {/* Protected Routes */}
         <Route path="/" element={<ProtectedRoute> <Dashboard /> </ProtectedRoute>} />
         <Route path="/uploadcourse" element={<ProtectedRoute> <CourseUplodePage /> </ProtectedRoute>} />
         <Route path="/courses" element={<ProtectedRoute> <FetcheCourses /> </ProtectedRoute>} />

@@ -17,7 +17,7 @@ const ViewBooks = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true); // Show loading spinner
+    setIsLoading(true); r
     try {
       const response = await axios(`https://openlibrary.org/search.json?title=${encodeURIComponent(data)}`);
       setResponseData(response.data.docs);
@@ -26,7 +26,7 @@ const ViewBooks = () => {
     } catch (error) {
       console.log(error);
     } finally {
-      setIsLoading(false); // Hide loading spinner
+      setIsLoading(false); 
     }
   };
 
@@ -149,7 +149,7 @@ const ViewBooks = () => {
                 Author: {book.author_name ? book.author_name.join(', ') : 'Unknown Author'}
               </p>
               <p>First Published: {book.first_publish_year || 'Unknown Year'}</p>
-              {/* <p>Language: {book.language ? book.language.join(', ') : 'Unknown Language'}</p> */}
+              
               <Button
                 onClick={() => handleViewMore(book.key)}
                 variant="contained"

@@ -7,6 +7,7 @@ const tutorRoutes = require('./Tutor.routes')
 const courseRoutes = require('./Course.routes')
 const accountRoutes = require('./Account.routes')
 
+
 const routes = [
   {
     path:'/account',
@@ -25,6 +26,7 @@ const routes = [
     route:courseRoutes
   }
 ]
+
 
 
 routes.forEach((route)=>{

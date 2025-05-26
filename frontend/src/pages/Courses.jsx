@@ -160,7 +160,7 @@ const Courses = () => {
           marginTop: "16px",
           padding: "30px 150px"
         }}>
-          {/* Categories Sidebar */}
+          
           <motion.div
             initial={{ x: -200 }}
             animate={{ x: 0 }}
@@ -219,7 +219,7 @@ const Courses = () => {
             </Box>
           </motion.div>
 
-          {/* Category Image Display */}
+         
           <div className="flex items-center justify-center relative" style={{ width: '800px', height: '600px', marginLeft: "320px", marginTop: "-30px" }}>
             {imageVisible ? (
               <>
@@ -247,8 +247,8 @@ const Courses = () => {
 
 
 
-          {/* Courses Grid */}
-          <Box sx={{ flexGrow: 1, padding: 2, marginLeft: '-450px' }}> {/* Add marginLeft here */}
+        
+          <Box sx={{ flexGrow: 1, padding: 2, marginLeft: '-450px' }}> 
             <motion.div
               initial={{ x: -250 }}
               animate={{ x: 0 }}

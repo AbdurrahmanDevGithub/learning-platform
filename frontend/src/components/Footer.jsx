@@ -18,7 +18,7 @@ const Footer = () => {
     >
       <Container maxWidth="lg">
         <Grid container spacing={4} justifyContent="space-between" alignItems="center">
-          {/* Logo and About Section */}
+         
           <Grid item xs={12} md={4}>
             <Typography variant="h6" color="rgba(255, 255, 255, 0.745)" gutterBottom>
               EduLearn
@@ -28,7 +28,7 @@ const Footer = () => {
             </Typography>
           </Grid>
 
-          {/* Quick Links Section */}
+          
           <Grid item xs={12} md={4}>
             <Typography variant="h6" color="rgba(255, 255, 255, 0.745)" gutterBottom>
               Quick Links
@@ -49,7 +49,7 @@ const Footer = () => {
             </Box>
           </Grid>
 
-          {/* Contact Section */}
+         
           <Grid item xs={12} md={4}>
             <Typography variant="h6" color="rgba(255, 255, 255, 0.745)" gutterBottom>
               Contact Us
@@ -66,7 +66,7 @@ const Footer = () => {
           </Grid>
         </Grid>
 
-        {/* Social Media & Copyright Section */}
+
         <Box
           mt={4}
           pt={2}
