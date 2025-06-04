@@ -17,7 +17,7 @@ const controller = {
 
   enrollCourse:async(req,res)=>{
     try{
-      //res.json({"msg":"succsessss"})
+      //res.json({"msg":"sccsess"})
       const id = req.user.id;
       const email = req.user.email;
       const username = req.user.username;
