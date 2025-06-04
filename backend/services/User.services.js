@@ -1,45 +1,47 @@
 const User = require('../models/User.model')
+const authMiddleware = require('../middleware/Authorization')
 
 
 
-const signup = async(username,email,password,role)=>{
-  try{
+const signup = async (username, email, password, role) => {
+  try {
     const emailIsTaken = await User.emailIsTaken(email)
-    if(emailIsTaken){
-      return {error:"Email is already taken'"}
+    if (emailIsTaken) {
+      return { error: "Email is already taken", statuscode: 409 }
     }
 
-    const newUser = new User({username,email,password,role})
-    const user= await newUser.save()
+    const newUser = new User({ username, email, password, role })
+    const user = await newUser.save()
     return user
 
-  }catch(error){
-    console.log("error in signup services",error);
-    throw error
+  } catch (error) {
+    console.log("error in signup services", error);
+    return { error: "error in signup services", statuscode: 500 }
   }
 }
 
-const signin = async(email,password)=>{
-  try{
-    const user = await User.findOne({email})
-    if(!user){
-      return {error:"invalid Email"}
+
+const signin = async (email, password) => {
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return { success: false, msg: "Invalid email", statuscode: 409 };
     }
 
-    if(!await user.comparePassword(password)){
-      return {error:"invalid password"}
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) {
+      return { success: false, msg: "Invalid password", statuscode: 409 };
     }
 
-    const username = user.username
+    const token = await authMiddleware.generateToken(user);
+    return { success: true, user, token };
+  } catch (error) {
+    console.error(error);
 
-    console.log(username, 'logged success');
-    return user;
-    // return {username,"msg":"Successfully logged in"}
-    
-  }catch(error){
-    
+    return { success: false, msg: "Something went wrong", statuscode: 500 };
   }
-}
+
+};
 
 module.exports = {
   signup,

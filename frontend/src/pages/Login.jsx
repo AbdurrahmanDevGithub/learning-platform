@@ -1,91 +1,63 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-import { useEffect } from 'react';
 import axios from 'axios';
-import { loginRoute } from '../utils/APIRoutes';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../redux/features/AuthSlice';
 
 const Login = () => {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const [values, setValues] = useState({
-    email: "",
-    password: ""
-  });
-
-  const toastOptions = {
-    position: "bottom-right",
-    autoClose: 8000,
-    pauseOnHover: true,
-    theme: "dark"
-  }
-
-  useEffect(() => {
-    if (localStorage.getItem('app-user')) {
-      navigate('/')
-    }
-  }, []);
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    if (handleValidation()) {
-      const { email, password } = values;
-
-      try {
-        const { data } = await axios.post(loginRoute, {
-          email,
-          password,
-        });
-
-        if (data.status === false) {
-          toast.error(data.msg, toastOptions);
-        }
-
-        if (data.status === true) {
-          localStorage.setItem("app-user", JSON.stringify(data.user));
-
-
-        }
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    
+    try {
+      const response = await axios.post("http://localhost:3001/api/account/signin", {
+        email,
+        password,
+      });
+  
+      if (response.data.success) {
+        dispatch(
+          loginSuccess({
+            token: response.data.token,
+            username: response.data.user.username,
+          })
+        );
+        toast.success("Login successful!", { position: "top-right" });
         navigate("/");
-      } catch (ex) {
-        console.error("Error during login:", ex);
-        toast.error("Something went wrong. Please try again.", toastOptions);
+      } else {
+        setError(response.data.msg || "Invalid credentials, please try again");
+        toast.error(response.data.msg || "Invalid credentials, please try again", {
+          position: "top-right",
+        });
       }
+    } catch (error) {
+      const errorMessage = error.response?.data?.msg || "An error occurred. Please try again.";
+      setError(errorMessage);
+      toast.error(errorMessage, { position: "top-right" });
     }
   };
 
-
-  const handleValidation = () => {
-    const { password, email } = values;
-
-    if (email.trim() === "" || password.trim() === "") {
-      toast.error(
-        "email and password are required", toastOptions
-      );
-      return false
-    }
-    return true;
-  }
-
-  const handleChange = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.value });
-  }
 
   return (
 
 
     <motion.div
-  initial={{ opacity: 0, y: 50 }}
-  animate={{ opacity: 1, y: 0 }}
-  exit={{ opacity: 0, y: -50 }}
-  transition={{ duration: 0.5 }}
->
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -50 }}
+      transition={{ duration: 0.5 }}
+    >
 
       <Container>
         <form onSubmit={(event) => handleSubmit(event)}>
@@ -95,16 +67,18 @@ const Login = () => {
 
           <input
             type="email"
-            placeholder='email'
+            placeholder='sample@gmail.com'
             name='email'
-            onChange={(e) => handleChange(e)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
 
           <input
             type="password"
-            placeholder='password'
+            placeholder='Enter your password'
             name='password'
-            onChange={(e) => handleChange(e)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
 
           <button type='submit'>Login</button>
@@ -134,7 +108,7 @@ const Container = styled.div`
       background-color: transparent;
 
       .brand {
-        display: flex;
+      display: flex;
       align-items: center;
       gap: 1rem;
       justify-content: center;
@@ -146,7 +120,7 @@ const Container = styled.div`
   }
 
       form {
-        display: flex;
+      display: flex;
       flex-direction: column;
       gap: 2rem;
       background-color: #120529;

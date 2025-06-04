@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { signupRoute } from '../utils/APIRoutes';
-import axios from 'axios'
+import axios from 'axios';
 
 const Register = () => {
 
@@ -15,9 +15,14 @@ const Register = () => {
     username: "",
     email: "",
     password: "",
-    confirmpassword: ""
-    // roles: [],
+    confirmpassword: "",
+    role: "user"
   });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const [loading, setLoading] = useState(false);
 
   const toastOptions = {
     position: "bottom-right",
@@ -28,181 +33,172 @@ const Register = () => {
 
   useEffect(() => {
     if (localStorage.getItem('app-user')) {
-      navigate('/');
+      navigate('/login');
     }
-  }, []);
-
-
+  }, [navigate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (handleValidation()) {
-      const { username, email, password } = values;      //{ username, email, password, roles }
+      const { username, email, password, role } = values;
+      setLoading(true);
 
-      const { data } = await axios.post(signupRoute, {
-        username,
-        email,
-        password,
-        // roles
-      });
+      try {
+        const { data } = await axios.post(signupRoute, {
+          username,
+          email,
+          password,
+          role
+        });
 
-      if (data.status === false) {
-        toast.error(data.msg, toastOptions);
+        if (data.status === false) {
+          toast.error(data.msg, toastOptions);
+        }
+
+        if (data.status === true) {
+          localStorage.setItem('app-user', JSON.stringify(data.newUser));
+          localStorage.setItem("token", data.token);
+        }
+        navigate('/');
       }
-
-      if (data.status === true) {
-        localStorage.setItem('app-user', JSON.stringify(data.newUser))
-
+      catch (error) {
+        console.log("Error during registration: ", error);
+        toast.error("Something went wrong. Please try again.", toastOptions);
+      } finally {
+        setLoading(false);
       }
-
-      navigate('/')
-
-
     }
-  }
-
+  };
 
   const handleValidation = () => {
-
     const { password, confirmpassword, username, email } = values;
 
     if (password !== confirmpassword) {
-      toast.error(
-        "Password and Confirm password should be same", toastOptions
-      );
+      toast.error("Password and Confirm password should be the same", toastOptions);
       return false;
     }
 
     if (username.length < 3) {
-      toast.error(
-        "Username should be grater than 3 chracters", toastOptions
-      );
+      toast.error("Username should be greater than 3 characters", toastOptions);
       return false;
     }
 
     if (password.length < 8) {
-      toast.error(
-        "password should be equal or grater than 8 chracters", toastOptions
-      );
+      toast.error("Password should be equal to or greater than 8 characters", toastOptions);
       return false;
     }
 
     if (email === "") {
-      toast.error(
-        "Email is required", toastOptions
-      )
+      toast.error("Email is required", toastOptions);
       return false;
     }
 
     return true;
-
-  }
-
+  };
 
   const handleChange = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.value })
-  }
+    setValues({ ...values, [event.target.name]: event.target.value });
+  };
 
-  // const handleCheckBoxChange = (event) => {
-  //   const {value, checked} = event.target;
+  const togglePasswordVisibility = () => {
+    setShowPassword(prev => !prev);
+  };
 
-  //   setValues((prevValues) => {
-  //     if(checked){
-  //       return {...prevValues, roles: [...prevValues.roles, value]};
-  //     }
-  //     else{
-  //       return{
-  //         ...prevValues,
-  //         roles: prevValues.roles.filter((role) => role !== value),
-  //       };
-  //     }
-  //   })
-  // }
-
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(prev => !prev);
+  };
 
   return (
-    
-
     <motion.div
-    initial={{ opacity: 0, y: 50 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: -50 }}
-    transition={{ duration: 0.5 }}
-  >
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -50 }}
+      transition={{ duration: 0.5 }}
+    >
 
-        <Container>
-          <form onSubmit={(event) => handleSubmit(event)}>
-            <div className="brand">
-              <h1>Learning</h1>
-            </div>
+      <Container>
+        <form onSubmit={(event) => handleSubmit(event)}>
+          <div className="brand">
+            <h1>Learning</h1>
+          </div>
 
+          <input
+            type="text"
+            placeholder='Username'
+            name='username'
+            onChange={(e) => handleChange(e)}
+          />
+
+          <input
+            type="email"
+            placeholder='Email'
+            name='email'
+            onChange={(e) => handleChange(e)}
+          />
+
+          <div className="password-field">
             <input
-              type="text"
-              placeholder='username'
-              name='username'
-              onChange={(e) => handleChange(e)}
-            />
-
-            <input
-              type="email"
-              placeholder='email'
-              name='email'
-              onChange={(e) => handleChange(e)}
-            />
-
-            <input
-              type="password"
-              placeholder='password'
+              type={showPassword ? "text" : "password"}
+              placeholder='Password'
               name='password'
               onChange={(e) => handleChange(e)}
             />
+            <button type="button" onClick={togglePasswordVisibility}>
+              {showPassword ? "Hide" : "Show"}
+            </button>
+          </div>
 
+          <div className="password-field">
             <input
-              type="password"
-              placeholder='ConfirmPassword'
+              type={showConfirmPassword ? "text" : "password"}
+              placeholder='Confirm Password'
               name='confirmpassword'
               onChange={(e) => handleChange(e)}
             />
+            <button type="button" onClick={toggleConfirmPasswordVisibility}>
+              {showConfirmPassword ? "Hide" : "Show"}
+            </button>
+          </div>
 
-            <div className="roles">
-              <label>
-                <input
-                  type="radio"
-                  name='role'
-                  value='Admin'
-                // onChange={handleCheckBoxChange} 
-                />
-                <span>Admin</span>
-              </label>
+          <div className="roles">
+            <label>
+              <input
+                type="radio"
+                name="role"
+                value="tutor"
+                onChange={(e) => handleChange(e)}
+                checked={values.role === "tutor"}
+              />
+              <span>Admin</span>
+            </label>
 
-              <label>
-                <input
-                  type="radio"
-                  name='role'
-                  value='User'
-                // onChange={handleCheckBoxChange}
-                />
-                <span>User</span>
-              </label>
-            </div>
+            <label>
+              <input
+                type="radio"
+                name="role"
+                value="user"
+                onChange={(e) => handleChange(e)}
+                checked={values.role === "user"}
+              />
+              <span>User</span>
+            </label>
+          </div>
 
+          <button type='submit' disabled={loading}>
+            {loading ? "Creating Account..." : "Create User Account"}
+          </button>
+          <span>
+            Already have an account? <Link to="/login">Login</Link>
+          </span>
 
+        </form>
+      </Container>
+      <ToastContainer />
+    </motion.div>
 
-            <button type='submit'>Create User Account</button>
-            <span>
-              Already have an account ? <Link to="/login">Login</Link>
-            </span>
-
-          </form>
-        </Container>
-        <ToastContainer />
-      </motion.div>
-    
   )
-}
-
-
+};
 
 const Container = styled.div`
 
@@ -222,8 +218,8 @@ const Container = styled.div`
     justify-content: center;
 
     h1 {
-    color: white;
-    text-transform: uppercase;
+      color: white;
+      text-transform: uppercase;
     }
   }
 
@@ -248,12 +244,27 @@ const Container = styled.div`
         border: 0.1rem solid #997af0;
         outline: none;
       }
-      
+    }
+
+    .password-field {
+      display: flex;
+      align-items: center;
+      position: relative;
+
+      button {
+        background: transparent;
+        border: none;
+        color: #997af0;
+        position: absolute;
+        right: 10px;
+        cursor: pointer;
+        font-size: 0.8rem;
+      }
     }
 
     .roles {
       display: flex;
-      justify-content: space-between;;
+      justify-content: space-between;
 
       label {
         color: white;
@@ -283,10 +294,10 @@ const Container = styled.div`
         }
 
         span {
-        margin-left: 0.5rem;
-        color: #3005a4;
-        font-weight: bold;
-      }
+          margin-left: 0.5rem;
+          color: #3005a4;
+          font-weight: bold;
+        }
       }
     }
 
@@ -305,6 +316,11 @@ const Container = styled.div`
       &:hover {
         background-color: #3005a4;
       }
+
+      &:disabled {
+        background-color: #6c54d0;
+        cursor: not-allowed;
+      }
     }
 
     span {
@@ -317,12 +333,8 @@ const Container = styled.div`
         font-weight: bold;
       }
     }
-
   }
 
-
 `;
-
-
 
 export default Register;
